@@ -11,7 +11,7 @@
 프로젝트 제안서를 설명하세요. 발표자료와 동영상을 추가하세요. 시스템의 아키텍쳐 설명도 추가하세요.
 
 <a href="/koposoftware/2020_18_hthong/blob/master/FinalProject_proposal_hongtaek.pdf">발표자료</a>
- 
+<iframe style="width:100%; height:100%;" src="./FinalProject_proposal_hongtaek.pdf">제안서</iframe>
 
 # 3. 프로젝트 결과
 프로젝트 결과를 추가하세요. 발표자료. 시연동영상을 추가하세요.
