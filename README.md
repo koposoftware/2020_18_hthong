@@ -11,7 +11,7 @@
 프로젝트 제안서를 설명하세요. 발표자료와 동영상을 추가하세요. 시스템의 아키텍쳐 설명도 추가하세요.
 
    <img src="[Project] 하나원픽_제안서_홍현택.pdf"/>[발표자료](/project.pptx)<br>
-   <iframe style="width:100%; heigth:100%;" src="[Project] 하나원픽_제안서_홍현택.pdf"></iframe>
+ 
  
 
 # 3. 프로젝트 결과
