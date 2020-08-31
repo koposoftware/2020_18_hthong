@@ -1,0 +1,14 @@
+#loader_itech{
+    height:75px;
+}
+
+#login_itech .modal-body button{
+    margin-top:10px;
+    padding:10px 25px 10px 25px;
+    width: 200px;
+}
+
+#login_itech .form-group input{
+    padding: 15px;
+    height: 50px;
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member.dao.MemberDAO">
+	<select id="login" parameterType="memberVO" resultType="memberVO">
+		select id, password, type
+		from member
+		where id = #{id} and password = #{password}
+	</select>
+	
+	<select id="mypage" parameterType="memberVO" resultType="memberVO">
+		select id, name, password, ssn1, ssn2, email, mobile
+		from member
+		where id = #{id}
+	</select>
+	
+	<update id="editUserInfo" parameterType="memberVO">
+		update member
+		set
+		password = #{ password }, email = #{ email }, mobile = #{ mobile }
+		where id = #{id}
+	</update>
+	
+	<insert id="signUp" parameterType="memberVO">
+		insert into member(id, password, name, ssn1, ssn2, email, mobile)
+		values( #{id}, #{password}, #{name}, #{ssn1}, #{ssn2}, #{email}, #{mobile} )
+	</insert>
+	
+	
+	<delete id="signOut" parameterType="memberVO">
+		delete from member
+		where id = #{id} and password = #{ password }
+	</delete>
+	
+	<select id="inquiryAcc" parameterType="memberVO" resultType="accountVO">
+	  	select id, bank_code as bankCode, acc_no as accNo, balance, acc_type as accType, acc_name as accName, nickname, reg_date as regDate
+		from account
+		where id = #{id}
+	</select>
+	
+	
+</mapper>
+
+
+
