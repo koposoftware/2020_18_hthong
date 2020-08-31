@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="account.dao.AccountDAO">
+
+	<select id="inquiryAcc" parameterType="memberVO"
+		resultType="accountVO">
+		select id, bank_code as bankCode, acc_no as accNo, balance, acc_type as
+		accType, acc_name as accName, nickname, to_char(reg_date, 'yyyy-mm-dd') as regDate
+		from
+		account
+		where id = #{id}
+	</select>
+
+</mapper>
+
+
+
