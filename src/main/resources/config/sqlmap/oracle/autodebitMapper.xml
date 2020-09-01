@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="autodebit.dao.AutoDebitDAO">
+
+	<resultMap type="autoDebitVO" id="autoDebitMap">
+		<result column="acc_no" property="accNo" />
+		<result column="set_money" property="setMoney" />
+		<result column="opp_acc_no" property="oppAccNo" />
+		<result column="autodebit_code" property="autodebitCode" />
+	</resultMap>
+
+
+	<!--1. 자동이체 정보 조회 -->
+	<select id="selectByDate" resultMap="autoDebitMap">
+		select acc_no, set_money, opp_acc_no, autodebit_code
+		from autodebit
+		where set_date = 2	<!-- setDate 자동이체 설정일 -->
+	</select>
+
+	<!--3-1. 자동이체 계좌 출금 -->
+	<update id="autoDebitSend" parameterType="autoDebitVO">
+		update account
+		set balance = balance - #{ setMoney }
+		where acc_no = #{ accNo }
+	</update>
+	
+	<!-- 3-2. 자동이체 상대계좌 입금 -->
+
+	<update id="autoDebitReceive" parameterType="autoDebitVO">
+		update account
+		set balance = balance + #{ setMoney }
+		where acc_no = #{ oppAccNo }
+	</update>
+	
+	
+	<!-- 4. 거래내역 로그 남기기 -->
+	
+	
+	<!-- 5. 자동이체 테이블 last_run_date -->
+ 	<update id="lastRunDate" parameterType="autoDebitVO">
+		update autodebit
+		set last_run_date = sysdate
+		where autodebit_code = #{ autodebitCode }
+	</update> 
+
+	
+	
+	
+	
+</mapper>
+
+

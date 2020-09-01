@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+
+/* th가 세로형태 */
+.form-group {
+	width: 500px;
+}
+
+.form-control {
+	vertical-align: middle;
+	min-width: 200px;
+	max-width: 200px;
+}
+
+.table-highlight {
+	min-width: 150px;
+}
+
+.input-date1 {
+	margin-right: 20px;
+}
+
+.input-date2 {
+	margin-left: 20px;
+}
+
+.radio {
+	margin-right: 30px;
+}
+
+.radio-order {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.btn-area {
+	width: 100%;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.btn-wrap {
+	min-width: 130px;
+	min-height: 40px;
+	display: inline-block;
+}
+
+#select-bank .custom-select {
+	min-width: 200px;
+}
+
+#select-account .custom-select {
+	min-width: 350px;
+}
+
+table tr th {
+	width: 200px;
+}
+
+.display_input {
+	display: table;
+}
+
+.input-group.mb-3 {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.custom-select {
+	min-width: 250px;	
+}
+
+.form-control {
+	min-width: 250px;	
+}
+
+
+/* th가 가로형태 */
+
+.btn.btn-outline-dark{
+	border-radius: 40px;
+	margin-right: 5px;
+	font-size: 13px;
+	font-weight: 600;
+	height: 28px;
+	padding-top: 6px;
+}
+
+.btn.btn-outline-dark:hover{
+     background: rgba(0, 0, 0, 0.3);
+}
+
+.table-highlight {
+	background-color: #F5F5F5;
+	text-align: center; 
+	vertical-align: middle;
+}
+
+.textarea-sub {
+	font-size: 18px;
+	font-weight: 570;
+	padding-left: 10px;
+	margin-bottom: 8px;
+}
+
+#sum-title {
+	font-size: 15px;
+	font-weight: 600;
+	text-align: center; 
+	vertical-align: middle;
+}
+
+#sum-money {
+	font-size: 20px;
+	font-weight: 800;
+}
+
+form {
+	margin-bottom: 70px;
+}
+
+
+.form-control-col {
+	width: 30%;
+	padding: .5rem .75rem;
+	font-size: 1rem;
+	line-height: 1.25;
+	color: #495057;
+	background-color: #fff;
+	background-image: none;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: .25rem;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

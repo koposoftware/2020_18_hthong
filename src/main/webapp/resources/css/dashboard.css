@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+.card {
+	margin-bottom: 30px;
+	border: 0px;
+	border-radius: 0.625rem;
+	box-shadow: 6px 11px 41px -28px #a99de7;
+}
+
+.card-title {
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.card-header {
+	border-bottom: 0px;
+	background: transparent;
+}
+
+.card-header:first-child {
+	border-radius: 0;
+}
+
+.card .card-body {
+	padding: 1.88rem 1.81rem;
+}
+
+.card-action a {
+	display: inline-block;
+	color: #fff;
+	border-radius: 50%;
+}
+
+.card-action a:not(:last-child) {
+	margin-right: 4px;
+}
+
+.card-action a i, .card-action a span {
+	font-size: 12px;
+}
+
+.card-fullscreen {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 99999999;
+	overflow: auto;
+}
+
+.gradient-1, .dropdown-mega-menu .ext-link.link-1 a, .morris-hover,
+	.datamaps-hoverover {
+	background-image: linear-gradient(230deg, #759bff, #843cf6);
+}
+
+.gradient-2, .dropdown-mega-menu .ext-link.link-3 a {
+	background-image: linear-gradient(230deg, #fc5286, #fbaaa2);
+}
+
+.gradient-3, .dropdown-mega-menu .ext-link.link-2 a, .header-right .icons .user-img .activity
+	{
+	background-image: linear-gradient(230deg, #ffc480, #ff763b);
+}
+
+.gradient-4, .sidebar-right .nav-tabs .nav-item .nav-link.active::after,
+	.sidebar-right .nav-tabs .nav-item .nav-link.active span i::before {
+	background-image: linear-gradient(230deg, #0e4cfd, #6a8eff);
+}
+
+.gradient-5 {
+	background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+}
+
+.gradient-6 {
+	background-image: linear-gradient(135deg, #97ABFF 10%, #123597 100%);
+}
+
+.gradient-7 {
+	background-image: linear-gradient(135deg, #3C8CE7 10%, #00EAFF 100%);
+}
+
+.gradient-8 {
+	background-image: linear-gradient(135deg, #EE9AE5 10%, #5961F9 100%);
+}
+
+.gradient-anchor, .gradient-9 {
+	background-image: linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9
+		33%, #ee609c 66%, #ee609c 100%);
+}
+
+.gradient-anchor {
+	-webkit-background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+}
+
+.display-5 {
+	font-size: 3rem;
+}
+
+.opacity-5 {
+	opacity: 0.5;
+}
+
+.float-right.display-5.opacity-5 i {
+	color: white;
+}
+
