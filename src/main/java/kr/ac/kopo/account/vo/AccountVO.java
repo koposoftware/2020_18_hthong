@@ -10,6 +10,7 @@ public class AccountVO {
 	private String accName;
 	private String nickname;
 	private String regDate;
+	private String holder;
 
 	public AccountVO() {
 		super();
@@ -87,11 +88,19 @@ public class AccountVO {
 		this.regDate = regDate;
 	}
 
+	public String getHolder() {
+		return holder;
+	}
+
+	public void setHolder(String holder) {
+		this.holder = holder;
+	}
+
 	@Override
 	public String toString() {
 		return "AccountVO [id=" + id + ", bankCode=" + bankCode + ", accNo=" + accNo + ", accPwd=" + accPwd
 				+ ", balance=" + balance + ", accType=" + accType + ", accName=" + accName + ", nickname=" + nickname
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", holder=" + holder + "]";
 	}
 
 }

@@ -1,5 +1,6 @@
 package kr.ac.kopo.member.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -46,7 +47,7 @@ public class MemberController {
 	 */
 	@PostMapping("/login")
 	public ModelAndView login(MemberVO member, HttpSession session) {
-		MemberVO loginVO = memberService.login(member); // �α����� �Ϸ�Ǹ� ���������� loginVO�� ��´�.
+		MemberVO loginVO = memberService.login(member); // 
 		ModelAndView mav = new ModelAndView();
 
 		// 로그인 실패
@@ -156,6 +157,8 @@ public class MemberController {
 	@PostMapping("/signUp")
 	public String signUp(MemberVO member, HttpServletRequest request) {
 		memberService.signUp(member);
+		
+		System.out.println("check in member con : " + member.toString());
 		return "redirect:/";
 	}
 
@@ -170,12 +173,15 @@ public class MemberController {
 		return "/member/signOut";
 	}
 
+	
 	@PostMapping("/signOut")
 	public String signOut(MemberVO member) {
 
-		System.out.println("Ż�� : " + member.toString());
+		System.out.println("로그아웃 : " + member.toString());
 
 		memberService.signOut(member);
 		return "redirect:/";
 	}
+	
+	
 }

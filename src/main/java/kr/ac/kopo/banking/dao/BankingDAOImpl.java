@@ -39,29 +39,5 @@ public class BankingDAOImpl implements BankingDAO {
 		return transHistory;
 	}
 
-	@Override
-	public List<AutoDebitVO> autodebitList(AutoDebitVO autoDebitVO) {
-		List<AutoDebitVO> autodebitList = sqlSession.selectList("banking.dao.BankingDAO.autodebitList", autoDebitVO);
-
-		System.out.println("check in dao : " + autoDebitVO.toString());
-
-		return autodebitList;
-	}
-	
-
-	@Override
-	public int autoDebitReg(AutoDebitVO autoDebitVO) {
-		int chkResult = 0;
-		
-		try {
-			System.out.println("check in dao 자동이체 등록 " + autoDebitVO.toString());
-			chkResult = sqlSession.insert("banking.dao.BankingDAO.autodebitReg", autoDebitVO);
-			System.out.println(chkResult);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return chkResult;
-	}
 
 }

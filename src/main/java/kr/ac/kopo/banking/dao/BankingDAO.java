@@ -18,11 +18,6 @@ public interface BankingDAO {
 	
 	// 거래내역 조회
 	public List<TransactionVO> transHistory(TransactionVO transactionVO);
-	
-	// 자동이체 조회
-	public List<AutoDebitVO> autodebitList(AutoDebitVO autoDebitVO);
-	
-	// 자동이체 등록
-	public int autoDebitReg(AutoDebitVO autoDebitVO);
+
 	
 }

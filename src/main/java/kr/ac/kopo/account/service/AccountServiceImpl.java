@@ -19,13 +19,29 @@ public class AccountServiceImpl implements AccountService {
 	 * 전체계좌 조회
 	 */
 	@Override
-	public List<AccountVO> inquiryAcc(MemberVO loginVO) {
-		
+	public List<AccountVO> inquiryAcc(MemberVO loginVO) throws Exception{
 		List<AccountVO> accountList = accountDAO.inquiryAcc(loginVO);
-		
+		return accountList;
+	}
+	
+	/**
+	 * 통장전환용 계좌조회
+	 */
+	@Override
+	public List<AccountVO> inquiryChkAcc(MemberVO loginVO) throws Exception {
+		List<AccountVO> accountList = accountDAO.inquiryChkAcc(loginVO);
 		return accountList;
 	}
 
-	
 
+	/**
+	 * 비밀번호 확인
+	 */
+	@Override
+	public int checkPwd(AccountVO accountVO) throws Exception{
+		int checkResult = accountDAO.checkPwd(accountVO);
+		return checkResult;
+	}
+
+	
 }

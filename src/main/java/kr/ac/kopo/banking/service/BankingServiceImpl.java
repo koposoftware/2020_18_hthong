@@ -39,27 +39,5 @@ public class BankingServiceImpl implements BankingService {
 		return transactionList;
 	}
 
-	/**
-	 * 자동이체 조회
-	 */
-	@Override
-	public List<AutoDebitVO> autoDebitList(AutoDebitVO autoDebitVO) {
-		List<AutoDebitVO> autodebitList = bankingDAO.autodebitList(autoDebitVO);
-
-		return autodebitList;
-	}
-
-	
-	/**
-	 * 자동이체 등록
-	 */
-	@Override
-	public int autoDebitReg(AutoDebitVO autoDebitVO) {
-		int chkResult = bankingDAO.autoDebitReg(autoDebitVO);
-		
-		return chkResult;
-	}
-
-	
 	
 }

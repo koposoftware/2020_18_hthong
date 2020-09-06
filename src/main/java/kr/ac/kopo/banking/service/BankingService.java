@@ -13,9 +13,5 @@ public interface BankingService {
 	// 거래내역 조회
 	public List<TransactionVO> transaction(TransactionVO transactionVO);
 
-	// 자동이체 조회
-	public List<AutoDebitVO> autoDebitList(AutoDebitVO autoDebitVO);
-	
-	// 자동이체 등록
-	public int autoDebitReg(AutoDebitVO autoDebitVO);
+
 }

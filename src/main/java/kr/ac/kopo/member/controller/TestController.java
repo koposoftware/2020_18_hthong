@@ -33,7 +33,7 @@ public class TestController {
 		CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
 		credsProvider.setCredentials(new AuthScope(hostname, 443, AuthScope.ANY_REALM),
-				new UsernamePasswordCredentials("", ""));
+				new UsernamePasswordCredentials("hana_onepick", "ecc54adcedd311eaa4f10cc47a1fcfae"));
 
 		// Create AuthCache instance
 		AuthCache authCache = new BasicAuthCache();
@@ -50,7 +50,7 @@ public class TestController {
 			HttpPost httpPost = new HttpPost(url);
 			httpPost.setHeader("Content-type", "application/json; charset=utf-8");
 
-			String json = "{\"sender\":\"" + "010" + "\",\"receivers\":[\"" + "01092768500"
+			String json = "{\"sender\":\"" + "01092768500" + "\",\"receivers\":[\"" + "01097922797"
 					+ "\"],\"content\":\"" + "보낼 내용" + "\"}";
 
 			StringEntity se = new StringEntity(json, "UTF-8");

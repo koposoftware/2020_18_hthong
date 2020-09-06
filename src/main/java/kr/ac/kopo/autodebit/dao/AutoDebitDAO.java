@@ -6,6 +6,30 @@ import kr.ac.kopo.autodebit.vo.AutoDebitVO;
 
 public interface AutoDebitDAO {
 
+	// 자동이체 조회
+	public List<AutoDebitVO> autodebitList(AutoDebitVO autoDebitVO);
+
+	// 자동이체 조건조회
+	public List<AutoDebitVO> selectByCategry(AutoDebitVO autoDebitVO);
+	
+	
+	
+	// 자동이체 등록
+	public int autoDebitReg(AutoDebitVO autoDebitVO);
+	
+	
+	// 자동이체 삭제
+	public int autoDebitDelete(AutoDebitVO autoDebitVO);
+	
+	
+	// 자동이체 변경
+	public int autoDebitModify(AutoDebitVO autoDebitVO);
+	
+
+	////////////////////////////////////////////////////////////////////////////
+	//// 자동이체 실행 로직
+	////////////////////////////////////////////////////////////////////////////
+	
 	// 1. 오늘 날짜 = 지정일인 자동이체 정보조회
 	List<AutoDebitVO> selectByDate();
 

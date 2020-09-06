@@ -33,7 +33,7 @@ public class BankingController {
 
 	// 계좌리스트 값이 필요한 banking 업무 처리
 	@GetMapping("/banking/{path}")
-	public ModelAndView banking(@PathVariable("path") String path, HttpServletRequest request) {
+	public ModelAndView banking(@PathVariable("path") String path, HttpServletRequest request) throws Exception {
 
 		// 세션 로그인 정보 값
 		HttpSession session = request.getSession();
@@ -59,9 +59,6 @@ public class BankingController {
 		else {
 			mav = new ModelAndView("redirect:/");
 		}
-
-		System.out.println("accList: " + mav.toString());
-
 		return mav;
 	}
 
@@ -93,7 +90,7 @@ public class BankingController {
 
 		ModelAndView mav = new ModelAndView();
 		List<TransactionVO> transaction = bankingService.transaction(transactionVO); // 거래내역 조회 메소드
-		
+
 		System.out.println("lastCheck in con : " + transaction);
 
 		mav = new ModelAndView("/banking/transactionResult");
@@ -112,90 +109,5 @@ public class BankingController {
 		return "/banking/transactionResult";
 	}
 
-	// 계좌리스트 값이 필요한 banking 업무 처리
-	@GetMapping("/autodebit/{path}")
-	public ModelAndView autodebit(@PathVariable("path") String path, HttpServletRequest request) {
-
-		// 세션 로그인 정보 값
-		HttpSession session = request.getSession();
-		MemberVO loginVO = (MemberVO) session.getAttribute("loginVO");
-
-		// 계좌리스트 조회
-		ModelAndView mav = new ModelAndView();
-		List<AccountVO> accountList = accountService.inquiryAcc(loginVO);
-
-		// 자동이체 조회 view
-		if (path.equals("info")) {
-			mav = new ModelAndView("/autodebit/autodebitInfo");
-			mav.addObject("accountList", accountList);
-		}
-
-		// 자동이체 등록 view
-		else if (path.equals("registration")) {
-			mav = new ModelAndView("/autodebit/autodebitReg");
-			mav.addObject("accountList", accountList);
-		}
-
-		// 자동이체 수정 view
-		else if (path.equals("manage")) {
-			mav = new ModelAndView("/autodebit/autodebitManage");
-			mav.addObject("accountList", accountList);
-		}
-
-		// 예외발생 view
-		else {
-			mav = new ModelAndView("redirect:/");
-		}
-
-		System.out.println("accList: " + mav.toString());
-
-		return mav;
-	}
-
-	/**
-	 * 자동이체 조회 
-	 * @param autoDebitVO
-	 * @return
-	 */
-	@PostMapping("/autodebit/info")
-	public ModelAndView autodebitInfo(AutoDebitVO autoDebitVO) {
-
-		System.out.println("autodebitInfo check : " + autoDebitVO.toString());
-
-		ModelAndView mav = new ModelAndView();
-		List<AutoDebitVO> autoDebitList = bankingService.autoDebitList(autoDebitVO); // 자동이체 리스트
-
-		System.out.println("lastCheck in autodebitInfo : " + autoDebitList.toString());
-
-		mav = new ModelAndView("#");
-		mav.addObject("autoDebitList", autoDebitList);
-
-		return mav;
-	}
-
-	/**
-	 * 자동이체 등록
-	 * @param autoDebitVO
-	 * @return
-	 */
-	@PostMapping("/autodebit/registration")
-	public ModelAndView registration(AutoDebitVO autoDebitVO) {
-		
-		System.out.println("autodebit registration check : " + autoDebitVO.toString());
-
-		ModelAndView mav = new ModelAndView();
-		
-		int chkResult = bankingService.autoDebitReg(autoDebitVO); // 자동이체 등록 메소드
-		
-		if(chkResult == 0 ) {
-			mav = new ModelAndView("/autodebit/autodebitRegFail");
-			
-		} else if(chkResult > 0 ) {
-			mav = new ModelAndView("/autodebit/autodebitRegResult");
-		}
-
-		
-		return mav;
-	}
 
 }

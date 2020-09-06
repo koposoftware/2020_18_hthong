@@ -22,8 +22,7 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 
-	///////////////
-	// 계좌조회, 계좌관리(별칭만), 계좌가입, 계좌전환)
+	// 계좌조회, 계좌관리(별칭만), 계좌가입, 계좌전환
 
 	/**
 	 * 계좌조회
@@ -31,7 +30,7 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/inquiry")
-	public ModelAndView inquiryForm(HttpServletRequest request) {
+	public ModelAndView inquiryForm(HttpServletRequest request) throws Exception{
 
 		// 세션 로그인 정보 값
 		HttpSession session = request.getSession();

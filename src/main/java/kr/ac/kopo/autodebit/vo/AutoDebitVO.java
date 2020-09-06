@@ -5,19 +5,15 @@ public class AutoDebitVO {
 	private String category; // 자동이체 구분
 	private String setMoney; // 자동이체 금액
 	private String startDate; // 자동이체 시작일
-	private String endDate; // 자동이체 종료일
 	private String cycle; // 자동이체 주기(1일, 7일, 30일 먼저 구현)
 	private String status; // 자동이체 상태(정상, 해지)
 	private String closeDate; // 자동이체 해지일
-	private String oppAccNo;	// 자동이체 상대방 계좌번호
+	private String oppAccNo; // 자동이체 상대방 계좌번호
 	private String autodebitCode; // 자동이체 고유번호
+	private String bankName; // 상대방 은행명
+	private String lastRunDate; // 마지막 자동이체일
 
-	
 	private String setDate; // 설정일
-
-	public AutoDebitVO() {
-		super();
-	}
 
 	public String getAccNo() {
 		return AccNo;
@@ -51,14 +47,6 @@ public class AutoDebitVO {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
 	public String getCycle() {
 		return cycle;
 	}
@@ -83,14 +71,6 @@ public class AutoDebitVO {
 		this.closeDate = closeDate;
 	}
 
-	public String getSetDate() {
-		return setDate;
-	}
-
-	public void setSetDate(String setDate) {
-		this.setDate = setDate;
-	}
-
 	public String getOppAccNo() {
 		return oppAccNo;
 	}
@@ -107,12 +87,36 @@ public class AutoDebitVO {
 		this.autodebitCode = autodebitCode;
 	}
 
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public String getLastRunDate() {
+		return lastRunDate;
+	}
+
+	public void setLastRunDate(String lastRunDate) {
+		this.lastRunDate = lastRunDate;
+	}
+
+	public String getSetDate() {
+		return setDate;
+	}
+
+	public void setSetDate(String setDate) {
+		this.setDate = setDate;
+	}
+
 	@Override
 	public String toString() {
 		return "AutoDebitVO [AccNo=" + AccNo + ", category=" + category + ", setMoney=" + setMoney + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", cycle=" + cycle + ", status=" + status + ", closeDate="
-				+ closeDate + ", oppAccNo=" + oppAccNo + ", autodebitCode=" + autodebitCode + ", setDate=" + setDate
-				+ "]";
+				+ startDate + ", cycle=" + cycle + ", status=" + status + ", closeDate=" + closeDate + ", oppAccNo="
+				+ oppAccNo + ", autodebitCode=" + autodebitCode + ", bankName=" + bankName + ", lastRunDate="
+				+ lastRunDate + ", setDate=" + setDate + "]";
 	}
 
 }

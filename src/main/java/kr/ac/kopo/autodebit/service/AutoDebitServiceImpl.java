@@ -16,6 +16,65 @@ public class AutoDebitServiceImpl implements AutoDebitService {
 	@Autowired
 	private AutoDebitDAO autoDebitDAO;
 
+	/**
+	 * 자동이체 전체조회
+	 */
+	@Override
+	public List<AutoDebitVO> autoDebitList(AutoDebitVO autoDebitVO) {
+		List<AutoDebitVO> autodebitList = autoDebitDAO.autodebitList(autoDebitVO);
+		return autodebitList;
+	}
+	
+	
+	/**
+	 * 자동이체 조건조회
+	 */
+	@Override
+	public List<AutoDebitVO> selectByCategry(AutoDebitVO autoDebitVO) {
+		List<AutoDebitVO> autodebitList = autoDebitDAO.selectByCategry(autoDebitVO);
+		return autodebitList;
+	}
+
+
+
+	/**
+	 * 자동이체 등록
+	 */
+	@Override
+	public int autoDebitReg(AutoDebitVO autoDebitVO) {
+		int chkResult = autoDebitDAO.autoDebitReg(autoDebitVO);
+		return chkResult;
+	}
+	
+
+	/**
+	 * 자동이체 삭제
+	 */
+	@Override
+	public int autoDebitDelete(AutoDebitVO autoDebitVO) {
+		int result = autoDebitDAO.autoDebitDelete(autoDebitVO);
+		return result;
+	}
+
+
+	/**
+	 * 자동이체 변경
+	 */
+	@Override
+	public int autoDebitModify(AutoDebitVO autoDebitVO) {
+		int result = autoDebitDAO.autoDebitModify(autoDebitVO);
+		return result;
+	}
+
+
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	//자동이체 실행로직 //////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * 자동이체 실행 로직
+	 */
 	@Override
 	public void autoDebitExecute() {
 

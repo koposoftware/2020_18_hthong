@@ -17,7 +17,6 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public MemberVO login(MemberVO member) { // 사용자 입력값
-
 		return memberDAO.login(member);
 	}
 
@@ -26,7 +25,6 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public MemberVO mypage(MemberVO member) {
-
 		return memberDAO.mypage(member);
 	}
 

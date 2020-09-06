@@ -36,7 +36,7 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public void signOut(MemberVO member) {
-		sqlSession.insert("member.dao.MemberDAO.signOut", member);
+		sqlSession.delete("member.dao.MemberDAO.signOut", member);
 	}
 
 	
