@@ -1,1 +1,9 @@
 /target/
+*.css
+*.scss
+calljson.jsp
+smssend.jsp
+smsTest.jsp
+pom.xml
+spring-mvc.xml
+mybatis.xml
