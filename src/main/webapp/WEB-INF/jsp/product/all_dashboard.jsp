@@ -10,7 +10,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="/resources/css/table.css" rel="stylesheet">
-<!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16"
 	href="/resources/images/favicon.png">
 <!-- Custom Stylesheet -->

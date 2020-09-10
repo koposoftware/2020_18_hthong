@@ -1,5 +1,7 @@
 package kr.ac.kopo.product.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,8 @@ import kr.ac.kopo.account.dao.AccountDAO;
 import kr.ac.kopo.account.vo.AccountVO;
 import kr.ac.kopo.member.vo.MemberVO;
 import kr.ac.kopo.product.dao.ProductDAO;
+import kr.ac.kopo.product.vo.BudgetVO;
+import kr.ac.kopo.product.vo.OnepickVO;
 import kr.ac.kopo.product.vo.ProductVO;
 
 @Service
@@ -49,5 +53,80 @@ public class ProductServiceImpl implements ProductService{
 		
 		return accountVO;
 	}
+
+	/**
+	 * 원픽통장 금액이동
+	 */
+	@Override
+	public int onepickTransfer(OnepickVO onepickVO) throws Exception {
+		int result = 0;
+		
+		// 이동(출금)
+		int result1 = productDAO.sendMoney(onepickVO);
+		
+		// 이동(입금)
+		int result2 = productDAO.receiveMoney(onepickVO);
+		
+		// 원픽 거래내역 입력
+		int result3 = productDAO.sendTrans(onepickVO);
+		
+		return result;
+	}
+
+	
+	/**
+	 * 원픽 예산목록 조회
+	 */
+	@Override
+	public List<BudgetVO> budgetList(ProductVO productVO) throws Exception {
+		List<BudgetVO> budgetList = productDAO.budgetList(productVO);
+		return budgetList;
+	}
+
+	
+	/**
+	 * 원픽 총예산 수정
+	 */
+	@Override
+	public void updateTotalBudget(ProductVO productVO) throws Exception {
+		productDAO.updateTotalBudget(productVO);
+	}
+
+	
+	/**
+	 * 원픽 자동 금액이동 조회
+	 */
+	@Override
+	public ProductVO autoInfo(ProductVO productVO) throws Exception {
+		ProductVO autoInfo = productDAO.autoInfo(productVO);
+		return autoInfo;
+	}
+
+	/**
+	 * 원픽 자동 금액이동 입력
+	 */
+	@Override
+	public void insertAutoSend(ProductVO productVO) throws Exception {
+		productDAO.insertAutoSend(productVO);
+	}
+
+	
+	/**
+	 * 원픽 자동 금액이동 수정
+	 */
+	@Override
+	public void updateAutoSend(ProductVO productVO) throws Exception {
+		productDAO.updateAutoSend(productVO);
+	}
+
+
+	@Override
+	public void insertBudget(BudgetVO budgetVO) throws Exception {
+		productDAO.insertBudget(budgetVO);
+	}
+	
+	
+	
+	
 	
 }
