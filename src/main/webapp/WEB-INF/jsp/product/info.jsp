@@ -261,7 +261,7 @@
 															<select id="sender" name="sender" class="custom-select"
 																aria-label="Example select with button addon">
 																<option selected>통장선택</option>
-																<option class="type" value="base_money">기본금</option>
+																<option class="type" value="base_budget">기본금</option>
 																<option class="type" value="living_cost">생활비</option>
 																<option class="type" value="extra_money">예비금</option>
 															</select>
@@ -273,9 +273,9 @@
 															<select id="receiver" name="receiver" class="custom-select"
 																aria-label="Example select with button addon">
 																<option selected>통장선택</option>
-																<option class="type" value="base_money">기본금</option>
-																<option class="type" value="living_cost">생활비</option>
-																<option class="type" value="extra_money">예비금</option>
+																<option class="type" value="base_budget">기본금</option>
+																<option class="type" value="living_budget">생활비</option>
+																<option class="type" value="extra_budget">예비금</option>
 															</select>
 														</div>
 													</td>

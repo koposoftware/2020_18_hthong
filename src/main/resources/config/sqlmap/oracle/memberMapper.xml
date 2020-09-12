@@ -34,7 +34,7 @@
 	</delete>
 	
 	<select id="inquiryAcc" parameterType="memberVO" resultType="accountVO">
-	  	select id, bank_code as bankCode, acc_no as accNo, balance, acc_type as accType, acc_name as accName, nickname, reg_date as regDate
+	  	select id, acc_no as accNo, balance, acc_type as accType, acc_name as accName, nickname, reg_date as regDate
 		from account
 		where id = #{id}
 	</select>

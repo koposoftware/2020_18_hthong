@@ -5,50 +5,136 @@
 <mapper namespace="autodebit.dao.AutoDebitDAO">
 
 	<resultMap type="autoDebitVO" id="autoDebitMap">
+		<result column="autodebit_code" property="autodebitCode" />
 		<result column="acc_no" property="accNo" />
 		<result column="set_money" property="setMoney" />
 		<result column="opp_acc_no" property="oppAccNo" />
-		<result column="autodebit_code" property="autodebitCode" />
+		<result column="opp_bank_name" property="bankName" />
+		<result column="start_date" property="startDate" />
+		<result column="set_date" property="setDate" />
+		<result column="last_run_date" property="lastRunDate" />
+		<result column="close_date" property="closeDate" />
 	</resultMap>
+
+
+	<!-- 자동이체 전체 조회 -->
+	<select id="autodebitList" resultMap="autoDebitMap"
+		parameterType="autoDebitVO">
+		select autodebit_code, acc_no, category, set_money
+		,opp_acc_no, opp_bank_name as bankName
+		, to_char(start_date, 'yyyy-mm-dd') as start_date, set_date
+		, cycle, to_char(last_run_date, 'yyyy-mm-dd') as last_run_date
+		, status, to_char(close_date, 'yyyy-mm-dd') as close_date
+		from autodebit
+		where acc_no = #{ accNo }
+	</select>
+
+
+	<!-- 자동이체 조건 조회 -->
+	<select id="selectByCategry" resultMap="autoDebitMap"
+		parameterType="autoDebitVO">
+		select autodebit_code, acc_no, category, set_money
+		,opp_acc_no, opp_bank_name as bankName
+		, to_char(start_date, 'yyyy-mm-dd') as start_date, set_date
+		, cycle, to_char(last_run_date, 'yyyy-mm-dd') as last_run_date
+		, status, to_char(close_date, 'yyyy-mm-dd') as close_date
+		from autodebit
+		where acc_no = #{ accNo } and category = #{ category }
+	</select>
+
+
+	<!-- 자동이체 등록 -->
+	<insert id="autodebitReg" parameterType="autoDebitVO">
+		insert into
+		autodebit(autodebit_code, acc_no, category, set_money, start_date,
+		opp_acc_no, opp_bank_name, cycle, set_date )
+		values(
+		autodebit_code_seq.nextval, #{ accNo }, #{category}, #{setMoney},
+		#{startDate}, #{oppAccNo}, #{bankName}, #{cycle}, #{setDate} )
+	</insert>
+
+	<!-- 자동이체 삭제 -->
+	<delete id="autodebitDelete" parameterType="autoDebitVO" >
+		delete from autodebit
+		where autodebit_code = #{ autodebitCode }
+	</delete>
+
+
+	<!-- 자동이체 변경 -->
+	<update id="autoDebitModify" parameterType="autoDebitVO" >
+		update autodebit
+		set 
+		category	= #{category}, 
+		set_money	= #{setMoney}, 
+		start_date	= #{startDate}, 
+		opp_acc_no	= #{oppAccNo}, 
+		opp_bank_name = #{bankName}, 
+		cycle		= #{cycle}, 
+		set_date	= #{setDate}
+		where autodebit_code = #{ autodebitCode }
+	</update>
+
+
+
+	<!-- =============================================================================== -->
+	<!-- 자동이체 실행로직 -->
+	<!-- =============================================================================== -->
+
+
 
 
 	<!--1. 자동이체 정보 조회 -->
 	<select id="selectByDate" resultMap="autoDebitMap">
-		select acc_no, set_money, opp_acc_no, autodebit_code
+		select acc_no, category, set_money, opp_acc_no, autodebit_code
 		from autodebit
-		where set_date = 2	<!-- setDate 자동이체 설정일 -->
+		where set_date = '11'	<!-- setDate 자동이체 설정일 -->
 	</select>
+
 
 	<!--3-1. 자동이체 계좌 출금 -->
 	<update id="autoDebitSend" parameterType="autoDebitVO">
 		update account
-		set balance = balance - #{ setMoney }
+		set
+		balance = balance - #{ setMoney }
 		where acc_no = #{ accNo }
 	</update>
-	
-	<!-- 3-2. 자동이체 상대계좌 입금 -->
 
+
+	<!-- 3-2. 자동이체 상대계좌 입금 -->
 	<update id="autoDebitReceive" parameterType="autoDebitVO">
 		update account
-		set balance = balance + #{ setMoney }
+		set
+		balance = balance + #{ setMoney }
 		where acc_no = #{ oppAccNo }
 	</update>
-	
-	
-	<!-- 4. 거래내역 로그 남기기 -->
-	
-	
-	<!-- 5. 자동이체 테이블 last_run_date -->
- 	<update id="lastRunDate" parameterType="autoDebitVO">
+
+
+	<!-- 4. 자동이체 테이블 last_run_date -->
+	<update id="lastRunDate" parameterType="autoDebitVO">
 		update autodebit
-		set last_run_date = sysdate
+		set
+		last_run_date = sysdate
 		where autodebit_code = #{ autodebitCode }
-	</update> 
+	</update>
 
 	
+	<!-- 자동이체 - 거래내역 로그(출금 거래내역)-->
+	<insert id="sendAutoTrans" parameterType="autoDebitVO">
+		insert into transaction(acc_no, trans_code, memo, withdraw, balance, opp_acc_no, summary)
+		values( #{ accNo }, seq_trans_code.nextval,  #{ category }, #{ setMoney }, 
+		(select balance from account where acc_no = #{ accNo }), #{ oppAccNo }, '자동출금'  )		
+	</insert>
+
+
+	<!-- 자동이체 - 거래내역 로그(입금 거래내역) -->
+	<insert id="receiveAutoTrans" parameterType="autoDebitVO">
+		insert into transaction(acc_no, trans_code, memo, deposit, balance, opp_acc_no, summary)
+		values( #{ oppAccNo }, seq_trans_code.nextval,  #{ category }, #{ setMoney }, 
+		(select balance from account where acc_no = #{ oppAccNo }), #{ accNo }, '자동입금' )
+	</insert>
 	
 	
-	
+
 </mapper>
 
 

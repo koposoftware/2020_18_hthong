@@ -122,7 +122,7 @@
 					<div class="card card-widget">
 						<div class="card-body">
 							<h2 class="text-muted" id="chartTitle">홍길동 고객님 이번주 사용 가능한
-								생활비는 100,000원입니다.</h2>
+								생활비는 ${ weeklyBudget }원입니다.</h2>
 							<div class="mt-4"></div>
 						</div>
 					</div>
@@ -168,7 +168,7 @@
 									<tbody>
 										<tr>
 											<th>1</th>
-											<td>자동이체 설정값</td>
+											<td>${ weeklyBudget } 원</td>
 											<td>${ onepickInfo.livingCost }원</td>
 											<td style="text-align: right; width: 25%;">
 												<div class="progress" style="height: 10px;">
@@ -183,7 +183,7 @@
 										</tr>
 										<tr>
 											<th>2</th>
-											<td>자동이체 설정값</td>
+											<td>${ weeklyBudget } 원</td>
 											<td>${ onepickInfo.livingCost }원</td>
 											<td>
 												<div class="progress" style="height: 10px">
@@ -198,7 +198,7 @@
 										</tr>
 										<tr>
 											<th>3</th>
-											<td>자동이체 설정값</td>
+											<td>${ weeklyBudget } 원</td>
 											<td>${ onepickInfo.livingCost }원</td>
 											<td>
 												<div class="progress" style="height: 10px">
@@ -213,7 +213,7 @@
 										</tr>
 										<tr>
 											<th>4</th>
-											<td>자동이체 설정값</td>
+											<td>${ weeklyBudget } 원</td>
 											<td>${ onepickInfo.livingCost }원</td>
 											<td>
 												<div class="progress" style="height: 10px">

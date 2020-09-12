@@ -4,16 +4,58 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="account.dao.AccountDAO">
 
+	<!-- 전체계좌 조회 -->
 	<select id="inquiryAcc" parameterType="memberVO"
 		resultType="accountVO">
-		select id, bank_code as bankCode, acc_no as accNo, balance, acc_type as
+		select id, acc_no as accNo, balance, acc_type as
 		accType, acc_name as accName, nickname, to_char(reg_date, 'yyyy-mm-dd') as regDate
 		from
 		account
 		where id = #{id}
 	</select>
+	
+	
+	<!-- 통장전환용 통장 조회 -->
+	<select id="inquiryChkAcc" parameterType="memberVO"
+		resultType="accountVO">
+		select id, acc_no as accNo, balance, acc_type as
+		accType, acc_name as accName, nickname, to_char(reg_date, 'yyyy-mm-dd') as regDate
+		from
+		account
+		where id = #{id} and acc_name != '하나원픽통장'
+	</select>
+	
+	<select id="inquiryOneAcc" parameterType="accountVO" resultType="accountVO">
+		select acc_no as accNo, balance, acc_type as accType, acc_name as accName
+		, to_char(reg_date, 'yyyy-mm-dd') as regDate, holder
+		from account
+		where acc_no = #{accNo}
+	</select>
+	
+	
+	<!-- 통장전환(계좌이름 변경) -->
+	<update id="changeAccInfo" parameterType="accountVO">
+		update account
+		set
+		acc_name = #{ accName }
+		where acc_no = #{ accNo }
+	</update>
+	
+	
+	<!-- 계좌비밀번호 확인 -->
+	<select id="checkPwd" parameterType="accountVO" resultType="int">
+		select count(*) 
+		from account
+		where acc_no = #{ accNo } and acc_pwd = #{ accPwd }
+	</select>
+
+
+
 
 </mapper>
+
+
+
 
 
 

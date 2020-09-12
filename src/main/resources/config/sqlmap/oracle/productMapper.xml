@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product.dao.ProductDAO">
+
+	<resultMap type="productVO" id="productMap">
+		<result column="acc_no" property="accNo" />
+		<result column="base_v_acc_no" property="baseAccNo" />
+		<result column="living_v_acc_no" property="livingAccNo" />
+		<result column="extra_v_acc_no" property="extraAccNo" />
+		<result column="base_budget" property="baseBudget" />
+		<result column="living_budget" property="livingBudget" />
+		<result column="extra_budget" property="extraBudget" />
+		<result column="bank_name" property="bankName" />
+		<result column="reg_date" property="regDate" />
+		<result column="send_money" property="sendMoney" />
+		<result column="total_budget" property="totalBudget" />
+		<result column="money_to_living" property="moneyToLiving" />
+		<result column="money_to_extra" property="moneyToExtra" />
+		<result column="date_to_living" property="dateToLiving" />
+		<result column="date_to_extra" property="dateToExtra" />
+		<result column="autodebit_code" property="autodebitCode" />
+		<result column="acc_name" property="accName" />
+				
+		<result column="base_money" property="baseMoney" />
+		<result column="living_cost" property="livingCost" />
+		<result column="extra_money" property="extraMoney" />
+	</resultMap>
+	
+	<resultMap type="budgetVO" id="budgetMap">
+		<result column="acc_no" property="accNo" />
+		<result column="name" property="budgetName" />
+		<result column="set_date" property="setDate" />
+		<result column="data_full" property="dataFull" />
+		<result column="budget_no" property="budgetNo" />
+	</resultMap>
+	
+
+	<!-- 원픽통장 조회  -->
+	<select id="onepickInfo" parameterType="memberVO" resultMap="productMap">
+		select a.acc_no, acc_name, bank_name ,balance, to_char(reg_date, 'yyyy-MM-dd') as reg_date, base_v_acc_no, living_v_acc_no, extra_v_acc_no 
+					, total_budget, base_money, living_cost, extra_money
+		from account a
+		join onepick_account b
+		on a.acc_no = b.acc_no
+		where id = #{ id } and acc_name = '하나원픽통장'
+	</select>
+	
+		
+	<!-- 원픽 총예산 수정 -->
+	<update id="updateTotalBudget" parameterType="productVO">
+		update onepick_account
+		set total_budget = #{ totalBudget }
+		where acc_no = #{ accNo }
+	</update>
+	
+	
+	<!-- 원픽 예산 등록  -->
+	<insert id="insertBudget" parameterType="budgetVO" >
+		insert into onepick_budget(budget_no, acc_no, category, name, budget, set_date)
+		values( seq_onepick_budget.nextval, #{accNo}, #{category}, #{budgetName}, #{budget}, #{setDate})
+	</insert>
+	
+	
+	<!-- 원픽 예산 삭제 -->
+	<delete id="deleteBudget" parameterType="budgetVO">
+		delete onepick_budget
+		where budget_no = #{ budgetNo }
+	</delete>
+	
+	
+	
+	<!-- 원픽통장으로 전환  -->
+	<insert id="convertAcc" parameterType="productVO" >
+		insert into onepick_account(acc_no, base_v_acc_no, living_v_acc_no, extra_v_acc_no, base_money)
+		values( #{accNo}, v_acc_no_seq.nextval, v_acc_no_seq.nextval + 1, v_acc_no_seq.nextval + 2, (select balance from account where acc_no = #{ accNo }) )
+	</insert>
+	
+	
+	<!-- 원픽통장 내 금액이동(출금) -->
+	<update id="sendMoney" parameterType="productVO" >
+		update onepick_account
+		set ${ columnParam } = ${ columnParam } - #{ money }
+		where acc_no = #{ accNo }
+	</update>
+	
+	
+	<!-- 원픽통장 내 금액이동(입금) -->
+	<update id="receiveMoney" parameterType="productVO" >
+		update onepick_account
+		set ${ columnParam } = ${ columnParam } + #{ money }
+		where acc_no = #{ accNo }
+	</update>
+	
+	
+	<!-- 원픽 거래내역 -->
+	<insert id="sendTrans" parameterType="onepickVO" >
+		insert into onepick_transaction(trans_code, acc_no, sender, receiver, send_money, memo  )
+		values( seq_onepick_trans_code.nextval, #{ accNo }, #{ sender }, #{ receiver }, #{ money }, #{ memo } )
+	</insert>
+	
+	
+	<!-- 원픽 예산설정 목록 조회 -->
+	<select id="budgetList" parameterType="productVO" resultMap="budgetMap">
+		select acc_no, category, name, budget, set_date, data_full, budget_no
+		from onepick_budget
+		where acc_no = #{ accNo }
+	</select>
+
+
+	<!-- 원픽 자동 금액이동 조회 -->
+	<select id="autoInfo" parameterType="productVO" resultMap="productMap">
+		select autodebit_code, acc_no, money_to_living, money_to_extra, date_to_living, date_to_extra
+		from onepick_autodebit
+		where acc_no = #{ accNo }
+	</select>
+	
+	
+	<!-- 원픽 자동 금액이동 설정 -->
+	<insert id="insertAutoSend" parameterType="productVO" >
+		insert into onepick_autodebit(autodebit_code, acc_no, money_to_living, money_to_extra, date_to_living, date_to_extra)
+		values( seq_onepick_auto_code.nextval, #{ accNo }, #{ moneyToLiving }, #{ moneyToExtra }, #{ dateToLiving }, #{ dateToExtra } )
+	</insert>
+	
+	
+	<!-- 원픽 자동 금액이동 수정 -->
+	<update id="updateAutoSend" parameterType="productVO" >
+		update onepick_autodebit
+		set 
+		money_to_living = #{ moneyToLiving },
+		money_to_extra = #{ moneyToExtra },
+		date_to_living = #{ dateToLiving },
+		date_to_extra = #{ dateToExtra }
+		where acc_no = #{ accNo }
+	</update>
+	
+	
+	<!-- 원픽 주간 지출내역 조회 -->
+	<select id="weeklySpend" parameterType="memberVO" resultMap="productMap">
+		select sum(withdraw) 
+		from transaction 
+		where trans_date 
+		between (select trunc(sysdate,'mm') from dual) - #{ calDate }
+		and (select next_day((trunc(sysdate,'month')-1),'일') from dual);
+	</select>
+	
+	
+	
+	
+</mapper>

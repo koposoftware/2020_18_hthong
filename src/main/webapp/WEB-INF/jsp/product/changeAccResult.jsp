@@ -122,7 +122,7 @@
 											<div class="btn-wrap">
 												<input type="button" class="btn btn-outline-info"
 													value="통장 확인하기"
-													onclick="location.href='<%=request.getContextPath()%>/product/productIntro.jsp'">
+													onclick="location.href='<%=request.getContextPath()%>/product/onepick/info'">
 											</div>
 										</div>
 									</form>

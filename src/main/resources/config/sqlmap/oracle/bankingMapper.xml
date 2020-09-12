@@ -6,7 +6,6 @@
 
 	<resultMap type="transactionVO" id="transactionMap">
 		<result column="trans_date" property="transDate" />
-		<result column="trans_class" property="transClass" />
 		<result column="opp_acc_no" property="oppAccNo" />
 		<result column="acc_no" property="accNo" />
 	</resultMap>
@@ -24,65 +23,62 @@
 		<result column="autodebit_code" property="autodebitCode" />
 	</resultMap>
 	
-
-	<select id="checkAccNo" parameterType="bankingVO"
-		resultType="bankingVO">
-		select balance
+	<!-- 계좌 조회 -->
+	<select id="checkAccNo" parameterType="bankingVO" resultType="int">
+		select count(*)
 		from account
-		where acc_pwd = #{ accPwd } and
-		acc_no = #{ withdrawAccNo }
+		where acc_no = #{ accNo } and acc_pwd = #{ accPwd }
 	</select>
 
+	<!-- 이체(출금계좌) -->
 	<update id="withdraw" parameterType="bankingVO">
-		update account
-		set balance =
-		balance - #{ money }
-		where acc_pwd = #{ accPwd } and acc_no = #{
-		withdrawAccNo }
+		update account 
+		set balance = balance - #{ money }
+		where acc_no = #{ accNo }
 	</update>
 
+	<!-- 이체(입금계좌) -->
 	<update id="deposit" parameterType="bankingVO">
 		update account
-		set balance =
-		balance + #{ money }
-		where acc_no = #{ depositAccNo }
+		set balance = balance + #{ money }
+		where acc_no = #{ oppAccNo }
 	</update>
 
-	<select id="transHistory" resultMap="transactionMap"
-		parameterType="TransactionVO">
-		select acc_no, trans_date, trans_class, memo, withdraw,
+	<!-- 거래내역 조회 -->
+	<select id="transHistory" resultMap="transactionMap" parameterType="TransactionVO">
+		select acc_no, trans_date, summary, memo, withdraw,
 		deposit, balance, opp_acc_no
 		from transaction
 		where acc_no = #{ accNo }
 		and trans_date between #{ startDate } and #{ endDate }
+		order by trans_date desc
 	</select>
 
 
+	<!-- 거래내역 합계 -->
 	<select id="transSum" resultMap="transactionMap"
 		parameterType="TransactionVO">
 		select sum(withdraw) as withSum, sum(deposit) as depoSum
 		from transaction
 		where acc_no = #{ accNo }
 	</select>
+	
 
-
-	<select id="autodebitList" resultMap="autoDebitMap"
-		parameterType="autoDebitVO">
-		select acc_no, category, set_money, start_date, cycle,
-		status
-		from autodebit
-		where acc_no = #{ accNo }
-	</select>
-
-
-
-	<insert id="autodebitReg" parameterType="autoDebitVO">
-		insert into
-		autodebit(autodebit_code, acc_no, category, set_money, start_date, opp_acc_no, cycle, set_date )
-		values( autodebit_code_seq.nextval, #{ accNo }, #{category}, #{setMoney},
-				#{startDate}, #{oppAccNo}, #{cycle}, #{setDate} )
+	<!-- 거래내역 로그(출금 거래내역) -->
+	<insert id="sendTransaction" parameterType="bankingVO">
+		insert into transaction(acc_no, trans_code, summary, memo, withdraw, balance, opp_acc_no)
+		values( #{ accNo }, seq_trans_code.nextval, #{ summary }, #{ memo }, #{ money }, 
+		(select balance from account where acc_no = #{ accNo }), #{ oppAccNo } )		
 	</insert>
 
+
+	<!-- 거래내역 로그(입금 거래내역) -->
+	<insert id="receiveTransaction" parameterType="bankingVO">
+		insert into transaction(acc_no, trans_code, summary, memo, deposit, balance, opp_acc_no)
+		values( #{ oppAccNo }, seq_trans_code.nextval, #{ summary }, #{ memo }, #{ money }, 
+		(select balance from account where acc_no = #{ oppAccNo }), #{ accNo } )
+	</insert>
+	
 </mapper>
 
 
