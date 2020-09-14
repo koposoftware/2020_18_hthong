@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.ac.kopo.account.vo.AccountVO;
 import kr.ac.kopo.member.vo.MemberVO;
+import kr.ac.kopo.product.vo.AnalysisVO;
 import kr.ac.kopo.product.vo.BudgetVO;
 import kr.ac.kopo.product.vo.OnepickVO;
 import kr.ac.kopo.product.vo.ProductVO;
@@ -13,6 +14,20 @@ public interface ProductDAO {
 	// 원픽통장 현황 조회
 	public ProductVO onepickInfo(MemberVO member);
 	
+	// 원픽 대시보드_예산
+	public AnalysisVO dashboardInfo(ProductVO productVO);
+	
+	// 원픽 대시보드_지출
+	public AnalysisVO dashSpending(ProductVO productVO);
+	
+	// 원픽 대시보드_비교분석_나이대
+	public AnalysisVO analyAge(ProductVO productVO);
+	
+	// 원픽 대시보드_비교분석_예산규모
+	public AnalysisVO analySeg(ProductVO productVO);
+	
+	
+	/////////////////////////////////////////////////////////////////////
 	// 통장전환
 	public void convertAcc(AccountVO accountVO);
 	
@@ -45,6 +60,7 @@ public interface ProductDAO {
 	
 	// 원픽 예산 삭제
 	public void deleteBudget(BudgetVO budgetVO);
+	
 	
 	
 	

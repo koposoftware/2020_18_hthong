@@ -20,6 +20,7 @@
 <link href="/resources/css/style-dash.css" rel="stylesheet">
 <title>원픽통장</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://kit.fontawesome.com/48c3a06538.js"></script>
 <style>
 .content-body {
 	margin-left: 0px;
@@ -121,9 +122,8 @@
 				<div class="col-lg col-md-6">
 					<div class="card card-widget">
 						<div class="card-body">
-							<h2 class="text-muted" id="chartTitle">홍길동 고객님 이번주 사용 가능한
-								생활비는 ${ weeklyBudget }원입니다.</h2>
-							<div class="mt-4"></div>
+							<h2 class="text-muted" id="chartTitle" style="text-align: center;">홍길동 고객님 하루 권장 
+								생활비는 ${ dashboardInfo.dailyBudget }원입니다.</h2>
 						</div>
 					</div>
 				</div>
@@ -153,86 +153,38 @@
 				<div class="col-lg-8 col-md-6">
 					<div class="card card-widget card-size">
 						<div class="card-body">
-							<h5 class="text-muted">주간 생활비 지출 현황</h5>
-							<br>
-							<div class="table-responsive">
-								<table class="table header-border table-hover verticle-middle">
-									<thead>
-										<tr>
-											<th scope="col" style="width: 6%">주차</th>
-											<th scope="col" style="width: 10%">예산 금액</th>
-											<th scope="col" style="width: 10%">지출 금액</th>
-											<th colspan="2" scope="col" style="text-align: center;">지출/예산</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th>1</th>
-											<td>${ weeklyBudget } 원</td>
-											<td>${ onepickInfo.livingCost }원</td>
-											<td style="text-align: right; width: 25%;">
-												<div class="progress" style="height: 10px;">
-													<div class="progress-bar gradient-1" style="width: 90%;"
-														role="progressbar">
-														<span class="sr-only">70% Complete</span>
-													</div>
-												</div>
-											</td>
-											<td style="text-align: center; width: 8%;"><span
-												class="label gradient-1 btn-rounded">70%</span></td>
-										</tr>
-										<tr>
-											<th>2</th>
-											<td>${ weeklyBudget } 원</td>
-											<td>${ onepickInfo.livingCost }원</td>
-											<td>
-												<div class="progress" style="height: 10px">
-													<div class="progress-bar gradient-2" style="width: 70%;"
-														role="progressbar">
-														<span class="sr-only">70% Complete</span>
-													</div>
-												</div>
-											</td>
-											<td style="text-align: center;"><span
-												class="label btn-rounded gradient-2">70%</span></td>
-										</tr>
-										<tr>
-											<th>3</th>
-											<td>${ weeklyBudget } 원</td>
-											<td>${ onepickInfo.livingCost }원</td>
-											<td>
-												<div class="progress" style="height: 10px">
-													<div class="progress-bar gradient-3" style="width: 70%;"
-														role="progressbar">
-														<span class="sr-only">70% Complete</span>
-													</div>
-												</div>
-											</td>
-											<td style="text-align: center;"><span
-												class="label btn-rounded gradient-3">70%</span></td>
-										</tr>
-										<tr>
-											<th>4</th>
-											<td>${ weeklyBudget } 원</td>
-											<td>${ onepickInfo.livingCost }원</td>
-											<td>
-												<div class="progress" style="height: 10px">
-													<div class="progress-bar gradient-8" style="width: 70%;"
-														role="progressbar">
-														<span class="sr-only">70% Complete</span>
-													</div>
-												</div>
-											</td>
-											<td style="text-align: center;"><span
-												class="label gradient-8 btn-rounded">70%</span></td>
-										</tr>
-									</tbody>
-								</table>
+							<h5 class="text-muted">생활비 예산</h5>
+							<div style="text-align: right;">
+								<h5 class="mt-4"><strong style="font-size: 30px; color: blue"> ${ dashSpending.remainingBudget } 원</strong>  남음</h5><br>
+								<span>예산을 맞추려면 하루에 <strong style="font-size: 15px; text-decoration: underline; ">${ dashSpending.recDailyBudget }원</strong>을 써야해요</span><br>
+								<span>이 추세로 쓴다면 이번달 지출 <strong style="font-size: 15px; text-decoration: underline;"> ${ dashSpending.estimSum }원</strong>  예상</span><br><br>
+								<div class="bootstrap-badge">
+									<span class="badge badge-secondary" onclick="location.href='${ pageContext.request.contextPath }/product/onepick/budget'" style="cursor: pointer;">
+										예산 설정  &nbsp;<i class="fas fa-arrow-right"></i>
+									</span> 
+                                </div>
+								
+							</div>
+							<div class="mt-4">
+								<div class="progress mb-3" style="height: 30px">
+									<div class="progress-bar gradient-1" id="progress-bar" style="width: ${ dashSpending.spendingRatio }%; height: 100%; text-align: right; "
+										role="progressbar" >
+										<span class="label" style="font-size: 20px;">${ dashSpending.spendingRatio }%</span>
+									</div>
+								</div>
+								<h6>
+									<span style="font-size: 18px;">예산</span>
+									<span style="font-size: 18px; padding-left: 10px;">${ dashboardInfo.moneyToLiving }원</span>
+								</h6>
+								<h6>
+									<span style="font-size: 18px;">지출</span>
+									<span style="font-size: 18px; padding-left: 10px;">  ${ dashSpending.monthSpending }원</span>
+								</h6>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- *******#/주간 예산 목표 달성률******* -->
+			<!-- *******#/주간 예산 목표 달성률******* -->
 			</div>
 			<!-- ******content-row******* -->
 			<div class="row">
@@ -247,97 +199,6 @@
 				</div>
 			</div>
 			<!-- ******#/content-row******* -->
-
-
-
-			<!-- ******content-row******* -->
-			<div class="row">
-				<!-- ******이번달 예산 상세보기******* -->
-				<div class="col-lg">
-					<div class="card card-widget">
-						<div class="card-body">
-							<h5 class="text-muted" id="chartTitle">이번달 예산구성 상세(매달 1일 기준)</h5>
-							<p>자동이체 테이블 그대로 가져와서 보여줄 경우, 중간에 자동이체 수정하면 예산 전체가 이상해짐. / 예산
-								테이블 따로 만들고 매월 1일에 갱신되도록 설정</p>
-							<div class="mt-4">
-								<div class="table-responsive">
-									<table
-										class="table table-striped table-bordered zero-configuration">
-										<thead>
-											<tr>
-												<th style="width: 10%;">구분</th>
-												<th style="width: 10%;">상세구분</th>
-												<th style="width: 30%;">금액</th>
-												<th style="width: 30%;">비중</th>
-												<th style="width: 10%;">예산설정</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>기본금</td>
-												<td>집세</td>
-												<td>700,230</td>
-												<td>40%</td>
-												<td><button>설정</button></td>
-											</tr>
-											<tr>
-												<td>기본금</td>
-												<td>대출금</td>
-												<td>135,000</td>
-												<td>10%</td>
-												<td><button>설정</button></td>
-											</tr>
-											<tr>
-												<td>기본금</td>
-												<td>공과금</td>
-												<td>132,000</td>
-												<td>12%</td>
-												<td><button>설정</button></td>
-											</tr>
-											<tr>
-												<td>기본금</td>
-												<td>교통비</td>
-												<td>70,000</td>
-												<td>8%</td>
-												<td><button>설정</button></td>
-											</tr>
-											<tr>
-												<td>기본금</td>
-												<td>통신비</td>
-												<td>120,000</td>
-												<td>14%</td>
-												<td><button>설정</button></td>
-											</tr>
-											<tr>
-												<td>생활비</td>
-												<td>생활비</td>
-												<td>900,000</td>
-												<td>50%</td>
-												<td><button>설정</button></td>
-											</tr>
-										</tbody>
-										<tfoot>
-											<tr>
-												<th>구분</th>
-												<th>상세구분</th>
-												<th>금액</th>
-												<th>비중</th>
-												<th></th>
-											</tr>
-										</tfoot>
-									</table>
-								</div>
-							</div>
-						</div>
-						<!-- #/ container -->
-					</div>
-				</div>
-				<!-- ******#/이번달 예산 상세보기******* -->
-			</div>
-			<!-- ******#/content-row******* -->
-
-
-
 		</div>
 		<!-- ****** #/content-body******* -->
 	</div>
@@ -361,19 +222,18 @@
 <script>
 			//Animating a Donut with Svg.animate
 			var a = ${onepickInfo.baseMoney};
-			var b = ${onepickInfo.baseMoney};
-			var c = ${onepickInfo.livingCost};
-			var d = ${onepickInfo.extraMoney};
+			var b = ${onepickInfo.livingCost};
+			var c = ${onepickInfo.extraMoney};
 
 			var chart = new Chartist.Pie('#animating-donut', {
-				series : [ a, b, c, d ],
-				labels : [ '기본금', '고정비', '생활비', '예비금' ]
+				series : [ a, b, c ],
+				labels : [ '기본금', '생활비', '예비금' ]
 			}, {
 				donut : true,
 				showLabel : true,
 				plugins : [ Chartist.plugins.tooltip() ]
 			});
-
+			
 			chart.on('draw', function(data) {
 				if (data.type === 'slice') {
 					// Get the total path length in order to use for dash array animation

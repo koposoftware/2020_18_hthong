@@ -20,6 +20,7 @@
 <link href="/resources/css/style-dash.css" rel="stylesheet">
 <title>원픽통장</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://kit.fontawesome.com/48c3a06538.js"></script>
 <style>
 .content-body {
 	margin-left: 0px;
@@ -122,7 +123,7 @@
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">또래 예산 구성</h4>
-							<p>하나은행 20대 손님들의 예산비율 평균입니다.</p>
+							<p style="font-size: 13px; color: grey;">하나은행 ${analyAge.age}대 손님들의 예산비율 평균</p>
 							<div id="multi-line-chart" class="ct-chart ct-golden-section"></div>
 						</div>
 					</div>
@@ -133,8 +134,8 @@
 				<div class="col-lg-6">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">자산 규모에 따른 예산 구성</h4>
-							<p>유사한 금융 자산규모를 가진 하나은행 손님들의 예산 구성입니다.</p>
+							<h4 class="card-title">예산 규모에 따른 구성</h4>
+							<p style="font-size: 13px; color: grey;">유사한 예산규모를 가진 하나은행 손님들의 항목별 예산</p>
 							<div id="multi-line-chart2" class="ct-chart ct-golden-section"></div>
 						</div>
 					</div>
@@ -149,11 +150,19 @@
 			<div class="row">
 				<!-- *******나 vs 또래****** -->
 				<div class="col-lg-6">
-					<div class="card card-widget">
+					<div class="card card-widget" style="min-hight: 180px;">
 						<div class="card-body">
-							<h2 class="text-muted" id="chartTitle">나 vs 또래</h2>
-							<h5 class="text-muted" id="chartTitle">하나은행 20대 손님 대비 예비금 비율이 14% 더 높습니다.</h5>
-							<div class="mt-4"></div>
+							<h4 class="text-muted" id="chartTitle">나 vs 또래</h4>
+							<c:if test="${ flag == 'case1' }">
+								<p id="chartTitle" style="color: black; font-size: 20px; margin-bottom: 0px;">하나은행 <strong>[ ${analyAge.age}대 ]</strong> 손님 대비 </p>
+								<p id="chartTitle" style="color: black; font-size: 20px;">예비금 비율이 <Strong> [ ${ extraRatio }% ] </Strong> 더 높습니다.</p>
+							</c:if>
+							<c:if test="${ flag == 'case2' }">
+								<p id="chartTitle" style="color: black; font-size: 20px; margin-bottom: 0px;">하나은행 <strong>[ ${analyAge.age}대 ]</strong> 손님 대비 </p>
+								<p id="chartTitle" style="color: black; font-size: 20px;">예비금 비율이 <Strong> [ ${ extraRatio }% ] </Strong> 낮습니다.</p>
+							</c:if>
+							<div class="bootstrap-badge">
+                            </div>
 						</div>
 					</div>
 				</div>
@@ -161,11 +170,23 @@
 				
 				<!-- *******고객별 상품추천****** -->
 				<div class="col-lg-6">
-					<div class="card card-widget">
+					<div class="card card-widget" style="min-hight: 180px;">
 						<div class="card-body">
-							<h2 class="text-muted" id="chartTitle">추천 상품</h2>
-							<h5 class="text-muted" id="chartTitle">180만원의 여유금으로 [하나원큐적금]에 투자하는 것은 어떻까요?</h5>
-							<div class="mt-4"></div>
+							<c:if test="${ flag == 'case1' }">
+								<h4 class="text-muted" id="chartTitle">추천 상품</h4>
+								<p id="chartTitle" style="color: black; font-size: 20px; margin-bottom: 0px;">남는 예비금으로 <strong>[ 하나원큐적금 ]</strong>에 </p>
+								<p id="chartTitle" style="color: black; font-size: 20px;">투자하는 것은 어떨까요?</p>
+							</c:if>
+							<c:if test="${ flag == 'case2' }">
+								<h4 class="text-muted" id="chartTitle">전문가 조언</h4>
+								<p id="chartTitle" style="color: black; font-size: 15px; margin-bottom: 0px;">불확실한 미래를 위해 </p>
+								<p id="chartTitle" style="color: black; font-size: 15px;">예비금 비율을 늘리는 것은 어떨까요?</p>
+								<div class="bootstrap-badge">
+									<span class="badge badge-secondary" onclick="location.href='${ pageContext.request.contextPath }/product/onepick/budget'" style="cursor: pointer;">
+										예산 설정  &nbsp;<i class="fas fa-arrow-right"></i>
+									</span> 
+                                </div>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -211,11 +232,19 @@
 	src="/resources/css/vendor/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 
 <script>
+	let my_buget_a = ${onepickInfo.baseMoney};
+	let my_buget_b = ${autoInfo.moneyToLiving};
+	let my_buget_c = ${autoInfo.moneyToExtra};
+	let avg_buget_a = ${analyAge.fixedCostAge};
+	let avg_buget_b = ${analyAge.livingCostAge};
+	let avg_buget_c = ${analyAge.extraMoneyAge};
+
+	
 	//Multi-line labels1
 	new Chartist.Bar('#multi-line-chart', {
-		labels : [ '고정비', '투자금', '생활비', '예비금' ],
-		series : [ [ 60000, 40000, 80000, 70000 ],
-				[ 40000, 30000, 70000, 65000 ] ]
+		labels : [ '고정비', '생활비', '예비금' ],
+		series : [ [ my_buget_a, my_buget_b, my_buget_c ],
+				[ avg_buget_a, avg_buget_b, avg_buget_c ] ]
 	}, {
 		seriesBarDistance : 10,
 		axisX : {
@@ -224,18 +253,25 @@
 		axisY : {
 			offset : 80,
 			labelInterpolationFnc : function(value) {
-				return value + ' CHF'
+				return value + ''
 			},
 			scaleMinSpace : 15
 		},
 		plugins : [ Chartist.plugins.tooltip() ]
 	});
 	
+	let my_compare_a = ${onepickInfo.baseMoney};  
+	let my_compare_b = ${autoInfo.moneyToLiving}; 
+	let my_compare_c = ${autoInfo.moneyToExtra}; 
+	let avg_compare_a = ${analySeg.fixedCostSeg}; 
+	let avg_compare_b = ${analySeg.livingCostSeg};
+	let avg_compare_c = ${analySeg.extraMoneySeg};
+	
 	//Multi-line labels2
 	new Chartist.Bar('#multi-line-chart2', {
-		labels : [ '고정비', '투자금', '생활비', '예비금' ],
-		series : [ [ 60000, 40000, 80000, 70000 ],
-				[ 40000, 30000, 70000, 65000 ] ]
+		labels : [ '고정비', '생활비', '예비금' ],
+		series : [ [ my_compare_a, my_compare_b, my_compare_c ],
+				[ avg_compare_a, avg_compare_b, avg_compare_c ] ]
 	}, {
 		seriesBarDistance : 10,
 		axisX : {
@@ -244,7 +280,7 @@
 		axisY : {
 			offset : 80,
 			labelInterpolationFnc : function(value) {
-				return value + ' CHF'
+				return value + ''
 			},
 			scaleMinSpace : 15
 		},
@@ -310,7 +346,8 @@ $chart.on('mousemove', function(event) {
 <script src="/resources/js/gleek.js"></script>
 <script src="/resources/js/styleSwitcher.js"></script>
 
-<script src="/resources/plugins/chartist/js/chartist.min.js"></script>
+<script src="/resources/plugins/chartist/js/chartist.min.js"><
+/script>
 <script
 	src="/resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 </html>

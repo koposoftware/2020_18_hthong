@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.ac.kopo.account.vo.AccountVO;
 import kr.ac.kopo.member.vo.MemberVO;
+import kr.ac.kopo.product.vo.AnalysisVO;
 import kr.ac.kopo.product.vo.BudgetVO;
 import kr.ac.kopo.product.vo.OnepickVO;
 import kr.ac.kopo.product.vo.ProductVO;
@@ -27,6 +28,74 @@ public class ProductDAOImpl implements ProductDAO {
 		
 		return onepickInfo;
 	}
+	
+
+	/**
+	 * 원픽 대시보드_예산
+	 */
+	@Override
+	public AnalysisVO dashboardInfo(ProductVO productVO) {
+		System.out.println("pro dao 체크1 : " + productVO.getAccNo());
+		AnalysisVO dashboardInfo = sqlSession.selectOne("product.dao.ProductDAO.dashboardInfo", productVO);
+		
+		System.out.println("pro dao 체크2 : " + dashboardInfo.toString());
+		return dashboardInfo;
+	}
+
+
+	/**
+	 * 원픽 대시보드_지출
+	 */
+	@Override
+	public AnalysisVO dashSpending(ProductVO productVO) {
+		System.out.println("pro dao 체크3 : " + productVO.getAccNo());
+		AnalysisVO dashSpending = sqlSession.selectOne("product.dao.ProductDAO.dashSpending", productVO);
+		
+		System.out.println("pro dao 체크4 : " + dashSpending.toString());
+		return dashSpending;
+	}
+	
+	
+	/**
+	 * 원픽통장 대시보드 비교분석_나이대
+	 */
+	@Override
+	public AnalysisVO analyAge(ProductVO productVO) {
+		System.out.println("체크 비교분석_나이대1 : " + productVO.toString());
+		AnalysisVO analyAge = sqlSession.selectOne("product.dao.ProductDAO.analyAge", productVO);
+		System.out.println("체크 비교분석_나이대2 : " + analyAge.toString());
+		return analyAge;
+	}
+
+
+	/**
+	 * 원픽통장 대시보드 비교분석_소득
+	 */
+	@Override
+	public AnalysisVO analySeg(ProductVO productVO) {
+		int budgetFlag = Integer.parseInt(productVO.getTotalBudget());
+		if( budgetFlag <= 2640000) {
+			productVO.setTotalBudget("1890000");
+		} else if(budgetFlag > 2640000 && budgetFlag <= 3860000) {
+			productVO.setTotalBudget("3190000");
+		} else if(budgetFlag > 3860001 && budgetFlag <= 5100000) {
+			productVO.setTotalBudget("4530000");
+		} else if(budgetFlag > 5100001 && budgetFlag <= 7840000) {
+			productVO.setTotalBudget("5660000");
+		} else if(budgetFlag > 7840001) {
+			productVO.setTotalBudget("9020000");
+		}
+		
+		
+		System.out.println("체크 비교분석_소득1 : " + productVO.toString());
+		AnalysisVO analySeg = sqlSession.selectOne("product.dao.ProductDAO.analySeg", productVO);
+		System.out.println("체크 비교분석_소득2 : " + analySeg.toString());
+		return analySeg;
+	}
+	
+	
+	///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 
 	/**
 	 * 통장전환 
@@ -37,10 +106,7 @@ public class ProductDAOImpl implements ProductDAO {
 		sqlSession.insert("product.dao.ProductDAO.convertAcc", accountVO);
 	}
 
-	
-	///////////////////////////
-	////////////////////////////////////////////////////////////////////////////
-	
+
 	/**
 	 * 금액이동(출금)
 	 */

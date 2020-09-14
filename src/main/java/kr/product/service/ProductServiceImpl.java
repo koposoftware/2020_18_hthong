@@ -9,6 +9,7 @@ import kr.ac.kopo.account.dao.AccountDAO;
 import kr.ac.kopo.account.vo.AccountVO;
 import kr.ac.kopo.member.vo.MemberVO;
 import kr.ac.kopo.product.dao.ProductDAO;
+import kr.ac.kopo.product.vo.AnalysisVO;
 import kr.ac.kopo.product.vo.BudgetVO;
 import kr.ac.kopo.product.vo.OnepickVO;
 import kr.ac.kopo.product.vo.ProductVO;
@@ -32,6 +33,68 @@ public class ProductServiceImpl implements ProductService{
 		return onepickInfo;
 	}
 	
+	/**
+	 * 원픽 대시보드 조회_예산
+	 */
+	@Override
+	public AnalysisVO dashboardInfo(ProductVO onepickVO) throws Exception {
+		System.out.println("pro ser 체크1 : " + onepickVO.getAccNo());
+		
+		AnalysisVO dashboardInfo = productDAO.dashboardInfo(onepickVO);
+		
+		System.out.println("pro ser 체크2 : " + dashboardInfo.toString());
+		
+		return dashboardInfo;
+	}
+	
+	
+	/**
+	 * 원픽 대시보드 조회_지출
+	 */
+	@Override
+	public AnalysisVO dashSpending(ProductVO onepickVO) throws Exception {
+		System.out.println("pro ser 체크3 : " + onepickVO.getAccNo());
+		AnalysisVO dashSpending = productDAO.dashSpending(onepickVO);
+		System.out.println("pro ser 체크4 : " + dashSpending.toString());
+		
+		return dashSpending;
+	}
+
+	
+	////////////////////////////////////////////////////////////////////////\
+	////////////////////////////////////////////////////////////////////////\
+
+	/**
+	 * 원픽 대시보드_비교분석_나이대
+	 */
+	@Override
+	public AnalysisVO analyAge(ProductVO productVO) throws Exception {
+		System.out.println("pro ser 체크1 analyAge : " + productVO.getAccNo());
+		AnalysisVO analyAge = productDAO.analyAge(productVO);
+		System.out.println("pro ser 체크2 analyAge : " + analyAge.toString());
+		
+		return analyAge;
+	}
+
+	
+	/**
+	 * 원픽 대시보드_비교분석_예산규모
+	 */
+	@Override
+	public AnalysisVO analySeg(ProductVO productVO) throws Exception {
+		System.out.println("pro ser 체크3 analySeg : " + productVO.getAccNo());
+		AnalysisVO analySeg = productDAO.analySeg(productVO);
+		System.out.println("pro ser 체크4 analySeg : " + analySeg.toString());
+		
+		return analySeg;
+	}	
+	
+	////////////////////////////////////////////////////////////////////////\
+	////////////////////////////////////////////////////////////////////////\
+	
+	
+	
+	
 
 	/**
 	 * 통장전환
@@ -54,6 +117,7 @@ public class ProductServiceImpl implements ProductService{
 		return accountVO;
 	}
 
+	
 	/**
 	 * 원픽통장 금액이동
 	 */

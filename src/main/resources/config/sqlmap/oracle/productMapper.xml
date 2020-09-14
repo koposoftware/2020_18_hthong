@@ -36,6 +36,20 @@
 		<result column="budget_no" property="budgetNo" />
 	</resultMap>
 	
+	<resultMap type="analysisVO" id="analysisMap">
+		<result column="acc_no" property="accNo" />
+		<result column="money_to_living" property="moneyToLiving" />
+		<result column="money_to_extra" property="moneyToExtra" />
+		<result column="daily_budget" property="dailyBudget" />
+		<result column="num_of_day" property="numOfDay" />
+		<result column="num_of_day_left" property="numOfDayLeft" />
+		<result column="num_of_day_last" property="numOfDayLast" />
+		<result column="month_spending" property="monthSpending" />
+		<result column="remaining_budget" property="remainingBudget" />
+		<result column="rec_daily_budget" property="recDailyBudget" />
+		<result column="estim_sum" property="estimSum" />
+	</resultMap>
+	
 
 	<!-- 원픽통장 조회  -->
 	<select id="onepickInfo" parameterType="memberVO" resultMap="productMap">
@@ -47,6 +61,55 @@
 		where id = #{ id } and acc_name = '하나원픽통장'
 	</select>
 	
+	<!-- 원픽통장 대시보드 데이터_예산 -->
+	<select id="dashboardInfo" parameterType="productVO" resultMap="analysisMap">
+		select 
+		acc_no, money_to_living, money_to_extra
+		, (select cast(to_char(last_day(sysdate), 'dd') as int) from dual) as num_of_day
+		, (last_day(sysdate) - sysdate) as num_of_day_left
+		, trunc(sysdate - trunc(sysdate,'mm') + 1) as num_of_day_last
+		, round(money_to_living / (select cast(to_char(last_day(sysdate), 'dd') as int) from dual)) as daily_budget
+		from onepick_autodebit
+		where acc_no = #{ accNo }
+	</select>
+	
+	
+	<!--원픽통장 대시보드 데이터_지출_1 -->	
+	<select id="dashSpending" parameterType="productVO" resultMap="analysisMap">
+	select acc_no
+		,(select sum(withdraw) from transaction 
+		   where trans_date between trunc(sysdate,'mm') and sysdate) as month_spending
+		,money_to_living - (select sum(withdraw) from transaction 
+			where trans_date between trunc(sysdate,'mm') and sysdate) as remaining_budget
+		,trunc((money_to_living - (select sum(withdraw) from transaction 
+			where trans_date between trunc(sysdate,'mm') and sysdate)) / (last_day(sysdate) - sysdate)) as rec_daily_budget
+		,trunc((select sum(withdraw) from transaction where trans_date between trunc(sysdate,'mm') and sysdate) 
+			/ trunc(sysdate - trunc(sysdate,'mm') + 1) * (select cast(to_char(last_day(sysdate), 'dd') as int) from dual) ) as estim_sum
+	from onepick_autodebit
+	where acc_no = #{ accNo }
+	</select>	
+	
+<!-- ============================================ -->
+	<!-- 원픽통장 대시보드 분석_예산구성_나이대 -->
+	<select id="analyAge" parameterType="productVO" resultType="analysisVO">
+		select age, income as incomeAge, fixed_cost as fixedCostAge, investment as investmentAge
+		, living_cost as livingCostAge, extra_money as extraMoneyAge
+		from analysis_age
+		where age = #{ age }
+	</select>
+	
+	<!-- 원픽통장 대시보드 분석_예산구성_소득 -->
+	<select id="analySeg" parameterType="productVO" resultType="analysisVO">
+		select segment, income as incomeSeg, fixed_cost as fixedCostSeg, investment as investmentSeg
+			, living_cost as livingCostSeg, extra_money as extraMoneySeg
+		from analysis_segment
+		where income = #{ totalBudget } and rownum = 1
+	</select>
+	
+	
+<!-- ============================================ -->
+		
+		
 		
 	<!-- 원픽 총예산 수정 -->
 	<update id="updateTotalBudget" parameterType="productVO">
@@ -135,7 +198,7 @@
 		where acc_no = #{ accNo }
 	</update>
 	
-	
+	<!-- ================================== -->
 	<!-- 원픽 주간 지출내역 조회 -->
 	<select id="weeklySpend" parameterType="memberVO" resultMap="productMap">
 		select sum(withdraw) 

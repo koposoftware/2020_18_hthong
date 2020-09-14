@@ -166,7 +166,7 @@
 								<br>
 								<div class="row">
 									<div class="col">
-										<div class="card gradient-1">
+										<div class="card gradient-4">
 											<div class="card-body">
 												<h3 class="card-title text-white">기본비</h3>
 												<div class="d-inline-block">
@@ -183,8 +183,13 @@
 										</div>
 									</div>
 
+									
+								</div>
+
+
+								<div class="row">
 									<div class="col">
-										<div class="card gradient-4">
+										<div class="card gradient-2">
 											<div class="card-body">
 												<h3 class="card-title text-white">생활비</h3>
 												<div class="d-inline-block">
@@ -200,10 +205,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
-
-
-								<div class="row">
+								
 									<div class="col">
 										<div class="card gradient-3">
 											<div class="card-body">
@@ -221,13 +223,13 @@
 											</div>
 										</div>
 									</div>
-									<div class="col">
+									<!-- <div class="col">
 										<div class="card gradient-2">
 											<div class="card-body">
 												<h3 class="card-title text-white">투자예정금-삭제예정</h3>
 												<div class="d-inline-block">
 													<h2 class="text-white">원</h2>
-													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
+													<p class="text-white mb-0">Jan - March 2019</p>
 												</div>
 												<div>
 													<button value="투자금"
@@ -237,7 +239,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> -->
 								</div>
 
 								<!-- ============================================ -->
@@ -261,7 +263,7 @@
 															<select id="sender" name="sender" class="custom-select"
 																aria-label="Example select with button addon">
 																<option selected>통장선택</option>
-																<option class="type" value="base_budget">기본금</option>
+																<option class="type" value="base_money">기본금</option>
 																<option class="type" value="living_cost">생활비</option>
 																<option class="type" value="extra_money">예비금</option>
 															</select>
@@ -273,9 +275,9 @@
 															<select id="receiver" name="receiver" class="custom-select"
 																aria-label="Example select with button addon">
 																<option selected>통장선택</option>
-																<option class="type" value="base_budget">기본금</option>
-																<option class="type" value="living_budget">생활비</option>
-																<option class="type" value="extra_budget">예비금</option>
+																<option class="type" value="base_money">기본금</option>
+																<option class="type" value="living_cost">생활비</option>
+																<option class="type" value="extra_money">예비금</option>
 															</select>
 														</div>
 													</td>
