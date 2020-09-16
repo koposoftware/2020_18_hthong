@@ -14,6 +14,9 @@
 	rel="stylesheet">
 <link href="/resources/css/dashboard.css" rel="stylesheet">
 <link href="/resources/css/table.css" rel="stylesheet">
+<link href="/resources/css/style-dash.css" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <title>원픽통장</title>
 <style>
@@ -25,36 +28,6 @@
 	width: 120px;
 }
 </style>
-<script>
-	$(document).ready(function() {
-		$('button, i').on('click', function() {
-			let type = $(this).val();
-			console.log(type);
-
-			let con = document.getElementById('money_info');
-			let head = document.getElementById('onepick-type');
-			let text = document.getElementById('onepick-type').innerHTML
-
-			if (con.style.display == 'none') {
-				if (type != text) {
-					con.style.display = 'block';
-					con.style.backgroundColor = 'grey';
-					document.getElementById('onepick-type').innerHTML = type;
-				} else {
-					con.style.display = 'none';
-				}
-			} else {
-				if (type != text) {
-					con.style.display = 'block';
-					con.style.backgroundColor = 'red';
-					document.getElementById('onepick-type').innerHTML = type;
-				} else {
-					con.style.display = 'none';
-				}
-			}
-		});
-	});
-</script>
 <!-- <script>
 	$(document).ready(function() {
 		$('button, i').on('click', function() {
@@ -82,16 +55,14 @@
 
 	<!-- Page Content -->
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-8"></div>
-			<div class="col-sm-4">
+		<div class="row page-titles mx-0">
+			<div class="col p-md-0">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#">예금 </a></li>
-					<li class="breadcrumb-item active">원픽통장 조회</li>
+					<li class="breadcrumb-item active">나의 원픽통장</li>
+					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/product/onepick/info">하나원픽통장</a></li>
 				</ol>
 			</div>
 		</div>
-
 		<!-- Content Row -->
 		<div class="row">
 			<!-- Sidebar Column -->
@@ -108,7 +79,7 @@
 							<div class="container-fluid">
 								<%-- textarea 영역 : 글내용 --%>
 								<div class="textarea_wrap">
-									<h5 class="textarea-head">원픽통장 상세조회</h5>
+									<h5 class="textarea-head">나의 원픽통장</h5>
 									<hr class="textarea-head-hr">
 									<br>
 
@@ -174,7 +145,8 @@
 													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
 												</div>
 												<div>
-													<button value="기본비"
+													<button type="button" value="기본비" data-toggle="modal"
+														data-target="#exampleModal" data-whatever="@mdo"
 														class="float-right display-14 opacity-5 font-1">
 														금액이동 <i class="fas fa-arrow-right"></i>
 													</button>
@@ -183,7 +155,7 @@
 										</div>
 									</div>
 
-									
+
 								</div>
 
 
@@ -197,7 +169,8 @@
 													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
 												</div>
 												<div>
-													<button value="생활비"
+													<button type="button" value="생활비" data-toggle="modal"
+														data-target="#exampleModal" data-whatever="@mdo"
 														class="float-right display-14 opacity-5 font-1">
 														금액이동 <i class="fas fa-arrow-right"></i>
 													</button>
@@ -205,7 +178,7 @@
 											</div>
 										</div>
 									</div>
-								
+
 									<div class="col">
 										<div class="card gradient-3">
 											<div class="card-body">
@@ -215,7 +188,8 @@
 													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
 												</div>
 												<div>
-													<button value="예비금"
+													<button type="button" value="생활비" data-toggle="modal"
+														data-target="#exampleModal" data-whatever="@mdo"
 														class="float-right display-14 opacity-5 font-1">
 														금액이동 <i class="fas fa-arrow-right"></i>
 													</button>
@@ -242,81 +216,94 @@
 									</div> -->
 								</div>
 
-								<!-- ============================================ -->
-								<div id="money_info" style="display: none;">
-									<form
-										action="${ pageContext.request.contextPath }/product/onepick/transfer"
-										method="POST" name="form">
-										<input type="hidden" name="accNo" value="${ onepickInfo.accNo }">
-										<table class="table table-bordered" id="content-table">
-											<thead class="thead-light">
-												<tr>
-													<th scope="col" colspan="4" id="onepick-type"
-														style="text-align: center;"></th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<th scope="row" style="text-align: center;">통장선택</th>
-													<td>
-														<div class="input-group">
-															<select id="sender" name="sender" class="custom-select"
-																aria-label="Example select with button addon">
-																<option selected>통장선택</option>
-																<option class="type" value="base_money">기본금</option>
-																<option class="type" value="living_cost">생활비</option>
-																<option class="type" value="extra_money">예비금</option>
-															</select>
-														</div>
-													</td>
-													<td><i class="fas fa-arrow-right"></i></td>
-													<td>
-														<div class="input-group">
-															<select id="receiver" name="receiver" class="custom-select"
-																aria-label="Example select with button addon">
-																<option selected>통장선택</option>
-																<option class="type" value="base_money">기본금</option>
-																<option class="type" value="living_cost">생활비</option>
-																<option class="type" value="extra_money">예비금</option>
-															</select>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<th scope="row" style="text-align: center;">금액</th>
-													<td colspan="3">
-														<div class="input-group mb-3">
-															<input type="text" name="money" class="form-control"
-																placeholder="금액">
-														</div>
-													</td>
-												</tr>
+								<!-- 금액이동 모달창 -->
+								<div class="bootstrap-modal">
+									<div class="modal fade" id="exampleModal" tabindex="-1"
+										role="dialog" aria-labelledby="exampleModalLabel"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">원픽 금액이동</h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<form
+													action="${ pageContext.request.contextPath }/product/onepick/transfer"
+													method="POST" name="form">
+													<div class="modal-body">
+														<input type="hidden" name="accNo"
+															value="${ onepickInfo.accNo }">
+														<table class="table table-bordered" id="content-table">
+															<thead class="thead-light">
+																<tr>
+																	<th scope="col" colspan="4" id="onepick-type"
+																		style="text-align: center;"></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<th scope="row" style="text-align: center;">통장선택</th>
+																	<td>
+																		<div class="input-group">
+																			<select id="sender" name="sender"
+																				class="custom-select"
+																				aria-label="Example select with button addon">
+																				<option selected>통장선택</option>
+																				<option class="type" value="base_money">기본금</option>
+																				<option class="type" value="living_cost">생활비</option>
+																				<option class="type" value="extra_money">예비금</option>
+																			</select>
+																		</div>
+																	</td>
+																	<td><i class="fas fa-arrow-right"></i></td>
+																	<td>
+																		<div class="input-group">
+																			<select id="receiver" name="receiver"
+																				class="custom-select"
+																				aria-label="Example select with button addon">
+																				<option selected>통장선택</option>
+																				<option class="type" value="base_money">기본금</option>
+																				<option class="type" value="living_cost">생활비</option>
+																				<option class="type" value="extra_money">예비금</option>
+																			</select>
+																		</div>
+																	</td>
+																</tr>
+																<tr>
+																	<th scope="row" style="text-align: center;">금액</th>
+																	<td colspan="3">
+																		<div class="input-group mb-3">
+																			<input type="text" name="money" class="form-control"
+																				placeholder="금액">
+																		</div>
+																	</td>
+																</tr>
 
-												<tr>
-													<th scope="row" style="text-align: center;">메모</th>
-													<td colspan="3">
-														<div class="input-group mb-3">
-															<input type="text" name="memo" class="form-control"
-																placeholder="메모">
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="4">
-														<%-- button 영역 : 버튼 --%>
-														<div class="btn-area">
-															<div class="btn-wrap">
-																<input type="submit" value="금액이동"
-																	class="btn btn-outline-info">
-															</div>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</form>
+																<tr>
+																	<th scope="row" style="text-align: center;">메모</th>
+																	<td colspan="3">
+																		<div class="input-group mb-3">
+																			<input type="text" name="memo" class="form-control"
+																				placeholder="메모">
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Close</button>
+														<button type="submit" class="class = btn btn-outline-info">금액이동</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
 								</div>
-								<!-- ======================================================== -->
 							</div>
 						</div>
 					</div>
@@ -335,7 +322,11 @@
 	<footer>
 		<jsp:include page="/WEB-INF/include/footer.jsp" />
 	</footer>
-
+	<script src="/resources/plugins/common/common.min.js"></script>
+	<script src="/resources/js/custom.min.js"></script>
+	<script src="/resources/js/settings.js"></script>
+	<script src="/resources/js/gleek.js"></script>
+	<script src="/resources/js/styleSwitcher.js"></script>
 </body>
 
 </html>

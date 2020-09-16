@@ -10,6 +10,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="/resources/css/table.css" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>통장전환</title>
 <script>
 	function doCheck() {

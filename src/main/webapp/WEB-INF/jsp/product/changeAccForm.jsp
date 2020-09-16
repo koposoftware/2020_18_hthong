@@ -8,6 +8,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="/resources/css/table.css" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>통장전환</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>

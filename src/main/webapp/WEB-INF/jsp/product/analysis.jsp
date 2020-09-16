@@ -11,7 +11,7 @@
 <meta name="author" content="">
 <link href="/resources/css/table.css" rel="stylesheet">
 <link rel="icon" type="image/png" sizes="16x16"
-	href="/resources/images/favicon.png">
+	href="/resources/images/fav.png">
 <!-- Custom Stylesheet -->
 <link rel="stylesheet"
 	href="/resources/plugins/chartist/css/chartist.min.css">
@@ -94,24 +94,35 @@
 		<div class="row page-titles mx-0">
 			<div class="col p-md-0">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">원픽
-							대시보드</a></li>
+					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/product/onepick/analysis">또래분석</a></li>
 					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">Home</a></li>
+						href="${pageContext.request.contextPath }/product/onepick/info">하나원픽통장</a></li>
 				</ol>
 			</div>
 		</div>
 
 		<!-- banner****************************** -->
 		<div class="carousel-item active"
-			style="background-image: url('${pageContext.request.contextPath }/resources/images/dashboard_main.jpg'); height: 400px; margin-bottom: 50px;">
+			style="background-image: url('${pageContext.request.contextPath }/resources/images/dashboard_main.jpg'); height: 200px; margin-bottom: 50px;">
 			<div id="banner-title">
 				<h2 class="animated fadeInDown">Financial Report</h2>
 			</div>
 		</div>
 
 		<!-- tab****************************** -->
-		<jsp:include page="/WEB-INF/include/budgetTab.jsp" />
+		<div class="sub-nav">
+			<ul class="nav nav-tabs">
+				<li class="nav-item"><a class="nav-link"
+					href="${pageContext.request.contextPath }/product/onepick/budget">나의
+						예산</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="${pageContext.request.contextPath }/product/onepick/dashboard">개인분석</a>
+				</li>
+				<li class="nav-item"><a class="nav-link active"
+					href="${pageContext.request.contextPath }/product/onepick/analysis">또래분석</a>
+				</li>
+			</ul>
+		</div>
 
 		<!-- ******content-body******* -->
 		<div class="content-body">
