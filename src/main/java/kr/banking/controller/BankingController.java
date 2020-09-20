@@ -1,5 +1,6 @@
 package kr.ac.kopo.banking.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,16 +64,43 @@ public class BankingController {
 	}
 
 	/**
+	 * 계좌이체 - validation
+	 * 
+	 * @param bankingVO
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/banking/transfer/check")
+	public String chkTransfer(BankingVO bankingVO) throws Exception{
+		
+		System.out.println("accNo val " + bankingVO.getAccNo() );
+		
+		String chkCode = bankingService.chkTransfer(bankingVO); // 계좌체크 
+		return chkCode;
+	}
+	
+	/**
 	 * 계좌이체
 	 * 
 	 * @param bankingVO
 	 * @return
 	 */
+	@ResponseBody
 	@PostMapping("/banking/transfer")
-	public String transfer(BankingVO bankingVO) throws Exception{
-		int check = bankingService.transfer(bankingVO); // 이체 메소드
+	public ModelAndView transfer(BankingVO bankingVO) throws Exception{
+		ModelAndView mav = new ModelAndView();
 		
-		return "/banking/transaction";
+		String chkCode = bankingService.transfer(bankingVO); // 이체 메소드
+		System.out.println("이체 결과 : " + bankingVO.toString());
+		
+		
+		mav.addObject("transferResult", chkCode);
+		
+		mav = new ModelAndView("/banking/transferResult");
+		
+		System.out.println("con : " + chkCode);
+		
+		return mav;
 	}
 
 	/**
@@ -80,30 +109,14 @@ public class BankingController {
 	 * @param transactionVO
 	 * @return
 	 */
+	@ResponseBody
 	@PostMapping("/banking/transaction")
-	public ModelAndView transaction(TransactionVO transactionVO) {
+	public List<TransactionVO> transaction(TransactionVO transactionVO) {
 
-		System.out.println("trans check : " + transactionVO.toString());
+		List<TransactionVO> transaction = new ArrayList<>();
+		transaction = bankingService.transaction(transactionVO); // 거래내역 조회 메소드
 
-		ModelAndView mav = new ModelAndView();
-		List<TransactionVO> transaction = bankingService.transaction(transactionVO); // 거래내역 조회 메소드
-
-		System.out.println("lastCheck in con : " + transaction);
-
-		mav = new ModelAndView("/banking/transactionResult");
-		mav.addObject("transaction", transaction);
-
-		return mav;
-	}
-
-	/**
-	 * ajax 적용 전 거래내역조회
-	 * 
-	 * @return
-	 */
-	@GetMapping("/banking/transactionResult")
-	public String transactionResult() {
-		return "/banking/transactionResult";
+		return transaction;
 	}
 
 

@@ -9,7 +9,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="/Final-Project/resources/css/table.css" rel="stylesheet">
+<link href="/resources/css/table.css" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>계좌이체결과</title>
 </head>
 <body>

@@ -75,28 +75,19 @@
 		var chkNameId = checkedAccNo + '-n' // 계좌명
 		var chkBalanceId = checkedAccNo + '-b' // 잔액
 
-		console.log("계좌명" + chkNameId)
-		console.log("잔액" + chkBalanceId)
-
 		// 체크된 계좌의 value값
 		var chkName = $('#' + chkNameId).val();
 		var chkBalance = $('#' + chkBalanceId).val();
-
-		console.log(chkName)
-		console.log(chkBalance)
 
 		// input value 값 변경(계좌명)
 		$('#accName').val(chkName);
 
 		var test = $(':input[id="accName"]').val();
-		console.log(test)
 
 		// input vlaue 값 변경(잔액)
 		$('#balance').val(chkBalance);
 
 		var test = $(':input[id="balance"]').val();
-
-		console.log(test)
 
 	});
 </script>

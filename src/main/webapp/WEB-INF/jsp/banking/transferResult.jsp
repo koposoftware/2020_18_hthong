@@ -9,8 +9,10 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="/Final-Project/resources/css/table.css" rel="stylesheet">
-<title>계좌이체 < 이체</title>
+<link href="/resources/css/table.css" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
+<title>계좌이체</title>
 </head>
 <body>
 	<!-- Navigation -->
@@ -65,18 +67,15 @@
 											</thead>
 											<tbody>
 												<tr id="tr-con">
-													<td style="text-align: center;">하나원픽 통장${ accList.accType }</td>
-													<td style="text-align: center">하나은행${ accList.bankNM }</td>
-													<td rowspan="3" style="text-align: center; vertical-align: middle;">홍길동${ accList.accNO }
-														<input type="hidden" name="accNO"
-														value="1548-515${ accList.accNO }">
-													</td>
-													<td rowspan="3" style="text-align: center; vertical-align: middle;">500,000${ accList.balance }</td>
-													<td rowspan="3" style="text-align: center; vertical-align: middle;">완료${ accList.regDate }</td>
+													<td style="text-align: center;">${ transferResult }</td>
+													<td style="text-align: center">${ transferResult.bankNM }</td>
+													<td rowspan="3" style="text-align: center; vertical-align: middle;">${ transferResult.accNo }</td>
+													<td rowspan="3" style="text-align: center; vertical-align: middle;">${ transferResult.balance }</td>
+													<td rowspan="3" style="text-align: center; vertical-align: middle;">${ transferResult.regDate }</td>
 												</tr>
 												<tr>
 												<td rowspan="2"
-														style="text-align: center; vertical-align: middle;">1584-8548123123</td>
+														style="text-align: center; vertical-align: middle;"></td>
 												<td rowspan="2"
 														style="text-align: center; vertical-align: middle;">48120651651163165</td>
 												</tr>
@@ -110,5 +109,4 @@
 	</footer>
 
 </body>
-
 </html>

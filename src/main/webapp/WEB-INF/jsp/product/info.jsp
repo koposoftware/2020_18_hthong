@@ -28,27 +28,29 @@
 	width: 120px;
 }
 </style>
-<!-- <script>
-	$(document).ready(function() {
-		$('button, i').on('click', function() {
-			let type = $(this).val();
-			console.log(type);
-			$.ajax({
-				url : '${ pageContext.request.contextPath }/product/onepick/transfer',
-				type : 'post',
-				data : {
-					type : type
-				},
-				success : function(data) {
-					
-				},
-				error : function() {
-					console.log("실패");
-				}
-			})
-		})
-	});
-</script> -->
+<script>
+$(document).ready(function() {
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	let balance = ${ onepickInfo.balance };
+	let baseMoney = ${ onepickInfo.baseMoney };
+	let livingCost = ${ onepickInfo.livingCost };
+	let extraMoney = ${ onepickInfo.extraMoney };
+
+	balance = numberWithCommas(balance);
+	baseMoney = numberWithCommas(baseMoney);
+	livingCost = numberWithCommas(livingCost);
+	extraMoney = numberWithCommas(extraMoney);
+	
+	// text 변경
+	$('.balance').text(balance);
+	$('.text-white.base').text(baseMoney);
+	$('.text-white.living').text(livingCost);
+	$('.text-white.extra').text(extraMoney);
+})
+</script>
 <body>
 	<!-- Navigation -->
 	<jsp:include page="/WEB-INF/include/navbar.jsp" />
@@ -100,7 +102,9 @@
 												<td style="text-align: center">${ onepickInfo.regDate }
 
 												</td>
-												<td style="text-align: center">${ onepickInfo.balance }</td>
+												<td style="text-align: center">
+													<strong class="balance" style="font-size: 17px;"></strong>
+												</td>
 											</tr>
 
 											<tr id="tr-btn">
@@ -113,12 +117,7 @@
 													class="btn btn-outline-dark" value="이체">
 											</tr>
 										</tbody>
-										<!-- <tr class="table-highlight">
-												<td style="text-align: center;" id="sum-title">자유입출금 합계</td>
-												<td colspan="4" id="sum-money" style="text-align: right">500,000</td>
-											</tr> -->
 									</table>
-
 								</div>
 							</div>
 						</div>
@@ -141,7 +140,7 @@
 											<div class="card-body">
 												<h3 class="card-title text-white">기본비</h3>
 												<div class="d-inline-block">
-													<h2 class="text-white">${ onepickInfo.baseMoney }원</h2>
+													<h2 class="text-white base"></h2>
 													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
 												</div>
 												<div>
@@ -154,10 +153,7 @@
 											</div>
 										</div>
 									</div>
-
-
 								</div>
-
 
 								<div class="row">
 									<div class="col">
@@ -165,7 +161,7 @@
 											<div class="card-body">
 												<h3 class="card-title text-white">생활비</h3>
 												<div class="d-inline-block">
-													<h2 class="text-white">${ onepickInfo.livingCost }원</h2>
+													<h2 class="text-white living"></h2>
 													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
 												</div>
 												<div>
@@ -184,7 +180,7 @@
 											<div class="card-body">
 												<h3 class="card-title text-white">예비금</h3>
 												<div class="d-inline-block">
-													<h2 class="text-white">${ onepickInfo.extraMoney }원</h2>
+													<h2 class="text-white extra"></h2>
 													<!-- <p class="text-white mb-0">Jan - March 2019</p> -->
 												</div>
 												<div>

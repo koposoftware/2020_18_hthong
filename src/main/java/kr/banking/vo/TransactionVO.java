@@ -9,6 +9,7 @@ public class TransactionVO {
 	private String searchType; // 조회내용(입+출, 입, 출)
 	private String searchCnt; // 조회건수
 	private String searchSort; // order by 최근거래, 과거거래
+	private int countTransList; // 거래내역 페이징
 
 	// 올때
 	private String transDate; // 거래일시
@@ -153,13 +154,21 @@ public class TransactionVO {
 		this.depoSum = depoSum;
 	}
 
+	public int getCountTransList() {
+		return countTransList;
+	}
+
+	public void setCountTransList(int countTransList) {
+		this.countTransList = countTransList;
+	}
+
 	@Override
 	public String toString() {
 		return "TransactionVO [id=" + id + ", accNo=" + accNo + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", searchType=" + searchType + ", searchCnt=" + searchCnt + ", searchSort=" + searchSort
-				+ ", transDate=" + transDate + ", summary=" + summary + ", memo=" + memo + ", withdraw=" + withdraw
-				+ ", deposit=" + deposit + ", balance=" + balance + ", oppAccNo=" + oppAccNo + ", withSum=" + withSum
-				+ ", depoSum=" + depoSum + "]";
+				+ ", countTransList=" + countTransList + ", transDate=" + transDate + ", summary=" + summary + ", memo="
+				+ memo + ", withdraw=" + withdraw + ", deposit=" + deposit + ", balance=" + balance + ", oppAccNo="
+				+ oppAccNo + ", withSum=" + withSum + ", depoSum=" + depoSum + "]";
 	}
 
 }

@@ -10,6 +10,9 @@ public class BankingVO {
 	private String summary;
 	private String memo;
 
+	private String chkBalance;
+	private String bankName;
+
 	public BankingVO() {
 		super();
 	}
@@ -70,11 +73,27 @@ public class BankingVO {
 		this.memo = memo;
 	}
 
+	public String getChkBalance() {
+		return chkBalance;
+	}
+
+	public void setChkBalance(String chkBalance) {
+		this.chkBalance = chkBalance;
+	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
 	@Override
 	public String toString() {
 		return "BankingVO [id=" + id + ", accNo=" + accNo + ", accPwd=" + accPwd + ", money=" + money + ", oppAccNo="
-				+ oppAccNo + ", summary=" + summary + ", memo=" + memo + "]";
+				+ oppAccNo + ", summary=" + summary + ", memo=" + memo + ", chkBalance=" + chkBalance + ", bankName="
+				+ bankName + "]";
 	}
-
 
 }

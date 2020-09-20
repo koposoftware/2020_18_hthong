@@ -274,18 +274,11 @@ $(document).ready(function() {
 								
 								$('#append-area').append(str);
 							})
-							
-							
 						},
 						error : function() {
 							console.log("실패");
 						}
 					})
-					
-					
-					
-					
-					
 				},
 				error : function() {
 					console.log("실패");
@@ -306,7 +299,6 @@ $(document).ready(function() {
 				fixed_sum += Number($(this).val());
 				});
 			$('#fixed_sum').val(fixed_sum);
-			
 			
 			
 			// 고정지출 합계 변경(고정지출 추가시)
@@ -350,29 +342,46 @@ $(document).ready(function() {
 			
 			// 기본금 -> 생활비 금액 입력시
 			$('#lSetMoney').on('keyup' ,function(){
-				let sub = parseInt($('#lSetMoney').val());	
+				let sub1 = parseInt($('#lSetMoney').val());
+				let sub2 = parseInt($('#eSetMoney').val());	
+				
+				//NaN인 경우 0 세팅
+				if(isNaN(sub1)){
+					sub1 = 0;
+				}
+				if(isNaN(sub2)){
+					sub2 = 0;
+				}
+				
+				
+				let totalBudget = $('#totalBudget').val();
 				cal_result = parseInt(totalBudget - fixed_sum)
 				
-				cal_result = Number(cal_result - sub);
+				cal_result = Number(cal_result - sub1 - sub2);
 				
 				$('#cal_result').val(cal_result);
 			});
 			
 			// 기본금 -> 예비금 금액 입력시
 			$('#eSetMoney').on('keyup' ,function(){
-				let sub = parseInt($('#eSetMoney').val());	
+				let sub1 = parseInt($('#lSetMoney').val());
+				let sub2 = parseInt($('#eSetMoney').val());	
+				
+				//NaN인 경우 0 세팅
+				if(isNaN(sub1)){
+					sub1 = 0;
+				}
+				if(isNaN(sub2)){
+					sub2 = 0;
+				}
+				
+				let totalBudget = $('#totalBudget').val();
 				cal_result = parseInt(totalBudget - fixed_sum)
 				
-				cal_result = Number(cal_result - sub);
+				cal_result = Number(cal_result - sub1 - sub2);
 				
 				$('#cal_result').val(cal_result);
 			});
-			
-			
-			
-			
-			
-			/////////////////////////////////////////////////////////////////////
 			
 			
 			// 총 예산 변경
@@ -380,11 +389,6 @@ $(document).ready(function() {
 				totalBudget = $('#totalBudget').val();	// 한달 예산의 값
 				$('#cal_total').val(totalBudget);		// 총 예산의 값을 변경
 			});
-			
-			
-			
-			
-			
 
 	});
 </script>
@@ -489,8 +493,8 @@ $(document).ready(function() {
 												<th style="width: 10%;">구분</th>
 												<th style="width: 20%;">예산명</th>
 												<th style="width: 20%;">이체금액</th>
-												<th style="width: 20%;">이체일</th>
-												<th style="width: 20%;">체크</th>
+												<th style="width: 10%;">이체일</th>
+												<th style="width: 30%;">삭제</th>
 											</tr>
 										</thead>
 										<tbody id="append-area">
@@ -516,23 +520,30 @@ $(document).ready(function() {
 													<option value="투자금">투자금</option>
 													<option value="기타">기타</option>
 											</select></td>
-											<td><input type="text" name="budgetName"
-												class="input-area" id="add_budgetName">
+											<td style="text-align: center;">
+													<div class="form-group col-md-2" style="margin: 0;">
+														<input type="text" name="budgetName" class="form-control" id="add_budgetName" style="height: 10px; width: 10px;">
+	                                           		</div>
+	                                        </td>
+	                                        <td style="text-align: center;">
+													<div class="form-group col-md-2" style="margin: 0;">
+														<input type="text" name="budget" class="form-control" id="add_budget" style="height: 10px; width: 10px;">
+	                                           		</div>
+	                                        </td>
+											<td>
+												<div class="col-auto my-1"  >
+													<select class="form-control" name="setDate" id="add_setDate" 
+														aria-label="Example select with button addon">
+															<option value="없음" selected>없음</option>
+															<c:forEach begin="1" end="28" var="x">
+																<option>매달
+																	<c:out value="${x}" /> 일
+																</option>
+																<br>
+															</c:forEach>
+													</select>
+												</div>
 											</td>
-											<td><input type="text" name="budget"
-												class="input-area" id="add_budget">
-											</td>
-											<td><select name="setDate"
-												id="add_setDate"
-												aria-label="Example select with button addon">
-													<option value="없음" selected>없음</option>
-													<c:forEach begin="1" end="28" var="x">
-														<option>매달
-															<c:out value="${x}" /> 일
-														</option>
-														<br>
-													</c:forEach>
-											</select></td>
 											<td></td>
 										</tr>
 										<tr>
@@ -569,8 +580,7 @@ $(document).ready(function() {
 								자동으로 금액이동 설정이 가능합니다</p>
 							<div class="mt-4">
 								<div class="table-responsive">
-									<table
-										class="table table-striped table-bordered zero-configuration">
+									<table class="table table-bordered">
 										<thead>
 											<tr>
 												<th colspan="4"
@@ -583,60 +593,80 @@ $(document).ready(function() {
 												</th>
 											</tr>
 											<tr>
-												<th style="width: 30%;">금액이동</th>
-												<th style="width: 30%;">예산금액</th>
-												<th style="width: 20%;">이체일</th>
-												<th style="width: 20%;">버튼</th>
+												<th style="width: 30%; text-align: center;">금액이동</th>
+												<th style="width: 30%; text-align: center;">예산금액</th>
+												<th style="width: 20%; text-align: center;">이체일</th>
+												<th style="width: 20%; text-align: center;"></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td>기본금 <i class="fas fa-arrow-right"></i> 생활비
+												<td style="text-align: center; vertical-align: middle;">기본금&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>&nbsp;&nbsp;생활비
 												</td>
-												<td><input type="text" name="setMoney" id="lSetMoney"></td>		<!-- 여기 기본->생활 -->
-												<td><select name="setDate" class=""
-													id="lSetDate" aria-label="Example select with button addon">
-														<option selected>없음</option>
-														<c:forEach begin="1" end="28" var="x">
-															<option><c:out value="매달 ${x} 일" />
-															</option>
-															<br>
-														</c:forEach>
-												</select></td>
-												<td><button id="lCost-submit">설정</button></td>
+												<td style="text-align: center;">
+													<div class="col-auto my-1" style="margin: 0;">
+														<input type="text" name="setMoney" class="form-control" id="lSetMoney" style="height: 10px;">
+	                                           		</div>
+												</td>
+												
+												
+												<!-- 여기 기본->생활 -->
+												<td style="text-align: center;">
+												<div class="col-auto my-1">
+													<select name="setDate" class="custom-select mr-sm-2" id="eSetDate"
+														aria-label="Example select with button addon">
+															<option selected>없음</option>
+															<c:forEach begin="1" end="28" var="x">
+																<option><c:out value="매달 ${x} 일" /></option>
+																<br>
+															</c:forEach>
+													</select>
+												</div>
+												</td>
+												<td style="text-align: center; vertical-align: middle;">
+													<button class="label label-pill label-primary" id="eCost-submit" style="width: 70px; border: 0px; ">설정</button>
+												</td>
 											</tr>
 											<tr>
-												<td>기본금 <i class="fas fa-arrow-right"></i>예비금
+												<td style="text-align: center; vertical-align: middle;">기본금&nbsp;&nbsp;<i class="fas fa-arrow-right"></i>&nbsp;&nbsp;예비금
 												</td>
-												<td><input type="text" name="setMoney" id="eSetMoney"></td>		<!-- 여기 기본->예비 -->
-												<td><select name="setDate" class=""
-													id="eSetDate" aria-label="Example select with button addon">
-														<option selected>없음</option>
-														<c:forEach begin="1" end="28" var="x">
-															<option><c:out value="매달 ${x} 일" /></option>
-															<br>
-														</c:forEach>
-												</select></td>
-												<td><button id="eCost-submit">설정</button></td>
+												<td style="text-align: center;">
+													<div class="form-group col-md-2" style="margin: 0;">
+														<input type="text" name="setMoney" class="form-control" id="eSetMoney" style="height: 10px;">
+	                                           		</div>
+	                                           	</td>
+												<!-- 여기 기본 -> 예비 -->
+												<td style="text-align: center;">
+												<div class="col-auto my-1">
+													<select name="setDate" class="custom-select mr-sm-2" id="eSetDate"
+														aria-label="Example select with button addon">
+															<option selected>없음</option>
+															<c:forEach begin="1" end="28" var="x">
+																<option><c:out value="매달 ${x} 일" /></option>
+																<br>
+															</c:forEach>
+													</select>
+												</div>
+												</td>
+												<td style="text-align: center; vertical-align: middle;">
+												<button class="label label-pill label-primary" id="eCost-submit" style="width: 70px; border: 0px; ">설정</button></td>
 											</tr>
 										</tbody>
-										<tfoot>
-										</tfoot>
 									</table>
 								</div>
 							</div>
 						</div>
-						<div class="btn-area">
-							<div class="btn-wrap" id="cancle_btn">
-								<input type="submit" id="submit-btn"
-									class="btn btn-outline-info" value="초기화"
-									onclick="check('cancle')"> <input type="submit"
-									id="submit-btn2" class="btn btn-outline-info" value="완료"
-									onclick="check('modify')">
-							</div>
-						</div>
 					</div>
+					<br>
 
+					<!-- 	
+					<div class="btn-area">
+						<div class="btn-wrap" id="cancle_btn">
+							<input type="submit" id="submit-btn2" class="btn btn-outline-info" value="자동입금 설정"
+								onclick="check('modify')" style="width: ;">
+						</div>
+					</div> 
+					-->
 				</div>
 				<!-- *******#/주간 예산 목표 달성률******* -->
 			</div>

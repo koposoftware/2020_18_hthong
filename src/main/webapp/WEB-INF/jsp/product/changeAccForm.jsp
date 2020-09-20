@@ -37,7 +37,12 @@
 						// 0 : 비번 틀림
 						alert("패스워드가 틀렸습니다.");
 						return;
-					} else {
+					} 
+					else if(data == 2){
+						alert("원픽통장은 1개만 가입이 가능합니다.");
+						return;
+					}
+					else {
 						if(confirm("하나원픽 통장으로 전환하겠습니까?")){
 							$("#checkForm").submit();
 						}
