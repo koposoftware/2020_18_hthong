@@ -88,7 +88,6 @@
 
 				<!-- ======= login ======= -->
 				<div class="col-4" id="login-area">
-				<a href="${ pageContext.request.contextPath }/mailTest.jsp">mailTest</a>
 					<ul>
 						<c:choose>
 							<c:when test="${ empty loginVO }">

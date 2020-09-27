@@ -9,5 +9,16 @@
 		<typeAlias type="kr.ac.kopo.banking.vo.BankingVO" alias="bankingVO" />
 		<typeAlias type="kr.ac.kopo.banking.vo.TransactionVO" alias="transactionVO" />
 		<typeAlias type="kr.ac.kopo.autodebit.vo.AutoDebitVO" alias="autoDebitVO" />
+		
+		<typeAlias type="kr.ac.kopo.product.vo.ProductVO" alias="productVO" />
+		<typeAlias type="kr.ac.kopo.product.vo.BudgetVO" alias="budgetVO" />
+		<typeAlias type="kr.ac.kopo.product.vo.OnepickVO" alias="onepickVO" />
+		<typeAlias type="kr.ac.kopo.product.vo.AnalysisVO" alias="analysisVO" />
+		
+		<typeAlias type="kr.ac.kopo.paying.vo.PayingVO" alias="payingVO" />
+		
+		<typeAlias type="kr.ac.kopo.report.vo.ReportVO" alias="reportVO" />
+		<typeAlias type="kr.ac.kopo.report.vo.MailVO" alias="mailVO" />
+		<typeAlias type="kr.ac.kopo.report.vo.ReportTransVO" alias="reportTransVO" />
 	</typeAliases>
 </configuration>

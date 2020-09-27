@@ -8,6 +8,8 @@
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context   
     http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/tx
@@ -47,6 +49,8 @@
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
 			value="jdbc:oracle:thin:@localhost:1521:XE" />
+<!-- 		<property name="url"
+			value="jdbc:oracle:thin:@34.64.102.242:1521:XE" /> -->
 		<property name="username" value="system" />
 		<property name="password" value="1234" />
 	</bean>
@@ -108,24 +112,9 @@
 	</bean>
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />
+		
 
 	<!-- /////////////////////////// -->
-	<!-- 테스트용 쿼츠 잡 -->
-	<bean id="testJob"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-
-		<!-- 서비스 구현 객체의 빈 이름을 인자로 줍니다. -->
-		<property name="targetObject" ref="autoDebitExecute" /> 
-
-		<!-- 서비스 객체에서 주기적으로 실행될 메소드른 지정합니다. -->
-		<property name="targetMethod" value="autoDebitExecute" />
-
-		<!-- 동시 실행을 방지합니다. -->
-		<property name="concurrent" value="false" />
-	</bean>
-
-
-	<!-- 테스트용 트리거 -->
 	<!-- 시간 간격 설정 
 	0/1 * * * * ?		매 1초 간격
 	0 0/1 * * * ?		매 1분 간격
@@ -135,17 +124,27 @@
 	0 0 0 1 * ?			매월 1일 마다
 	0 0 0 1,10,20 * ?	매월 1일, 10일, 20일 마다
 	-->
-
+	
+	<!-- 자동이체 쿼츠 잡 -->
+	<bean id="testJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 서비스 구현 객체의 빈 이름을 인자로 줍니다. -->
+		<property name="targetObject" ref="autoDebitExecute" /> 
+		<!-- 서비스 객체에서 주기적으로 실행될 메소드른 지정합니다. -->
+		<property name="targetMethod" value="autoDebitExecute" />
+		<!-- 동시 실행을 방지합니다. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 일반 자동이체용 쿼츠 -->
 	<bean id="testJobTrigger"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="testJob" />
 		<!-- CronTrigger를 사용하여 2분 간격으로 실행되도록 지정했습니다. -->
-		<!-- <property name="cronExpression" value="0/5 * * * * ?" /> -->
-		<property name="cronExpression" value="0 0 0 1 * ?" />
-		
+		<!-- <property name="cronExpression" value="0/30 * * * * ?" /> -->
+		<property name="cronExpression" value="0 0 8 * * ?" />
 	</bean>
-
-
+	
 	<!-- 테스트용 스케줄러 -->
 	<bean id="testJobScheduler"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -157,7 +156,138 @@
 		</property>
 	</bean>
 
-	<!-- ////////////////////////////////////////////////////////////////////// -->
+	<!-- ================================================================================= -->
+	<!-- 자동이동 쿼츠 잡 -->
+	<bean id="onepickJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 서비스 구현 객체의 빈 이름을 인자로 줍니다. -->
+		<property name="targetObject" ref="scheduleExecute" /> 
+		<!-- 서비스 객체에서 주기적으로 실행될 메소드른 지정합니다. -->
+		<property name="targetMethod" value="scheduleExecute" />
+		<!-- 동시 실행을 방지합니다. -->
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 일반 자동이체용 쿼츠 -->
+	<bean id="testJobTrigger2"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="onepickJob" />
+		<property name="cronExpression" value="0 0 0 1 * ?" />
+	</bean>
+	
+	<!-- 테스트용 스케줄러 -->
+	<bean id="testJobScheduler2"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<!-- 앞에서 설정한 트리거를 등록합니다. 필요하면 여러개 만들어서 등록하면 됩니다. -->
+			<list>
+				<ref bean="testJobTrigger2" />
+			</list>
+		</property>
+	</bean>
 
+	<!-- ================================================================================= -->
+	<!-- 데일리 금융리포트 쿼츠 잡 -->
+	<!-- <bean id="dailyReport"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		서비스 구현 객체의 빈 이름을 인자로 줍니다.
+		<property name="targetObject" ref="dailyReportExecute" /> 
+		서비스 객체에서 주기적으로 실행될 메소드른 지정합니다.
+		<property name="targetMethod" value="dailyReportExecute" />
+		동시 실행을 방지합니다.
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	데일리 금융리포트용 쿼츠
+	<bean id="testJobTrigger3"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="dailyReport" />
+		<property name="cronExpression" value="0 0 8 * * ?" />
+	</bean>
+	
+	테스트용 스케줄러
+	<bean id="testJobScheduler3"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			앞에서 설정한 트리거를 등록합니다. 필요하면 여러개 만들어서 등록하면 됩니다.
+			<list>
+				<ref bean="testJobTrigger3" />
+			</list>
+		</property>
+	</bean> -->
+	
+	
+	<!-- ================================================================================= -->
+	<!-- 월간 금융리포트 쿼츠 잡 -->
+	<!-- <bean id="monthlyReport"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		서비스 구현 객체의 빈 이름을 인자로 줍니다.
+		<property name="targetObject" ref="monthlyReportExecute" /> 
+		서비스 객체에서 주기적으로 실행될 메소드른 지정합니다.
+		<property name="targetMethod" value="monthlyReportExecute" />
+		동시 실행을 방지합니다.
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	월간 금융리포트용 쿼츠
+	<bean id="testJobTrigger4"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="monthlyReport" />
+		<property name="cronExpression" value="0 0 0 1 * ?" />
+	</bean>
+
+	테스트용 스케줄러
+	<bean id="testJobScheduler4"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			앞에서 설정한 트리거를 등록합니다. 필요하면 여러개 만들어서 등록하면 됩니다.
+			<list>
+				<ref bean="testJobTrigger4" />
+			</list>
+		</property>
+	</bean> -->
+	
+<!-- 	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="hongtaek92@gmail.com" />
+		<property name="password" value="" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean> -->
+
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="465" />
+		<property name="username" value="mischief05" />
+		<property name="password" value="hohyta1132" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- this is a template message that we can pre-load with default state -->
+	<bean id="templateMessage"
+		class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="mischief05@naver.com" />
+		<property name="subject" value="Your order" />
+	</bean>
+
+	
+	
 
 </beans>

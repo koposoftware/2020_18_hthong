@@ -34,6 +34,7 @@
 		<result column="set_date" property="setDate" />
 		<result column="data_full" property="dataFull" />
 		<result column="budget_no" property="budgetNo" />
+		<result column="budget_sum" property="budgetSum" />
 	</resultMap>
 	
 	<resultMap type="analysisVO" id="analysisMap">
@@ -78,12 +79,12 @@
 	<select id="dashSpending" parameterType="productVO" resultMap="analysisMap">
 	select acc_no
 		,(select sum(withdraw) from transaction 
-		   where trans_date between trunc(sysdate,'mm') and sysdate) as month_spending
+		   where (trans_date between trunc(sysdate,'mm') and sysdate) and summary = '체크하나') as month_spending
 		,money_to_living - (select sum(withdraw) from transaction 
-			where trans_date between trunc(sysdate,'mm') and sysdate) as remaining_budget
+			where (trans_date between trunc(sysdate,'mm') and sysdate) and summary = '체크하나') as remaining_budget
 		,trunc((money_to_living - (select sum(withdraw) from transaction 
-			where trans_date between trunc(sysdate,'mm') and sysdate)) / (last_day(sysdate) - sysdate)) as rec_daily_budget
-		,trunc((select sum(withdraw) from transaction where trans_date between trunc(sysdate,'mm') and sysdate) 
+			where summary = '체크하나' and trans_date between trunc(sysdate,'mm') and sysdate)) / (last_day(sysdate) - sysdate + 1)) as rec_daily_budget
+		,trunc((select sum(withdraw) from transaction where summary = '체크하나' and trans_date between trunc(sysdate,'mm') and sysdate) 
 			/ trunc(sysdate - trunc(sysdate,'mm') + 1) * (select cast(to_char(last_day(sysdate), 'dd') as int) from dual) ) as estim_sum
 	from onepick_autodebit
 	where acc_no = #{ accNo }
@@ -140,9 +141,32 @@
 		values( #{accNo}, v_acc_no_seq.nextval, v_acc_no_seq.nextval + 1, v_acc_no_seq.nextval + 2, (select balance from account where acc_no = #{ accNo }) )
 	</insert>
 	
+	<!-- ===================================================== -->
 	
+	<!-- 계좌이체(출금)시 원픽통장 금액이동 -->
+	<!-- <update id="transSend" parameterType="productVO" >
+		update onepick_account
+		set base_money = base_money - #{ money }
+		where acc_no = #{ accNo }
+	</update>
+	
+	
+	계좌이체(입금)시 원픽통장 내 금액이동
+	<update id="transReceive" parameterType="productVO" >
+		update onepick_account
+		set base_money = base_money + #{ money }
+		where acc_no = #{ accNo }
+	</update> -->
+	
+
+
+
+
+	<!-- ===================================================== -->
+
+
 	<!-- 원픽통장 내 금액이동(출금) -->
-	<update id="sendMoney" parameterType="productVO" >
+	<update id="sendMoney" parameterType="onepickVO" >
 		update onepick_account
 		set ${ columnParam } = ${ columnParam } - #{ money }
 		where acc_no = #{ accNo }
@@ -150,15 +174,21 @@
 	
 	
 	<!-- 원픽통장 내 금액이동(입금) -->
-	<update id="receiveMoney" parameterType="productVO" >
+	<update id="receiveMoney" parameterType="onepickVO" >
 		update onepick_account
 		set ${ columnParam } = ${ columnParam } + #{ money }
 		where acc_no = #{ accNo }
 	</update>
 	
 	
-	<!-- 원픽 거래내역 -->
+	<!-- 원픽 거래내역 - send -->
 	<insert id="sendTrans" parameterType="onepickVO" >
+		insert into onepick_transaction(trans_code, acc_no, sender, receiver, send_money, memo  )
+		values( seq_onepick_trans_code.nextval, #{ accNo }, #{ sender }, #{ receiver }, #{ money }, #{ memo } )
+	</insert>
+	
+	<!-- 원픽 거래내역 - receive  -->
+	<insert id="receiveTrans" parameterType="onepickVO" >
 		insert into onepick_transaction(trans_code, acc_no, sender, receiver, send_money, memo  )
 		values( seq_onepick_trans_code.nextval, #{ accNo }, #{ sender }, #{ receiver }, #{ money }, #{ memo } )
 	</insert>
@@ -170,7 +200,24 @@
 		from onepick_budget
 		where acc_no = #{ accNo }
 	</select>
+	
+	<!-- 원픽 예산합계 조회 -->
+	<select id="budgetSum" parameterType="productVO" resultType="int">
+		select sum(budget) as budget_sum
+		from onepick_budget
+		where acc_no = #{ accNo }
+	</select>
 
+
+
+	<!-- 자동 금액이동 ================================== -->
+	
+	<!--1. 자동 금액이동 정보 조회 -->
+	<select id="selectByDate" parameterType="productVO" resultMap="productMap">
+		select autodebit_code, acc_no, money_to_living, money_to_extra, date_to_living, date_to_extra
+		from onepick_autodebit
+		where date_to_living = #{ sysDate } or date_to_extra = #{ sysDate }
+	</select>	
 
 	<!-- 원픽 자동 금액이동 조회 -->
 	<select id="autoInfo" parameterType="productVO" resultMap="productMap">
@@ -207,6 +254,9 @@
 		between (select trunc(sysdate,'mm') from dual) - #{ calDate }
 		and (select next_day((trunc(sysdate,'month')-1),'일') from dual);
 	</select>
+	
+	
+	
 	
 	
 	

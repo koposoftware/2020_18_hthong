@@ -29,6 +29,20 @@
 		from account
 		where acc_no = #{ accNo } and acc_pwd = #{ accPwd }
 	</select>
+	
+	<!-- 출금 가능여부 체크 -->
+	<select id="chkBalance" parameterType="bankingVO" resultType="accountVO">
+		select balance, balance - #{ money } as chkBalance, acc_name as accName
+		from account
+		where acc_no = #{ accNo } and acc_pwd = #{ accPwd }
+	</select>
+	
+	<!-- 상대방 계좌 체크 -->
+	<select id="chkOppAccNo" parameterType="bankingVO" resultType="int">
+		select count(*)
+		from account
+		where acc_no = #{ oppAccNo } and bank_name = #{ bankName }
+	</select>
 
 	<!-- 이체(출금계좌) -->
 	<update id="withdraw" parameterType="bankingVO">
@@ -43,7 +57,8 @@
 		set balance = balance + #{ money }
 		where acc_no = #{ oppAccNo }
 	</update>
-
+	
+	
 	<!-- 거래내역 조회 -->
 	<select id="transHistory" resultMap="transactionMap" parameterType="TransactionVO">
 		select acc_no, trans_date, summary, memo, withdraw,
@@ -51,9 +66,16 @@
 		from transaction
 		where acc_no = #{ accNo }
 		and trans_date between #{ startDate } and #{ endDate }
-		order by trans_date desc
-	</select>
 
+		<trim prefix="order by" suffix="" prefixOverrides=" " suffixOverrides=",">
+			<if test="searchSort == 'asc' ">
+				trans_date asc
+			</if>
+			<if test="searchSort == 'desc' ">
+				trans_date desc
+			</if>
+		</trim>
+	</select>
 
 	<!-- 거래내역 합계 -->
 	<select id="transSum" resultMap="transactionMap"

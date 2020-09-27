@@ -206,22 +206,6 @@
 			<!-- ******#/content-row******* -->
 
 
-
-			<!-- ******content-row******* -->
-			<div class="row">
-				<div class="col-lg">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">돈모으기 예상 시나리오</h4>
-							<div id="line-chart-tooltips" class="ct-chart ct-golden-section"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- ******#/content-row******* -->
-
-
-
 		</div>
 		<!-- ****** #/content-body******* -->
 	</div>

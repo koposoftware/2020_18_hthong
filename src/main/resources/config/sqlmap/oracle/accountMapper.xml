@@ -50,6 +50,13 @@
 	</select>
 
 
+	<!-- 원픽 소유여부 확인 -->
+	<select id="checkOnepick" parameterType="accountVO" resultType="int">
+		select count(*) 
+		from account
+		where id = #{ id } and acc_name = '하나원픽통장'
+	</select>
+
 
 
 </mapper>

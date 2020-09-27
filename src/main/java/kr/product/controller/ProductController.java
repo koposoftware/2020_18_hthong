@@ -83,7 +83,6 @@ public class ProductController {
 				if (path.equals("info")) {
 					mav = new ModelAndView("/product/info");
 					mav.addObject("onepickInfo", onepickInfo);
-					
 				}
 	
 				// 원픽통장 예산 view

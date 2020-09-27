@@ -38,12 +38,6 @@
 						<li><i class="bx bx-chevron-right"></i> <a href="${ pageContext.request.contextPath }/product/onepick/change">통장전환</a></li>
 					</ul>
 				</div>
-				<div class="col-lg-2 col-md-6 footer-links">
-					<h4>테스트</h4>
-					<ul>
-						<li><i class="bx bx-chevron-right"></i> <a href="${ pageContext.request.contextPath }/email_form.jsp">이메일 폼</a></li>
-					</ul>
-				</div>
 			</div>
 		</div>
 	</div>

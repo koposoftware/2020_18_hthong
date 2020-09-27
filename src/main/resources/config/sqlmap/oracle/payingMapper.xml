@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="paying.dao.PayingDAO">
+
+	<resultMap type="payingVO" id="payingMap">
+		<result column="acc_no" property="accNo" />
+		<result column="trans_code" property="transCode" />
+		<result column="opp_acc_no" property="oppAccNo" />
+		<result column="living_cost" property="livingCost" />
+	</resultMap>
+	
+	<!-- 체크카드 연결계좌 조회 -->
+	<select id="linkedAcc" parameterType="memberVO" resultType="accountVO">
+		select id, acc_no as accNo, balance
+		from account
+		where id = #{id} and acc_name = '하나원픽통장'
+	</select>
+	
+	<!-- 체크카드 연결계좌 잔액확인(원픽 생활비 계좌) -->
+	<select id="chkBalance" parameterType="payingVO" resultMap="payingMap">
+		select living_cost, living_cost - #{ money } as chkBalance
+		from onepick_account
+		where acc_no = #{ accNo }
+	</select>
+	
+	<!-- 체크카드 연결계좌 출금(원픽 생활비 계좌) -->
+	<update id="paying" parameterType="payingVO">
+		update onepick_account 
+		set living_cost = living_cost - #{ money }
+		where acc_no = #{ accNo }
+	</update>
+	
+	<!-- 체크카드 연결계좌 거래내역 로그 -->
+	<insert id="payingTransaction" parameterType="payingVO">
+		insert into transaction(acc_no, trans_code, summary, memo, withdraw, balance, opp_acc_no)
+		values( #{ accNo }, seq_trans_code.nextval, #{ summary }, #{ memo }, #{ money }, 
+		(select balance from account where acc_no = #{ accNo }), 'CARD' )	
+	</insert>
+	
+</mapper>
+
+
+

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="report.dao.ReportDAO">
+
+	<resultMap type="reportVO" id="reportMap">
+		<result column="acc_no" property="accNo" />				<!-- 계좌번호 -->
+		<result column="save_date" property="saveDate" />		<!-- 음성 저장일 -->
+	
+	</resultMap>
+
+	<resultMap type="mailVO" id="mailMap">
+		<result column="acc_no" property="accNo" />				<!-- 계좌번호 -->
+		<result column="acc_name" property="accName" />			<!-- 계좌명 -->
+		<result column="reg_date" property="regDate" />			<!-- 가입일 -->
+		<result column="total_budget" property="totalBudget" /> <!-- 총예산 -->
+		<result column="base_money" property="baseMoney" />		<!-- 기본금 -->
+		<result column="living_cost" property="livingCost" />	<!-- 생활비 -->
+		<result column="extra_money" property="extraMoney" />	<!-- 예비금 -->
+		
+		<result column="trans_date" property="transDate" />		<!-- top3 지출일 -->
+		<result column="rank_sum" property="rankSum" />			<!-- top3 지출액 -->
+		<result column="opp_acc_no" property="oppAccNo" />		<!-- 사용처 -->
+
+		<result column="per_w1" property="perW1" />		<!-- 주간 사용액 -->
+		<result column="per_w2" property="perW2" />		<!-- 주간 사용액 -->
+		<result column="per_w3" property="perW3" />		<!-- 주간 사용액 -->
+		<result column="per_w4" property="perW4" />		<!-- 주간 사용액 -->
+	</resultMap>
+	
+	<resultMap type="reportTransVO" id="reportTransMap">
+		<result column="acc_no" property="accNo" />				<!-- 계좌번호 -->
+		<result column="trans_date" property="date" />				
+	</resultMap>	
+
+	
+	<!-- 데일리 파일경로 검색========================= -->
+	<select id="ttsPathByAcc" parameterType="productVO" resultMap="reportMap">
+		select acc_no, filename, path, save_date, (select holder from account where acc_no = #{ accNo } ) as name
+		from tts_file
+		where acc_no = #{ accNo } 
+	</select>
+	
+	<!-- 데일리 금융리포트 리스트 검색========================= -->
+	<select id="ttsPathList" resultMap="reportMap">
+		select t.acc_no as acc_no, a.holder as name, m.mobile as mobile, filename, path, save_date
+		from
+		tts_file t inner join
+		account a on t.acc_no = a.acc_no left outer join
+		member m on a.id = m.id
+	</select>
+	
+	
+	<!-- 월간 금융리포트 보낼 list ========================= -->
+	<select id="mailsendList" parameterType="productVO" resultMap="reportMap">
+		select m.id as id, acc_no, name as receiver, email 
+		from member m join account a
+		on m.id = a.id
+		where a.acc_name = '하나원픽통장' and acc_no = #{ accNo }
+	</select>
+	
+	
+	<!-- 현재 작업영억====================================================================================== -->
+	
+	<!-- 1. 이메일 요약부분 - 예산구성 -->
+	 <select id="reportSummary" parameterType="mailVO" resultMap="mailMap">
+		select a.acc_no as acc_no, holder, acc_name, to_char(reg_date, 'yyyy-MM-dd') as reg_date 
+						, total_budget, base_money, living_cost, extra_money
+		from account a
+		join onepick_account b
+		on a.acc_no = b.acc_no
+		where id = #{ id } and acc_name = '하나원픽통장'
+	</select>
+		
+
+	<!-- 2-1. 이메일 요약부분 - 예산리뷰 - 1) 당월 소비지출 TOP3 날짜 + 합계 -->
+	<select id="rankSum" parameterType="mailVO" resultMap="mailMap">
+		select trans_date, sum as rank_sum
+			from(
+				select to_char(trans_date, 'yyyy-mm-dd') as trans_date, sum(withdraw) as sum
+				from transaction 
+				where to_char(trans_date, 'yyyymm') like to_char(sysdate, 'yyyymm') and acc_no = #{ accNo } and summary = '체크하나'
+				group by to_char(trans_date, 'yyyy-mm-dd')
+				order by sum desc
+			)
+		<![CDATA[ where rownum <= 3 ]]>
+	</select>
+	
+		
+	<!-- 2-2. 이메일 요약부분 - 예산리뷰 - 2) 당월 소비지출 TOP3 TRANSACTION  -->
+	<select id="rankTrans" parameterType="mailVO" resultMap="reportTransMap">
+		select acc_no, to_char(trans_date, 'YYYY/MM-DD=') as tDate, summary, memo, withdraw from transaction
+			where to_char(trans_date, 'yyyymmdd') like 
+			    (select trans_date from(
+				    select rownum as no, trans_date from(
+				        select to_char(trans_date, 'yyyymmdd') as trans_date, sum(withdraw) as sum
+				        from transaction 
+				        where to_char(trans_date, 'yyyymm') like to_char(sysdate, 'yyyymm') and summary = '체크하나' 
+				        group by to_char(trans_date, 'yyyymmdd')
+				        order by sum desc
+				        )
+				    ) a 
+					where a.no = #{ rownum } ) 
+			and acc_no = #{ accNo } and deposit = 0
+	</select>
+	
+	<!-- 3. 주차별 지출현황 --> 
+	<select id="weeklySpend" parameterType="mailVO" resultMap="mailMap">
+		select
+			nvl((select sum(withdraw)
+			from transaction
+			where acc_no = #{ accNo } and to_char(trans_date,'yyyymmdd') between (select to_char(trunc(sysdate,'mm'),'yyyymmdd') from dual) and (select next_day((trunc(sysdate,'mm')-1),1) from dual) and summary = '체크하나'
+			), 0) w1,
+			nvl((select sum(withdraw)
+			from transaction
+			where  acc_no = #{ accNo } and to_char(trans_date,'yyyymmdd') between ((select next_day((trunc(sysdate,'mm')-1),1)+ 1 from dual) ) and ((select next_day((trunc(sysdate,'mm')-1),1)+ 7 from dual) ) and summary = '체크하나'
+			), 0) w2,
+			nvl((select sum(withdraw)
+			from transaction
+			where  acc_no = #{ accNo } and to_char(trans_date,'yyyymmdd') between ((select next_day((trunc(sysdate,'mm')-1),1)+ 8 from dual) ) and ((select next_day((trunc(sysdate,'mm')-1),1)+ 14 from dual) ) and summary = '체크하나'
+			), 0) w3,
+			nvl((select sum(withdraw)
+			from transaction
+			where  acc_no = #{ accNo } and to_char(trans_date,'yyyymmdd') between ((select next_day((trunc(sysdate,'mm')-1),1)+ 15 from dual) ) and (select last_day(sysdate) from dual) and summary = '체크하나'
+			), 0) w4,
+			
+			nvl(round(((select sum(withdraw)
+			from transaction
+			where acc_no =#{ accNo } and to_char(trans_date,'yyyymmdd') between (select to_char(trunc(sysdate,'mm'),'yyyymmdd') from dual) and (select next_day((trunc(sysdate,'mm')-1),1) from dual) and summary = '체크하나'
+			)/((select living_cost from onepick_account where acc_no =#{ accNo })/4))*100, 1), 0) per_w1,
+			nvl(round(((select sum(withdraw)
+			from transaction
+			where  acc_no =#{ accNo } and to_char(trans_date,'yyyymmdd') between ((select next_day((trunc(sysdate,'mm')-1),1)+ 1 from dual) ) and ((select next_day((trunc(sysdate,'mm')-1),1)+ 7 from dual) ) and summary = '체크하나'
+			)/((select living_cost from onepick_account where acc_no =#{ accNo })/4))*100, 1), 0) per_w2,
+			nvl(round(((select sum(withdraw)
+			from transaction
+			where  acc_no =#{ accNo } and to_char(trans_date,'yyyymmdd') between ((select next_day((trunc(sysdate,'mm')-1),1)+ 8 from dual) ) and ((select next_day((trunc(sysdate,'mm')-1),1)+ 14 from dual) ) and summary = '체크하나'
+			)/((select living_cost from onepick_account where acc_no =#{ accNo })/4))*100, 1), 0) per_w3,
+			nvl(round(((select sum(withdraw)
+			from transaction
+			where  acc_no =#{ accNo } and to_char(trans_date,'yyyymmdd') between ((select next_day((trunc(sysdate,'mm')-1),1)+ 15 from dual) ) and (select last_day(sysdate) from dual) and summary = '체크하나'
+			)/((select living_cost from onepick_account where acc_no =#{ accNo })/4))*100, 1), 0) per_w4
+		from dual
+	</select>
+	
+	<!-- 4. 요일별 지출현황 -->
+	<select id="daySpend" parameterType="mailVO" resultMap="mailMap">
+		select
+			(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '2') monday
+			,(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '3') tuesday
+			,(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '4') wendsday
+			,(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '5') thursday
+			,(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '6') friday
+			,(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '7') saturday
+			,(select sum(withdraw) 
+			from transaction
+			where acc_no = #{ accNo } and summary = '체크하나' and to_char(trans_date, 'mm') = '08' and to_char(trans_date, 'd') = '1') sunday
+		from dual
+	</select> 
+
+
+
+
+	
+	
+	
+
+</mapper>
