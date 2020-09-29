@@ -10,6 +10,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link href="${ pageContext.request.contextPath }/resources/css/table.css" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>회원정보수정</title>
 <script>
 	function changeForm(type) {

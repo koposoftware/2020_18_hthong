@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,6 +92,32 @@
 
 	});
 </script>
+<script>
+	$(document).ready(function() {
+		$("#submit-form").on("click", function() {
+			
+			let accNo = $("#accNo").val();			// 계좌번호
+			
+			$.ajax({
+				url : '${ pageContext.request.contextPath }/product/checkPwd',
+				type : 'post',
+				data : { accNo : accNo	},
+				success : function(data) {
+					
+					if(data == 2){
+						alert("원픽통장은 1개만 가입이 가능합니다.");
+						return false;
+					} else {
+						$("#checkForm").submit();
+					}
+				},
+				error : function() {
+					console.log("실패");
+				}
+			})
+		})
+	});
+</script>
 </head>
 <body>
 	<!-- Navigation -->
@@ -156,7 +183,8 @@
 																name="tmpAccName" value="${ account.accName }">
 															</td>
 															<td style="text-align: center; vertical-align: middle;">${ account.accNo }</td>
-															<td style="text-align: center; vertical-align: middle;">${ account.balance }
+															<td style="text-align: center; vertical-align: middle;">
+																<fmt:formatNumber value="${ account.balance }" type="number" />
 																<input type="hidden" id="${account.accNo }-b"
 																name="tmpBalance" value="${ account.balance }">
 															</td>
@@ -223,16 +251,16 @@
 													본인은 위 안내에 대해 확인하고 이해합니다.</label>
 											</div>
 										</div>
+									</form>
 
 										<%-- button --%>
 										<div class="btn-area">
 											<div class="btn-wrap">
-												<input type="submit" class="btn btn-outline-info" value="확인">
+												<input type="submit" id="submit-form" class="btn btn-outline-info" value="확인">
 												<input type="button" class="btn btn-outline-info" value="취소"
 													onclick="javascript:history.go(-1)">
 											</div>
 										</div>
-									</form>
 								</div>
 							</div>
 						</div>

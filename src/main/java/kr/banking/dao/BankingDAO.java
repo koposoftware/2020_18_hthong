@@ -2,6 +2,7 @@ package kr.ac.kopo.banking.dao;
 
 import java.util.List;
 
+import kr.ac.kopo.account.vo.AccountVO;
 import kr.ac.kopo.banking.vo.BankingVO;
 import kr.ac.kopo.banking.vo.TransactionVO;
 
@@ -10,7 +11,7 @@ public interface BankingDAO {
 	int checkAccNo(BankingVO bankingVO);
 	
 	// 출금가능여부 확인
-	int chkBalance(BankingVO bankingVO);
+	AccountVO chkBalance(BankingVO bankingVO);
 	
 	// 상대방 계좌 체크
 	int chkOppAccNo(BankingVO bankingVO);

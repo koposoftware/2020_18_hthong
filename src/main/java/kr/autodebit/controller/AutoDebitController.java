@@ -84,6 +84,8 @@ public class AutoDebitController {
 			// 자동이체 조건조회
 			autoDebitList = autoDebitService.selectByCategry(autoDebitVO); 
 		}
+		
+		System.out.println(autoDebitList);
 		return autoDebitList;
 	}
 

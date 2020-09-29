@@ -2,7 +2,7 @@ package kr.ac.kopo.product.vo;
 
 public class ProductVO {
 	private String userId;
-	private String age;		// 사용자의 나이대
+	private String age; // 사용자의 나이대
 	private String accNo; // 원픽 계좌번호(account 테이블 계좌번호와 동일)
 	private String baseAccNo; // 기본금 가상계좌번호
 	private String livingAccNo; // 생활비 가상계좌번호
@@ -18,6 +18,7 @@ public class ProductVO {
 	private String regDate; // 신규일
 
 	private String flag; // ajax 판단
+	private String sysDate; // 자동이체 조회용 당일 일자 객체
 	private String autodebitCode; // 원픽 자동이동 코드
 	private String moneyToLiving; // 생활비로 자동입금할 금액
 	private String moneyToExtra; // 예비금으로 자동입금할 금액
@@ -27,7 +28,7 @@ public class ProductVO {
 	private String baseMoney; // 기본금
 	private String livingCost; // 생활비
 	private String extraMoney; // 예비금
-	
+
 	public String getUserId() {
 		return userId;
 	}
@@ -35,7 +36,7 @@ public class ProductVO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	
+
 	public String getAge() {
 		return age;
 	}
@@ -212,19 +213,24 @@ public class ProductVO {
 		this.extraBudget = extraBudget;
 	}
 
+	public String getSysDate() {
+		return sysDate;
+	}
+
+	public void setSysDate(String sysDate) {
+		this.sysDate = sysDate;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductVO [userId=" + userId + ", age=" + age + ", accNo=" + accNo + ", baseAccNo=" + baseAccNo
 				+ ", livingAccNo=" + livingAccNo + ", extraAccNo=" + extraAccNo + ", baseBudget=" + baseBudget
 				+ ", livingBudget=" + livingBudget + ", extraBudget=" + extraBudget + ", totalBudget=" + totalBudget
 				+ ", accName=" + accName + ", bankName=" + bankName + ", balance=" + balance + ", regDate=" + regDate
-				+ ", flag=" + flag + ", autodebitCode=" + autodebitCode + ", moneyToLiving=" + moneyToLiving
-				+ ", moneyToExtra=" + moneyToExtra + ", dateToLiving=" + dateToLiving + ", dateToExtra=" + dateToExtra
-				+ ", baseMoney=" + baseMoney + ", livingCost=" + livingCost + ", extraMoney=" + extraMoney + "]";
+				+ ", flag=" + flag + ", sysDate=" + sysDate + ", autodebitCode=" + autodebitCode + ", moneyToLiving="
+				+ moneyToLiving + ", moneyToExtra=" + moneyToExtra + ", dateToLiving=" + dateToLiving + ", dateToExtra="
+				+ dateToExtra + ", baseMoney=" + baseMoney + ", livingCost=" + livingCost + ", extraMoney=" + extraMoney
+				+ "]";
 	}
 
-
-
-
-	
 }

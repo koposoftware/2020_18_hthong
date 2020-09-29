@@ -72,9 +72,6 @@ public class BankingController {
 	@ResponseBody
 	@PostMapping("/banking/transfer/check")
 	public String chkTransfer(BankingVO bankingVO) throws Exception{
-		
-		System.out.println("accNo val " + bankingVO.getAccNo() );
-		
 		String chkCode = bankingService.chkTransfer(bankingVO); // 계좌체크 
 		return chkCode;
 	}
@@ -89,20 +86,15 @@ public class BankingController {
 	@PostMapping("/banking/transfer")
 	public ModelAndView transfer(BankingVO bankingVO) throws Exception{
 		ModelAndView mav = new ModelAndView();
-		
 		String chkCode = bankingService.transfer(bankingVO); // 이체 메소드
-		System.out.println("이체 결과 : " + bankingVO.toString());
-		
 		
 		mav.addObject("transferResult", chkCode);
-		
 		mav = new ModelAndView("/banking/transferResult");
-		
-		System.out.println("con : " + chkCode);
 		
 		return mav;
 	}
-
+	
+	
 	/**
 	 * 거래내역 조회
 	 * 

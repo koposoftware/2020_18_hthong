@@ -11,6 +11,8 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>계좌해지 < 계좌관리</title>
 <style>
 #content {

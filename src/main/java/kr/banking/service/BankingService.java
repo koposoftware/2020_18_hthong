@@ -15,7 +15,6 @@ public interface BankingService {
 	
 	// 계좌 이체
 	public String transfer(BankingVO bankingVO) throws Exception;
-	
 
 	// 거래내역 조회
 	public List<TransactionVO> transaction(TransactionVO transactionVO);

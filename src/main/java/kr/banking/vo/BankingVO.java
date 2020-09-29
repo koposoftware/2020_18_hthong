@@ -12,6 +12,7 @@ public class BankingVO {
 
 	private String chkBalance;
 	private String bankName;
+	private String accName;
 
 	public BankingVO() {
 		super();
@@ -89,11 +90,19 @@ public class BankingVO {
 		this.bankName = bankName;
 	}
 
+	public String getAccName() {
+		return accName;
+	}
+
+	public void setAccName(String accName) {
+		this.accName = accName;
+	}
+
 	@Override
 	public String toString() {
 		return "BankingVO [id=" + id + ", accNo=" + accNo + ", accPwd=" + accPwd + ", money=" + money + ", oppAccNo="
 				+ oppAccNo + ", summary=" + summary + ", memo=" + memo + ", chkBalance=" + chkBalance + ", bankName="
-				+ bankName + "]";
+				+ bankName + ", accName=" + accName + "]";
 	}
 
 }

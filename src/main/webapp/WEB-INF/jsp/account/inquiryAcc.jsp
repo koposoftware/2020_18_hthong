@@ -10,7 +10,10 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>전체계좌조회</title>
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <link href="/resources/css/table.css" rel="stylesheet">
+<link href="/resources/css/style-dash.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 	window.onload = function() {
@@ -23,6 +26,34 @@
 		});
 	}
 </script>
+<script>
+	$(document).ready(function(){
+		let cal_sum = 0;
+		let tmp_balance = '';
+		let tmp_id ='';
+		
+		// 천단위 구분 함수
+		function numberWithCommas(x) {
+		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		// 계좌 잔액 합계 계산
+		$('.balance_val').each(function(){	
+			cal_sum += Number($(this).val());
+			
+			tmp_id = $(this).attr('id');
+			console.log(tmp_id)
+			
+			$('#' + tmp_id +'-p').text(numberWithCommas($(this).val()) + ' 원');
+		});
+		
+		cal_sum = numberWithCommas(cal_sum);
+		
+		$('#cal_sum').text(cal_sum + ' 원');
+		
+	})
+		
+</script>
 
 </head>
 <body>
@@ -34,10 +65,9 @@
 		<div class="row page-titles mx-0">
 			<div class="col p-md-0">
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="javascript:void(0)">전체계좌
-							조회</a></li>
+					<li class="breadcrumb-item"><a href="${pageContext.request.contextPath }/inquiry">전체계좌조회</a></li>
 					<li class="breadcrumb-item active"><a
-						href="javascript:void(0)">조회</a></li>
+						href="${pageContext.request.contextPath }/inquiry">조회</a></li>
 				</ol>
 			</div>
 		</div>
@@ -87,70 +117,24 @@
 														<td style="text-align: center; vertical-align: middle;">${ account.accNo }</td>
 														<td style="text-align: center; vertical-align: middle;">${ account.accType }</td>
 														<td style="text-align: center; vertical-align: middle;">${ account.regDate }</td>
-														<td style="text-align: center; vertical-align: middle;">${ account.balance }</td>
+														<td style="text-align: center; vertical-align: middle;">
+														<p class="balance" id="${ account.accNo }-p"></p>
+															<input type="hidden" id="${ account.accNo }" value="${ account.balance }" class="balance_val">
+														</td>
 													</tr>
 
 													<tr id="tr-btn">
-														<td colspan="4" style="text-align: right"><input
-															type="submit"
-															onclick="javascript: form.action='http://localhost:9999/Final-Project/banking/transactionDetails.jsp';"
-															class="btn btn-outline-dark" value="조회"> <input
-															type="submit"
-															onclick="javascript: form.action='http://localhost:9999/Final-Project/banking/transfer.jsp';"
-															class="btn btn-outline-dark" value="이체"> <input
-															type="button" class="btn btn-outline-dark"
-															id="modal_open_btn" value="계좌관리">
+														<td colspan="4" style="text-align: right">
+														<input type="button" onclick="location.href='${ pageContext.request.contextPath }/banking/transaction'"
+															class="btn btn-outline-dark" value="조회" > 
+														<input type="button" onclick="location.href='${ pageContext.request.contextPath }/banking/transfer'"
+															class="btn btn-outline-dark" value="이체" > 
 													</tr>
 												</c:forEach>
 											</tbody>
 											<tr class="table-highlight">
 												<td style="text-align: center;" id="sum-title">자유입출금 합계</td>
-												<td colspan="4" id="sum-money" style="text-align: right">500,000</td>
-											</tr>
-										</table>
-									</form>
-
-									<%-- form2 --%>
-									<form method="post" name="form">
-										<p class="textarea-sub">정기예금/적금/신탁/ISA/개인형IRP</p>
-										<table class="table table-bordered" id="content-table">
-											<thead>
-												<tr class="table-highlight" id="tr-head">
-													<th scope="col" style="text-align: center">예금명</th>
-													<th scope="col" style="text-align: center">계좌번호</th>
-													<th scope="col" style="text-align: center">최종거래일</th>
-													<th scope="col" style="text-align: center">만기일</th>
-													<th scope="col" style="text-align: center">잔액(원)</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr id="tr-con">
-													<td rowspan="2"
-														style="text-align: center; vertical-align: middle;">${ accList.accType }</td>
-													<td style="text-align: center">${ accList.bankNM }</td>
-													<td style="text-align: center">${ accList.accNO }<input
-														type="hidden" name="accNO" value="${ accList.accNO }">
-													</td>
-													<td style="text-align: center">${ accList.balance }</td>
-													<td style="text-align: center">${ accList.regDate }</td>
-												</tr>
-
-												<tr id="tr-btn">
-													<td colspan="4" style="text-align: right"><input
-														type="submit"
-														onclick="javascript: form.action='transfer.do?service=KPBanking';"
-														class="btn btn-outline-dark" value="조회"> <input
-														type="submit"
-														onclick="javascript: form.action='transfer.do?service=KPBanking';"
-														class="btn btn-outline-dark" value="이체"> <input
-														type="submit"
-														onclick="javascript: form.action='editAccInfo.do';"
-														class="btn btn-outline-dark" value="계좌관리">
-												</tr>
-											</tbody>
-											<tr class="table-highlight">
-												<td style="text-align: center;" id="sum-title">합계</td>
-												<td colspan="4" id="sum-money" style="text-align: right">0</td>
+												<td colspan="4" style="text-align: right"><strong id="cal_sum" ></strong></td>
 											</tr>
 										</table>
 									</form>

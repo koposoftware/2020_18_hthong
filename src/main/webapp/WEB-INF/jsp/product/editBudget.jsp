@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,9 +116,6 @@
 			let setDate = tmp_setDate[1];
 			let budgetNo = '${ bidget.budgetNo }';
 			
-			console.log(view_setDate);
-			console.log(accNo + " : " + category + " : " + budgetName + " : " + budget + " : " + setDate);
-			
 			$.ajax({
 				url : '${ pageContext.request.contextPath }/product/onepick/budget/makeBudget',
 				type : 'post',
@@ -147,6 +145,9 @@
 					$('.input-area').val('');
 					$('#add_category').val('고정비').prop("selected",true);
 					$('#add_setDate').val('없음').prop("selected",true);
+					
+					$('#add_budgetName').empty();
+					$('#add_budget').empty();
 					
 				},
 				error : function() {
@@ -239,11 +240,8 @@
 $(document).ready(function() {
 		// 예산 삭제
 		$(document).on('click', '.delete-btn', function() {
-			let budgetNo = $('.delete-btn').val(); 
+ 			let budgetNo = $(this).val();
 			let accNo = '${ onepickInfo.accNo }';
-			
-			console.log("삭제 이벤트 : " + budgetNo);
-			console.log("삭제 이벤트2 : " + accNo);
 			
 			$.ajax({
 				url : '${ pageContext.request.contextPath }/product/onepick/budget/deleteBudget',
@@ -252,8 +250,6 @@ $(document).ready(function() {
 					budgetNo : budgetNo
 				},
 				success : function(data) {
-					console.log("yes!!!!!!")
-					
 					// 예산 목록을 보여주는 ajax 필요
 					$.ajax({
 						url : '${ pageContext.request.contextPath }/product/onepick/budgetList/${ onepickInfo.accNo }',
@@ -269,11 +265,24 @@ $(document).ready(function() {
  								str += '<td>' + this.budgetName + '</td>';
  								str += '<td>' + this.budget + '<input type="hidden" class="cal-budget" value="' + this.budget + '"></td>';
 								str += '<td>매달 ' + this.setDate +' 일</td>';
-								str += '<td><button class="delete-btn" value="' + this.budgetNo  + '">' + this.budgetNo + '삭제</button>';
+								str += '<td><button class="delete-btn" value="' + this.budgetNo  + '">삭제</button>';
 								str += '</td></tr>';
 								
 								$('#append-area').append(str);
 							})
+							
+							let fixed_sum = 0
+							$('.cal-budget').each(function(){ 			//클래스가 money인 항목의 갯수만큼 진행
+								fixed_sum = fixed_sum + Number($(this).val());
+							});
+							
+							console.log("체크" + fixed_sum);
+							$('#fixed_sum').val(fixed_sum);
+							
+							let cal_total = $('#cal_total').val();
+							cal_total = cal_total - fixed_sum;
+							
+							$('#cal_result').val(cal_total);
 						},
 						error : function() {
 							console.log("실패");
@@ -289,6 +298,10 @@ $(document).ready(function() {
 </script>
 <script>
 	$(document).ready(function() {
+			function numberWithCommas(x) {
+			    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+		
 			let totalBudget = $('#totalBudget').val();
 			let fixed_sum = 0; // 고정지출 합계
 			let cal_result = $('#cal_result').val();
@@ -298,7 +311,8 @@ $(document).ready(function() {
 			$('.cal-budget').each(function(){ 			//클래스가 money인 항목의 갯수만큼 진행
 				fixed_sum += Number($(this).val());
 				});
-			$('#fixed_sum').val(fixed_sum);
+			
+			$('#fixed_sum').val(numberWithCommas(fixed_sum));
 			
 			
 			// 고정지출 합계 변경(고정지출 추가시)
@@ -315,29 +329,9 @@ $(document).ready(function() {
 			});
 			
 			
-			// 고정지출 합계 변경(고정지출 삭제시)
-			/* $(document).on('click', '.delete-btn', function() {
-				
-				fixed_sum = 0
-				$('.cal-budget').each(function(){ 			//클래스가 money인 항목의 갯수만큼 진행
-					fixed_sum = fixed_sum + Number($(this).val());
-					alert(fixed_sum);
-				});
-				
-				$('#fixed_sum').val(fixed_sum);
-				
-				result = parseInt(result - fixed_sum);	// 지출합계 갱신
-				
-				$('#fixed_sum').val(sum);			// 값 변경
-				$('#cal_result').val(result);
-			}); */
-			
-			
 			// 총 지출 합계(dom 구성시)
 			cal_result = parseInt(totalBudget - fixed_sum)
 			$('#cal_result').val(cal_result);
-			
-			
 			
 			
 			// 기본금 -> 생활비 금액 입력시
@@ -482,6 +476,7 @@ $(document).ready(function() {
 									<input class="form-control form-control-lg" type="text" disabled
 										id="fixed_sum" name="fixedSum"
 										value="${ onepickInfo.totalBudget }">
+										
 								</div>
 							</div>
 							<div class="mt-4">
@@ -503,8 +498,10 @@ $(document).ready(function() {
 												<tr>
 													<td>${ budget.category }</td>
 													<td>${ budget.budgetName }</td>
-													<td>${ budget.budget }<input type="hidden" id="${ budget.budgetNo }"
-														class="cal-budget" value="${ budget.budget }"></td>
+													<td><fmt:formatNumber value="${ budget.budget }" type="number" />
+													<input type="hidden" id="${ budget.budgetNo }"
+														class="cal-budget" value="${ budget.budget }">
+													</td>
 													<td>매달 ${ budget.setDate } 일</td>
 													<td>
 														<button class="delete-btn" value="${ budget.budgetNo }">삭제</button>
@@ -605,7 +602,7 @@ $(document).ready(function() {
 												</td>
 												<td style="text-align: center;">
 													<div class="col-auto my-1" style="margin: 0;">
-														<input type="text" name="setMoney" class="form-control" id="lSetMoney" style="height: 10px;">
+														<input type="text" name="setMoney" class="form-control" id="lSetMoney" value= "${ autoInfo.moneyToLiving }" style="height: 10px;">
 	                                           		</div>
 												</td>
 												
@@ -624,7 +621,7 @@ $(document).ready(function() {
 												</div>
 												</td>
 												<td style="text-align: center; vertical-align: middle;">
-													<button class="label label-pill label-primary" id="eCost-submit" style="width: 70px; border: 0px; ">설정</button>
+													<button class="label label-pill label-primary" id="eCost-submit" style="width: 70px; border: 0px; ">저장</button>
 												</td>
 											</tr>
 											<tr>
@@ -632,7 +629,7 @@ $(document).ready(function() {
 												</td>
 												<td style="text-align: center;">
 													<div class="form-group col-md-2" style="margin: 0;">
-														<input type="text" name="setMoney" class="form-control" id="eSetMoney" style="height: 10px;">
+														<input type="text" name="setMoney" class="form-control" id="eSetMoney" value="${ autoInfo.moneyToExtra }" style="height: 10px;">
 	                                           		</div>
 	                                           	</td>
 												<!-- 여기 기본 -> 예비 -->
@@ -649,7 +646,7 @@ $(document).ready(function() {
 												</div>
 												</td>
 												<td style="text-align: center; vertical-align: middle;">
-												<button class="label label-pill label-primary" id="eCost-submit" style="width: 70px; border: 0px; ">설정</button></td>
+												<button class="label label-pill label-primary" id="eCost-submit" style="width: 70px; border: 0px; ">저장</button></td>
 											</tr>
 										</tbody>
 									</table>

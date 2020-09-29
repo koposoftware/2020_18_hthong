@@ -8,7 +8,8 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="" name="descriptison">
 <meta content="" name="keywords">
-
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <link href="/resources/images/apple-touch-icon.png"
 	rel="apple-touch-icon">
 <!-- Google Fonts -->
@@ -45,12 +46,12 @@
 		<div class="container">
 			<div class="row">
 				<!-- ======= logo ======= -->
-				<div class="col">
+				<div class="col" style="margin-top: 10px;">
 					<div class="logo float-left">
 						<!-- Uncomment below if you prefer to use an image logo -->
 						<a href="/"><img
-							src="/resources/images/hana_logo.png" alt=""
-							class="img-fluid"></a>
+							src="/resources/images/h1_logo_kebhana.png" alt=""
+							class="img-fluid" style="width: 100px; height: 30px"></a>
 					</div>
 				</div>
 
@@ -74,14 +75,12 @@
 									<li><a
 										href="${ pageContext.request.contextPath }/autodebit/info">자동이체</a></li>
 								</ul></li>
-							<li class="drop-down"><a href="">상품</a>
+							<li class="drop-down"><a href="">하나원픽</a>
 								<ul>
 									<li><a
-										href="${ pageContext.request.contextPath }/product/onepick/info">하나원픽통장</a></li>
+										href="${ pageContext.request.contextPath }/product/onepick/info">통장조회</a></li>
 									<li><a
-										href="${ pageContext.request.contextPath }/account">통장전환</a></li>
-									<li><a
-										href="${ pageContext.request.contextPath }/account">통장관리</a></li>
+										href="${ pageContext.request.contextPath }/product/onepick/change">통장전환</a></li>
 								</ul></li>
 						</ul>
 					</nav>
@@ -89,6 +88,7 @@
 
 				<!-- ======= login ======= -->
 				<div class="col-4" id="login-area">
+				<a href="${ pageContext.request.contextPath }/mailTest.jsp">mailTest</a>
 					<ul>
 						<c:choose>
 							<c:when test="${ empty loginVO }">
@@ -106,10 +106,9 @@
 						</c:choose>
 					</ul>
 				</div>
-				
+				<hr>
 			</div>
 		</div>
-		<hr>
 	</header>
 	<!-- End Header -->
 </html>

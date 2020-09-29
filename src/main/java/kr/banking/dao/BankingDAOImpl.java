@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.ac.kopo.account.vo.AccountVO;
 import kr.ac.kopo.banking.vo.BankingVO;
 import kr.ac.kopo.banking.vo.TransactionVO;
 
@@ -34,12 +35,13 @@ public class BankingDAOImpl implements BankingDAO {
 	 * 계좌이체 - 잔액확인
 	 */
 	@Override
-	public int chkBalance(BankingVO bankingVO) {
-		System.out.println("체크 dao bal" + bankingVO.toString());
-		int result = 0;
-		result = sqlSession.selectOne("banking.dao.BankingDAO.chkBalance", bankingVO);
+	public AccountVO chkBalance(BankingVO bankingVO) {
+		AccountVO accountVO = new AccountVO();
+		accountVO = sqlSession.selectOne("banking.dao.BankingDAO.chkBalance", bankingVO);
 		
-		return result;
+		System.out.println("잔액확인 : " + accountVO.toString());
+		
+		return accountVO;
 	}
 
 
@@ -71,7 +73,8 @@ public class BankingDAOImpl implements BankingDAO {
 	public int deposit(BankingVO bankingVO) {
 		int result = 0;
 		result = sqlSession.update("banking.dao.BankingDAO.deposit", bankingVO);
-		
+		System.out.println("디에이오 체크------------------- " + result);
+
 		try{
 			if(result == 0) {
 				bankingVO.setMoney("11111111111111111111");
@@ -80,6 +83,8 @@ public class BankingDAOImpl implements BankingDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} 
+		
+		
 		return result;
 	}
 

@@ -130,7 +130,7 @@
 			<!-- ******content-row******* -->
 			<div class="row">
 				<!-- *******나이대 비교****** -->
-				<div class="col-lg-6">
+				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">또래 예산 구성</h4>
@@ -142,7 +142,7 @@
 				<!-- *******#/나이대 비교****** -->
 				
 				<!-- *******예산별 비교****** -->
-				<div class="col-lg-6">
+				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">예산 규모에 따른 구성</h4>

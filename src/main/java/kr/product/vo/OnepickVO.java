@@ -2,13 +2,13 @@ package kr.ac.kopo.product.vo;
 
 // 원픽통장용 transaction vo
 public class OnepickVO {
-	private String accNo;		// 원픽 계좌번호
-	private String sender;		// 보내는 통장
-	private String receiver;	// 받는 통장
-	private String money;		// 금액
-	private String memo;		// 메모
-	private String columnParam;	// 컬렴명(동적 쿼리)
-	
+	private String accNo; // 원픽 계좌번호
+	private String sender; // 보내는 통장
+	private String receiver; // 받는 통장
+	private String money; // 금액
+	private String memo; // 메모
+	private String columnParam; // 컬렴명(동적 쿼리)
+
 	public String getSender() {
 		return sender;
 	}
@@ -48,7 +48,7 @@ public class OnepickVO {
 	public void setAccNo(String accNo) {
 		this.accNo = accNo;
 	}
-	
+
 	public String getColumnParam() {
 		return columnParam;
 	}
@@ -59,8 +59,8 @@ public class OnepickVO {
 
 	@Override
 	public String toString() {
-		return "OnepickVO [sender=" + sender + ", receiver=" + receiver + ", money=" + money + ", memo=" + memo
-				+ ", accNo=" + accNo + "]";
+		return "OnepickVO [accNo=" + accNo + ", sender=" + sender + ", receiver=" + receiver + ", money=" + money
+				+ ", memo=" + memo + ", columnParam=" + columnParam + "]";
 	}
 
 }

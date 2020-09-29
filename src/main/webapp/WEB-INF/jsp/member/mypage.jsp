@@ -12,7 +12,11 @@
 <link
 	href="${ pageContext.request.contextPath }/resources/css/table.css"
 	rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>회원정보</title>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 .btn.btn-outline-info {
 	margin-left: 20px;
@@ -25,6 +29,28 @@
 		} else if (type == 'D') {
 			location.href = "${ pageContext.request.contextPath }/#";
 		}
+	}
+</script>
+<script>
+	function smsAuth() {
+		$.ajax({
+			url : "${ pageContext.request.contextPath }/sendSMS",
+			data : {
+				//receiver: '내 전화번호'
+				receiver : '01092768500'
+			},
+			type : "post",
+			success : function(result) {
+				if (result == "ok") {
+					alert("문자 보내기 성공");
+				} else {
+					alert("문자 보내기 실패");
+				}
+			},
+			error : function(result) {
+				alert("응답 오류");
+			}
+		});
 	}
 </script>
 </head>
@@ -130,8 +156,8 @@
 											<div class="btn-wrap">
 												<input type="button"
 													onclick="location.href='${ pageContext.request.contextPath }/editInfo'"
-													class="btn btn-outline-info" value="정보수정">
-												<input type="button"
+													class="btn btn-outline-info" value="정보수정"> <input
+													type="button"
 													onclick="location.href='${ pageContext.request.contextPath }/signOut'"
 													class="btn btn-outline-info" value="회원탈퇴">
 											</div>

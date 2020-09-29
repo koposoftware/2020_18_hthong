@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,15 +111,23 @@ $(document).ready(function() {
 	let budget = ${ onepickInfo.totalBudget };
 	let living = ${ autoInfo.moneyToLiving };
 	let extra = ${ autoInfo.moneyToExtra };
-
+	let budgetSum = ${ budgetSum };
+	
 	let totalBudget = numberWithCommas(budget);
 	let living_money = numberWithCommas(living);
 	let extra_money = numberWithCommas(extra);
 	
+	let cal_budget = numberWithCommas(parseInt(living + extra));
+	budgetSum = numberWithCommas(budgetSum);
+	
+	console.log(budgetSum);
+	
 	// text 변경
+	$('.cal_budget').text(cal_budget);
 	$('.total_budget').text(totalBudget);
 	$('.living_money').text(living_money);
 	$('.extra_money').text(extra_money);
+	$('.fixed_sum').text(budgetSum);
 })
 </script>
 </head>
@@ -213,8 +222,8 @@ $(document).ready(function() {
 											<tr>
 												<th style="width: 10%;">구분</th>
 												<th style="width: 20%;">예산명</th>
-												<th style="width: 20%;">이체금액</th>
 												<th style="width: 20%;">이체일</th>
+												<th style="width: 20%;">이체금액</th>
 											</tr>
 										</thead>
 										<tbody id="append-area">
@@ -223,15 +232,15 @@ $(document).ready(function() {
 												<tr>
 													<td>${ budget.category }</td>
 													<td>${ budget.budgetName }</td>
-													<td>${ budget.budget }</td>
 													<td>매달 ${ budget.setDate } 일</td>
+													<td><fmt:formatNumber value="${ budget.budget }" type="number" /></td>
 												</tr>
 											</c:forEach>
 										</tbody>
 										<tfoot>
 											<tr style="background-color: white;">
-												<th>합계</th>
-												<th colspan="3"><strong class="fixed_sum" style="font-size: 18px;"></strong></th>
+												<th colspan="3">합계</th>
+												<th><strong class="fixed_sum" style="font-size: 18px;"></strong></th>
 											</tr>
 										</tfoot>
 									</table>
@@ -271,7 +280,7 @@ $(document).ready(function() {
 												<th colspan="3"
 													style="text-align: center; background-color: rgb(233, 236, 239);">
 													총 예산 <strong class="total_budget" style="font-size: 25px;">
-													</strong> 원 중 <strong class="total_budget" style="color: blue; font-size: 25px;"></strong> 원
+													</strong> 원 중 <strong class="cal_budget" style="color: blue; font-size: 25px;"></strong> 원
 												</th>
 											</tr>
 											<tr><th colspan="3"></th>
@@ -290,7 +299,7 @@ $(document).ready(function() {
 													<strong class="living_money" style="font-size: 18px;"></strong> 원
 												</td>
 												<td>
-													<strong class="extra_date" style="font-size: 15px;">매달 ${ autoInfo.dateToExtra } 일</strong><br>
+													<strong class="extra_date" style="font-size: 15px;">매달 ${ autoInfo.dateToLiving } 일</strong><br>
 												</td>
 											</tr>
 											<tr>
@@ -298,7 +307,7 @@ $(document).ready(function() {
 												</td>
 												<td><strong class="extra_money" style="font-size: 18px;"></strong> 원</td>
 												<td>
-													<strong class="extra_date" style="font-size: 15px;">매달 ${ autoInfo.dateToLiving } 일</strong><br>
+													<strong class="extra_date" style="font-size: 15px;">매달 ${ autoInfo.dateToExtra } 일</strong><br>
 												</td>
 											</tr>
 										</tbody>

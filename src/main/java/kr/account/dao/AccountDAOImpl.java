@@ -2,6 +2,8 @@ package kr.ac.kopo.account.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -63,9 +65,23 @@ public class AccountDAOImpl implements AccountDAO {
 	 * 계좌 비밀번호 체크
 	 */
 	@Override
-	public int checkPwd(AccountVO accountVO) throws Exception {
+	public int checkPwd(AccountVO accountVO, String id) throws Exception {
 		
-		int checkResult = sqlSession.selectOne("account.dao.AccountDAO.checkPwd", accountVO);
+		int checkResult = 0;
+		accountVO.setId(id);
+		
+		if(accountVO.getAccPwd() != 0) {
+			checkResult = sqlSession.selectOne("account.dao.AccountDAO.checkPwd", accountVO);
+		}
+		
+		int checkOwn = sqlSession.selectOne("account.dao.AccountDAO.checkOnepick", accountVO);
+		
+		System.out.println("check dao : " + checkResult + " : " + checkOwn);
+		
+		if(checkOwn == 1 ) {
+			checkResult = 2;
+		}
+		System.out.println("check dao 2: " + checkResult);
 		
 		return checkResult;
 	}

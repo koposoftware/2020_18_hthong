@@ -38,6 +38,9 @@ public interface ProductService {
 	// 원픽 예산목록 조회
 	public List<BudgetVO> budgetList(ProductVO productVO) throws Exception;
 	
+	// 원픽 예산합계 조회
+	public int budgetSum(ProductVO productVO) throws Exception;
+	
 	// 원픽 총예산 수정
 	public void updateTotalBudget(ProductVO productVO) throws Exception;
 	
@@ -51,14 +54,15 @@ public interface ProductService {
 	public void updateAutoSend(ProductVO productVO) throws Exception;
 	
 	// 원픽 예산 등록
-	public void insertBudget(BudgetVO budgetVO) throws Exception;
+	public List<BudgetVO> insertBudget(BudgetVO budgetVO, ProductVO productVO) throws Exception;
 	
 	// 원픽 예산 삭제
 	public void deleteBudget(BudgetVO budgetVO) throws Exception;
 	
 	
 	
-	
+	// 원픽 스케줄링
+	void scheduleExecute();
 	
 	
 	

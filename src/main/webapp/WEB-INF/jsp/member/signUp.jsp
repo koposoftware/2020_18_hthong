@@ -1,22 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="java.util.*"%>
+<%
+    request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link href="${ pageContext.request.contextPath }/resources/css/table.css" rel="stylesheet">
+<meta charset="UTF-8">
+<link
+	href="${ pageContext.request.contextPath }/resources/css/table.css"
+	rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <title>회원가입</title>
 <style>
 .input-group2 {
 	float: left;
 }
 </style>
+
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script
@@ -210,7 +214,8 @@
 
 									<%-- 계좌가입 form --%>
 									<form action="${ pageContext.request.contextPath }/signUp"
-										method="POST" name="signUpForm" onsubmit="return doWrite()">
+										method="POST" name="signUpForm" onsubmit="return doWrite()"
+										accept-charset="utf-8">
 										<table class="table table-bordered" id="content-table">
 											<tr>
 												<th class="id">아이디</th>
@@ -267,15 +272,16 @@
 												<td>
 													<div class="row">
 														<div class="col-xs-6 col-md-6">
-															<input class="form-control" type="text" name="email" id="email"
-																placeholder="example@hana.com">
+															<input class="form-control" type="text" name="email"
+																id="email" placeholder="example@hana.com">
 														</div>
 													</div>
 											</tr>
 											<tr>
 												<th class="accNickname">휴대전화</th>
 												<td><input class="form-control" type="text" id="mobile"
-													name="mobile" placeholder="010-0000-0000"></td>
+													name="mobile" placeholder="010-0000-0000">
+													</td>
 
 											</tr>
 											<!-- <tr>

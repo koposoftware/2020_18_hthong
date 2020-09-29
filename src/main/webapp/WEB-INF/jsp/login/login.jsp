@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="/resources/css/util.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/login.css">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <style>
 .wrap-login100.p-l-85.p-r-85.p-t-55.p-b-55 {
 	width: 500px;
@@ -42,7 +44,7 @@
 						class="txt1 p-b-11"> ID </span>
 					<div class="wrap-input100 validate-input m-b-36"
 						data-validate="Username is required">
-						<input class="input100" type="text" name="id" value="kopo2">
+						<input class="input100" type="text" name="id" value="kopo1">
 						<span class="focus-input100"></span>
 					</div>
 

@@ -15,5 +15,5 @@ public interface AccountService {
 	List<AccountVO> inquiryChkAcc(MemberVO loginVO) throws Exception;
 	
 	// 통장전환 비밀번호 확인
-	int checkPwd(AccountVO accountVO) throws Exception;
+	int checkPwd(AccountVO accountVO, String id) throws Exception;
 }

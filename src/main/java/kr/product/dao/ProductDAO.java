@@ -43,6 +43,9 @@ public interface ProductDAO {
 	// 원픽 예산목록 조회
 	public List<BudgetVO> budgetList(ProductVO productVO);
 	
+	// 원픽 예산합계 조회
+	public int budgetSum(ProductVO productVO) throws Exception;
+	
 	// 원픽 총예산 수정
 	public void updateTotalBudget(ProductVO productVO);
 	
@@ -61,7 +64,8 @@ public interface ProductDAO {
 	// 원픽 예산 삭제
 	public void deleteBudget(BudgetVO budgetVO);
 	
-	
+	// 원픽 스케줄링 - 자동 금액이동 목록 조회
+	public List<ProductVO> autoList(ProductVO productVO);
 	
 	
 	

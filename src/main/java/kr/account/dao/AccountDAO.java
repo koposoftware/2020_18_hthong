@@ -20,5 +20,5 @@ public interface AccountDAO {
 	public void changeAccInfo(AccountVO accountVO) throws Exception;
 	
 	//계좌 비밀번호 확인
-	public int checkPwd(AccountVO accountVO) throws Exception;
+	public int checkPwd(AccountVO accountVO, String id) throws Exception;
 }

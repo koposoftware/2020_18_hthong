@@ -8,6 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="/resources/css/util.css">
 <link rel="stylesheet" type="text/css" href="/resources/css/login.css">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
 <style>
 .wrap-login100.p-l-85.p-r-85.p-t-55.p-b-55 {
 	width: 500px;

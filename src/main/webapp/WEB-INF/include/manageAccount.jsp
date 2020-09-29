@@ -31,7 +31,7 @@
 	rel="stylesheet">
 <link href="/resources/css/vendor/aos/aos.css"
 	rel="stylesheet">
-<!-- Template Main CSS File --> 
+<!-- Template Main CSS File -->
 <link href="/resources/css/style.css" rel="stylesheet">
 <style>
 #modal {

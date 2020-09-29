@@ -9,7 +9,9 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<link href="/Final-Project/resources/images/apple-touch-icon.png"
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/resources/images/fav.png">
+<link href="/resources/images/apple-touch-icon.png"
 	rel="apple-touch-icon">
 <!-- Google Fonts -->
 <link
@@ -17,22 +19,22 @@
 	rel="stylesheet">
 <!-- Vendor CSS Files -->
 <link
-	href="/Final-Project/resources/css/vendor/bootstrap/css/bootstrap.min.css"
+	href="/resources/css/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="/Final-Project/resources/css/vendor/icofont/icofont.min.css"
+<link href="/resources/css/vendor/icofont/icofont.min.css"
 	rel="stylesheet">
 <link
 	href="/Final-Project/resources/css/vendor/boxicons/css/boxicons.min.css"
 	rel="stylesheet">
 <link
-	href="/Final-Project/resources/css/vendor/animate.css/animate.min.css"
+	href="/resources/css/vendor/animate.css/animate.min.css"
 	rel="stylesheet">
-<link href="/Final-Project/resources/css/vendor/venobox/venobox.css"
+<link href="/resources/css/vendor/venobox/venobox.css"
 	rel="stylesheet">
-<link href="/Final-Project/resources/css/vendor/aos/aos.css"
+<link href="/resources/css/vendor/aos/aos.css"
 	rel="stylesheet">
 <!-- Template Main CSS File -->
-<link href="/Final-Project/resources/css/style.css" rel="stylesheet">
+<link href="/resources/css/style.css" rel="stylesheet">
 <style>
 #modal {
 	display: none;

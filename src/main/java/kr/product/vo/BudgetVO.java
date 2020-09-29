@@ -8,6 +8,7 @@ public class BudgetVO {
 	private String setDate;
 	private String dataFull;
 	private String budgetNo;
+	private int budgetSum;
 
 	public String getAccNo() {
 		return accNo;
@@ -65,10 +66,19 @@ public class BudgetVO {
 		this.budgetNo = budgetNo;
 	}
 
+	public int getBudgetSum() {
+		return budgetSum;
+	}
+
+	public void setBudgetSum(int budgetSum) {
+		this.budgetSum = budgetSum;
+	}
+
 	@Override
 	public String toString() {
 		return "BudgetVO [accNo=" + accNo + ", category=" + category + ", budgetName=" + budgetName + ", budget="
-				+ budget + ", setDate=" + setDate + ", dataFull=" + dataFull + ", budgetNo=" + budgetNo + "]";
+				+ budget + ", setDate=" + setDate + ", dataFull=" + dataFull + ", budgetNo=" + budgetNo + ", budgetSum="
+				+ budgetSum + "]";
 	}
 
 }

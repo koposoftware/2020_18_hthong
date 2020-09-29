@@ -2,6 +2,9 @@ package kr.ac.kopo.account.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +41,9 @@ public class AccountServiceImpl implements AccountService {
 	 * 비밀번호 확인
 	 */
 	@Override
-	public int checkPwd(AccountVO accountVO) throws Exception{
-		int checkResult = accountDAO.checkPwd(accountVO);
+	public int checkPwd(AccountVO accountVO, String id) throws Exception{
+		
+		int checkResult = accountDAO.checkPwd(accountVO, id);
 		return checkResult;
 	}
 

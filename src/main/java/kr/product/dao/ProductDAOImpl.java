@@ -25,7 +25,6 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public ProductVO onepickInfo(MemberVO memberVO) {
 		ProductVO onepickInfo = sqlSession.selectOne("product.dao.ProductDAO.onepickInfo", memberVO);
-		
 		return onepickInfo;
 	}
 	
@@ -38,7 +37,6 @@ public class ProductDAOImpl implements ProductDAO {
 		System.out.println("pro dao 체크1 : " + productVO.getAccNo());
 		AnalysisVO dashboardInfo = sqlSession.selectOne("product.dao.ProductDAO.dashboardInfo", productVO);
 		
-		System.out.println("pro dao 체크2 : " + dashboardInfo.toString());
 		return dashboardInfo;
 	}
 
@@ -48,10 +46,7 @@ public class ProductDAOImpl implements ProductDAO {
 	 */
 	@Override
 	public AnalysisVO dashSpending(ProductVO productVO) {
-		System.out.println("pro dao 체크3 : " + productVO.getAccNo());
 		AnalysisVO dashSpending = sqlSession.selectOne("product.dao.ProductDAO.dashSpending", productVO);
-		
-		System.out.println("pro dao 체크4 : " + dashSpending.toString());
 		return dashSpending;
 	}
 	
@@ -61,9 +56,7 @@ public class ProductDAOImpl implements ProductDAO {
 	 */
 	@Override
 	public AnalysisVO analyAge(ProductVO productVO) {
-		System.out.println("체크 비교분석_나이대1 : " + productVO.toString());
 		AnalysisVO analyAge = sqlSession.selectOne("product.dao.ProductDAO.analyAge", productVO);
-		System.out.println("체크 비교분석_나이대2 : " + analyAge.toString());
 		return analyAge;
 	}
 
@@ -85,11 +78,8 @@ public class ProductDAOImpl implements ProductDAO {
 		} else if(budgetFlag > 7840001) {
 			productVO.setTotalBudget("9020000");
 		}
-		
-		
-		System.out.println("체크 비교분석_소득1 : " + productVO.toString());
+
 		AnalysisVO analySeg = sqlSession.selectOne("product.dao.ProductDAO.analySeg", productVO);
-		System.out.println("체크 비교분석_소득2 : " + analySeg.toString());
 		return analySeg;
 	}
 	
@@ -102,7 +92,6 @@ public class ProductDAOImpl implements ProductDAO {
 	 */
 	@Override
 	public void convertAcc(AccountVO accountVO) {
-		System.out.println("체크 pro dao : " + accountVO.toString());
 		sqlSession.insert("product.dao.ProductDAO.convertAcc", accountVO);
 	}
 
@@ -115,9 +104,7 @@ public class ProductDAOImpl implements ProductDAO {
 		int result = 0;
 		
 		// 컬럼 설정(동적쿼리)
-		String columnParam = onepickVO.getSender();
-		onepickVO.setColumnParam(columnParam);
-		
+		System.out.println("dao 체크 : " + onepickVO.toString());
 		result = sqlSession.update("product.dao.ProductDAO.sendMoney", onepickVO);
 		return result;
 	}
@@ -130,9 +117,7 @@ public class ProductDAOImpl implements ProductDAO {
 		int result = 0;
 		
 		// 컬럼 설정(동적쿼리)
-		String columnParam = onepickVO.getReceiver();
-		onepickVO.setColumnParam(columnParam);
-		
+		System.out.println("dao 체크 : " + onepickVO.toString());
 		result = sqlSession.update("product.dao.ProductDAO.receiveMoney", onepickVO);
 		return result;
 	}
@@ -144,21 +129,8 @@ public class ProductDAOImpl implements ProductDAO {
 	public int sendTrans(OnepickVO onepickVO) {
 		int result = 0;
 		
-		System.out.println("체크 거래내역 출금 : " + onepickVO.toString());
-		
 		result = sqlSession.update("product.dao.ProductDAO.sendTrans", onepickVO);
 		return result;
-	}
-
-	
-	/**
-	 * 원픽 예산목록 조회
-	 */
-	@Override
-	public List<BudgetVO> budgetList(ProductVO productVO) {
-		
-		List<BudgetVO> budgetList = sqlSession.selectList("product.dao.ProductDAO.budgetList", productVO);
-		return budgetList;
 	}
 
 	
@@ -201,14 +173,33 @@ public class ProductDAOImpl implements ProductDAO {
 		System.out.println("dao 체크2");
 	}
 
+
+	/**
+	 * 원픽 예산목록 조회
+	 */
+	@Override
+	public List<BudgetVO> budgetList(ProductVO productVO) {
+		List<BudgetVO> budgetList = sqlSession.selectList("product.dao.ProductDAO.budgetList", productVO);
+		return budgetList;
+	}
 	
+	
+	/**
+	 * 원픽 총예산 조회
+	 */
+	@Override
+	public int budgetSum(ProductVO productVO) throws Exception {
+		int budgetSum = sqlSession.selectOne("product.dao.ProductDAO.budgetSum", productVO);
+		return budgetSum;
+	}
+
+
 	/**
 	 * 원픽 예산 등록
 	 */
 	@Override
 	public void insertBudget(BudgetVO budgetVO) {
 		sqlSession.insert("product.dao.ProductDAO.insertBudget", budgetVO);
-		
 	}
 
 	
@@ -220,11 +211,22 @@ public class ProductDAOImpl implements ProductDAO {
 		sqlSession.delete("product.dao.ProductDAO.deleteBudget", budgetVO);
 		
 	}
+
+
+	///////////////////////////////////////////////////////////////////////
+	/**
+	 * 원픽 스케줄링
+	 */
+	@Override
+	public List<ProductVO> autoList(ProductVO productVO) {
+		List<ProductVO> autoInfo = sqlSession.selectList("product.dao.ProductDAO.selectByDate", productVO);
+		return autoInfo;
+	}
 	
 	
 	
 	
-	
+	 
 	
 	
 

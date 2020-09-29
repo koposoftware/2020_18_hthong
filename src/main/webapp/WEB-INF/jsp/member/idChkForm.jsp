@@ -9,6 +9,8 @@
 <link
 	href="/resources/css/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
+<link rel="icon" type="image/png" sizes="16x16"
+href="/resources/images/fav.png">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <style type="text/css">
 #wrap {

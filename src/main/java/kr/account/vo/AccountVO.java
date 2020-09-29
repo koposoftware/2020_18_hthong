@@ -12,6 +12,8 @@ public class AccountVO {
 	private String regDate;
 	private String holder;
 
+	private int chkBalance;
+
 	public AccountVO() {
 		super();
 	}
@@ -96,11 +98,19 @@ public class AccountVO {
 		this.holder = holder;
 	}
 
+	public int getChkBalance() {
+		return chkBalance;
+	}
+
+	public void setChkBalance(int chkBalance) {
+		this.chkBalance = chkBalance;
+	}
+
 	@Override
 	public String toString() {
 		return "AccountVO [id=" + id + ", bankCode=" + bankCode + ", accNo=" + accNo + ", accPwd=" + accPwd
 				+ ", balance=" + balance + ", accType=" + accType + ", accName=" + accName + ", nickname=" + nickname
-				+ ", regDate=" + regDate + ", holder=" + holder + "]";
+				+ ", regDate=" + regDate + ", holder=" + holder + ", chkBalance=" + chkBalance + "]";
 	}
 
 }

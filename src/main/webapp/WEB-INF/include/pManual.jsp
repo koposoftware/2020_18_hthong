@@ -5,9 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <link
-	href="/Final-Project/resources/css/vendor/bootstrap/css/bootstrap.min.css"
+	href="/resources/css/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="/Final-Project/resources/css/vendor/icofont/icofont.min.css"
+<link href="/resources/css/vendor/icofont/icofont.min.css"
 	rel="stylesheet">
 <title>하나원픽 상품설명서</title>
 </head>

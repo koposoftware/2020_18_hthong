@@ -53,7 +53,8 @@ public class MemberController {
 		// 로그인 실패
 		if (loginVO == null) {
 			mav.setViewName("redirect:/login");
-			// 로그인 성공
+		
+		// 로그인 성공
 		} else {
 			// preHandle 어디 거쳤는지 여부 확인
 			String dest = (String) session.getAttribute("dest");

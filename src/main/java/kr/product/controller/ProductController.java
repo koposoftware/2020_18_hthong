@@ -89,23 +89,28 @@ public class ProductController {
 				// 원픽통장 예산 view
 				else if (path.equals("budget")) {
 					mav = new ModelAndView("/product/budget");
-					
 					List<BudgetVO> budgetList = productService.budgetList(onepickInfo); 
+					int budgetSum = productService.budgetSum(onepickInfo);
 					
-					System.out.println("원픽통장 조회 : " + onepickInfo.toString());
+					mav.addObject("onepickInfo", onepickInfo);
+					mav.addObject("budgetList", budgetList);
+					mav.addObject("budgetSum", budgetSum);
+					mav.addObject("autoInfo", autoInfo);
+					
+						
+				// 원픽통장 예산 수정
+				} else if (path.equals("budgetEdit")) {
+					mav = new ModelAndView("/product/editBudget");
+					List<BudgetVO> budgetList = productService.budgetList(onepickInfo); 
 					
 					mav.addObject("onepickInfo", onepickInfo);
 					mav.addObject("budgetList", budgetList);
 					mav.addObject("autoInfo", autoInfo);
-					
-					System.out.println("===========================");
-					System.out.println(mav.toString());
 				}
 				
 				// 원픽통장 대시보드 view
 				else if (path.equals("dashboard")) {
 					mav = new ModelAndView("/product/dashboard");
-					
 					
 					// balance 포맷 변경
 					String balance = formatter.format(Integer.parseInt(onepickInfo.getBalance()) );	// 잔액 ',' 표시
@@ -262,16 +267,19 @@ public class ProductController {
 	 */
 	@ResponseBody
 	@PostMapping("/product/checkPwd")
-	public int checkPwd(AccountVO accountVO) throws Exception{
-		int checkResult = accountService.checkPwd(accountVO);
-
+	public int checkPwd(AccountVO accountVO, String id) throws Exception{
+		
+		id = loginVO.getId();
+		
+		int checkResult = accountService.checkPwd(accountVO, id);
+		System.out.println("계좌 여부 체크 : " + checkResult);
 		return checkResult;
 	}
 
 	/**
 	 * 통장전환 프로세스(data 수정/저장)
 	 * 
-	 * @param accountVO
+	 * @param accountVOselect
 	 * @return
 	 */
 	@PostMapping("/product/onepick/changeResult")
@@ -298,6 +306,9 @@ public class ProductController {
 		return "redirect:/product/onepick/info";
 	}
 	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * 원픽 총예산 수정	- 완료
@@ -352,14 +363,17 @@ public class ProductController {
 	 */
 	@ResponseBody
 	@PostMapping("/product/onepick/budget/makeBudget")
-	public String makeBudget(BudgetVO budgetVO) throws Exception{
+	public List<BudgetVO> makeBudget(BudgetVO budgetVO) throws Exception{
 		System.out.println("파라미터 체크 : " + budgetVO.toString() );
 		
-		productService.insertBudget(budgetVO);
+		ProductVO productVO = new ProductVO();
+		productVO.setAccNo(budgetVO.getAccNo());
+		System.out.println("파라미터 체크2 : " + productVO );
 		
-		return "redirect:/product/onepick/budget";
+		List<BudgetVO> budgetList = productService.insertBudget(budgetVO, productVO);
+		
+		return budgetList;
 	}
-	
 	
 	/**
 	 * 원픽 예산 삭제
@@ -378,8 +392,30 @@ public class ProductController {
 	}
 	
 	
+	/**
+	 * 예산 리스트 조회(ajax)
+	 * @param accNo
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@GetMapping("/product/onepick/budgetList/{accNo}")
+	public List<BudgetVO> budgetList(@PathVariable("accNo") String accNo) throws Exception{
+		ProductVO onepickInfo = new ProductVO();
+		onepickInfo.setAccNo(accNo);
+		List<BudgetVO> budgetList = productService.budgetList(onepickInfo); 
+		return budgetList;
+	}	
 	
 	
+	
+	////////////////////////////////////////////////////////////////////////////
+	// 스케줄링 Execute
+	public void AutoDebitTest() {
+		productService.scheduleExecute();
+	}
+	////////////////////////////////////////////////////////////////////////////
+		
 	
 	
 	
