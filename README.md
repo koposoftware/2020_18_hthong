@@ -1,4 +1,4 @@
-# Hana One-Pick(사회초년생 자산관리서비스)
+# Hana One-Pick (사회초년생 자산관리서비스)
 
 [프로젝트 홈페이지 - https://koposoftware.github.io/template/](https://koposoftware.github.io/template/)
 
@@ -15,7 +15,7 @@
 
 #### 이미지를 클릭하면 프로젝트 발표자료를 볼 수 있습니다. <br><br>
    <a target="_blank" rel="noopener noreferrer" href="/Doc/FinalProject_proposal.pdf">
-      <img src="/Doc/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a>
+      <img src="/Doc/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a><br>
   <a href="/Doc/FinalProject_proposal.pdf">발표자료</a>
  
 
@@ -31,15 +31,9 @@
 
 # 4. 본인 소개
 
-본인 소개를 추가하세요
-
-|이름 |고길동|![gdKO](/gdko.jpg)|
-|연락처 | gdko(@)kopo.ac.kr|
-|skill set| Frontend - HTML, CSS, Javascript|
-| | Backend - Java, Spring, Oracle|
-|자격증|  |
-|수상| |
-|특기사항|  TOEIC 990 |
+<a target="_blank" rel="noopener noreferrer" href="https://https://hyuntaekhong.github.io/">
+      <img src="/Doc/profile.png" style="max-width:100%;">
+</a><br>
 
 # 5. 기타
 그외 프로젝트를 더욱 설명할수 있는 것들을 추가하세요
