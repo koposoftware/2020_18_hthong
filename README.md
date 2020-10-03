@@ -8,7 +8,7 @@
 
 # 2. 프로젝트 제안서
 
-프로젝트 제안서를 설명하세요. 발표자료와 동영상을 추가하세요. 시스템의 아키텍쳐 설명도 추가하세요.
+#### 이미지를 클릭하면 프로젝트 발표자료를 볼 수 있습니다. <br><br>
    <a target="_blank" rel="noopener noreferrer" href="/Doc/FinalProject_proposal.pdf">
       <img src="/Doc/FinalProject_proposal.jpg" style="max-width:100%;"></a>
   <a href="/Doc/FinalProject_proposal.pdf">발표자료</a>
