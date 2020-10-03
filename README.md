@@ -31,8 +31,8 @@
 
 # 4. 본인 소개
 
-<a target="_blank" rel="noopener noreferrer" href="https://https://hyuntaekhong.github.io/">
-      <img src="/Doc/profile.jpg" style="max-width:90%;">
+<a target="_blank" rel="noopener noreferrer" href="https://hyuntaekhong.github.io/">
+      <img src="/Doc/profile.jpg" style="width: 640px;">
 </a><br>
 
 # 5. 기타
