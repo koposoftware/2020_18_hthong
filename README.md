@@ -32,7 +32,7 @@
 # 4. 본인 소개
 
 <a target="_blank" rel="noopener noreferrer" href="https://https://hyuntaekhong.github.io/">
-      <img src="/Doc/profile.png" style="max-width:100%;">
+      <img src="/Doc/profile.jpg" style="max-width:90%;">
 </a><br>
 
 # 5. 기타
