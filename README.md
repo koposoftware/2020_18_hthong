@@ -4,13 +4,17 @@
 
 # 1. 프로젝트 개요
 
-이것은 프로젝트 개요입니다. 글과 그림을 이용하여 개요를 설명하세요.
+## 하나원픽통장(Hana One-Pick)이란?
+   <img src="/Doc/project_intro.png" style="max-width:100%;">
+
+   - 입출금이 자유로운 예금으로 하나의 통장을 관리 목적에 따라 기본금, 생활비, 예비금으로 분리하여 관리할 수 있는 통장쪼개기 서비스를 제공합니다.
+
 
 # 2. 프로젝트 제안서
 
 #### 이미지를 클릭하면 프로젝트 발표자료를 볼 수 있습니다. <br><br>
    <a target="_blank" rel="noopener noreferrer" href="/Doc/FinalProject_proposal.pdf">
-      <img src="/Doc/FinalProject_proposal.jpg" style="max-width:100%;"></a>
+      <img src="/Doc/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a>
   <a href="/Doc/FinalProject_proposal.pdf">발표자료</a>
  
 
