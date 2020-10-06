@@ -26,7 +26,7 @@
 
 ## 시연 동영상 
 
-   <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://youtu.be/B1jyajp74QU" frameborder="0"></iframe>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/B1jyajp74QU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 # 4. 본인 소개
 
