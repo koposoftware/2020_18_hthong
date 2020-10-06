@@ -22,7 +22,10 @@
 프로젝트 결과를 추가하세요. 발표자료. 시연동영상을 추가하세요.
 
 ## 발표 ppt 
-   <img src="ppt.jpg"/>[발표자료](/project.pptx)<br>
+   <a target="_blank" rel="noopener noreferrer" href="/Doc/Final_Project_onepick.pdf">
+      <img src="/Doc/Final_Project_onepick.png" style="max-width:100%;"></a><br>
+  <a href="/Doc/Final_Project_onepick.pdf">발표자료</a>
+ 
 
 ## 시연 동영상 
 
