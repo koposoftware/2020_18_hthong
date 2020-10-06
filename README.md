@@ -13,7 +13,6 @@
 
 # 2. 프로젝트 제안서
 
-#### 이미지를 클릭하면 프로젝트 발표자료를 볼 수 있습니다. <br><br>
    <a target="_blank" rel="noopener noreferrer" href="/Doc/FinalProject_proposal.pdf">
       <img src="/Doc/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a><br>
   <a href="/Doc/FinalProject_proposal.pdf">발표자료</a>
@@ -27,7 +26,7 @@
 
 ## 시연 동영상 
 
-   <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/6LxbdIjWP04" frameborder="0"></iframe>
+   <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://youtu.be/B1jyajp74QU" frameborder="0"></iframe>
 
 # 4. 본인 소개
 
