@@ -10,7 +10,7 @@
    - 여러개의 실물통장이 필요했던 기존의 통장쪼개기와 다르게 <strong>__하나의 원픽통장을 가입하면 3개의 통장을 사용하는 것__</strong>과 같은 효과가 있습니다.
    
    <br>
-   <img src="/architecture.png" style="max-width:100%;">
+   <img src="/architecture_v2.png" style="max-width:100%;">
 
 # 2. 프로젝트 제안서
 
