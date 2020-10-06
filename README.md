@@ -29,7 +29,10 @@
 
 ## 시연 동영상 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/B1jyajp74QU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/embed/B1jyajp74QU">
+      <img src="/Doc/youtube_image.png" style="max-width:100%;">
+</a><br>
+
 
 # 4. 본인 소개
 
