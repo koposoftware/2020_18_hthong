@@ -5,7 +5,7 @@
 # 1. 프로젝트 개요
 
    ## 1) 하나원픽통장(Hana One-Pick)이란?
-   <center><img src="/HANA-ONEPICK/Doc/project_intro.png" style="max-width:100%;"/><br></center>
+   <center><img src="/Doc/project_intro.png" style="max-width:100%;"/><br></center>
       
    - 하나의 통장을 관리 목적에 따라 <strong>__기본금, 생활비, 예비금__</strong></u>으로 분리하여 관리할 수 있는 통장쪼개기 서비스를 제공합니다.
    - 여러개의 실물통장이 필요했던 기존의 통장쪼개기와 다르게 <strong>__하나의 원픽통장을 가입하면 3개의 통장을 사용하는 것__</strong>과 같은 효과가 있습니다.
@@ -13,7 +13,7 @@
 
 # 2. 프로젝트 제안서
 
-   <a target="_blank" rel="noopener noreferrer" href="/HANA-ONEPICK/Doc/FinalProject_proposal.pdf">
+   <a target="_blank" rel="noopener noreferrer" href="/Doc/FinalProject_proposal.pdf">
       <img src="/Doc/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a><br>
   <a href="/Doc/FinalProject_proposal.pdf">발표자료</a>
  
@@ -22,22 +22,22 @@
 프로젝트 결과를 추가하세요. 발표자료. 시연동영상을 추가하세요.
 
 ## 발표 ppt 
-   <a target="_blank" rel="noopener noreferrer" href="/HANA-ONEPICK/Doc/Final_Project_onepick.pdf">
-      <img src="/HANA-ONEPICK/Doc/Final_Project_onepick.png" style="max-width:100%;"></a><br>
-  <a href="/HANA-ONEPICK/Doc/Final_Project_onepick.pdf">발표자료</a>
+   <a target="_blank" rel="noopener noreferrer" href="/Doc/Final_Project_onepick.pdf">
+      <img src="/Doc/Final_Project_onepick.png" style="max-width:100%;"></a><br>
+  <a href="/Doc/Final_Project_onepick.pdf">발표자료</a>
  
 
 ## 시연 동영상 
 
 <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/embed/B1jyajp74QU">
-      <img src="/HANA-ONEPICK/Doc/youtube_image.png" style="max-width:100%;">
+      <img src="/Doc/youtube_image.png" style="max-width:100%;">
 </a><br>
 
 
 # 4. 본인 소개
 
 <a target="_blank" rel="noopener noreferrer" href="https://hyuntaekhong.github.io/">
-      <img src="/HANA-ONEPICK/Doc/profile.jpg" style="width: 640px;">
+      <img src="/Doc/profile.jpg" style="width: 640px;">
 </a><br>
 
    
