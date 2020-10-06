@@ -1,6 +1,5 @@
 # Hana One-Pick (사회초년생 자산관리서비스)
 
-[프로젝트 홈페이지 - https://koposoftware.github.io/template/](https://koposoftware.github.io/template/)
 
 # 1. 프로젝트 개요
 
