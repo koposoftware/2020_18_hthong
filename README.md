@@ -20,7 +20,7 @@
  
 
 # 3. 프로젝트 결과
-프로젝트 결과를 추가하세요. 발표자료. 시연동영상을 추가하세요.
+
 
 ## 발표 ppt 
    <a target="_blank" rel="noopener noreferrer" href="/Final_Project_onepick.pdf">
