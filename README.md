@@ -31,14 +31,14 @@
 ## 시연 동영상 
 
 <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/embed/B1jyajp74QU">
-      <img src="/youtube_image.png" style="max-width:100%;">
+<img src="/youtube_image.png" style="max-width:100%;">
 </a><br>
 
 
 # 4. 본인 소개
 
 <a target="_blank" rel="noopener noreferrer" href="https://hyuntaekhong.github.io/">
-      <img src="/profile.jpg" style="width: 640px;">
+<img src="/profile.jpg" style="width: 640px;">
 </a><br>
 
    
