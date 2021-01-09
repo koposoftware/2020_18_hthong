@@ -16,7 +16,7 @@
 
    <a target="_blank" rel="noopener noreferrer" href="/FinalProject_proposal.pdf">
       <img src="/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a><br>
-  <a href="/FinalProject_proposal.pdf">발표자료</a>
+  <a href="/FinalProject_proposa.pdf">발표자료</a>
  
 
 # 3. 프로젝트 결과
@@ -25,7 +25,7 @@
 ## 발표 ppt 
    <a target="_blank" rel="noopener noreferrer" href="/Final_Project_onepick.pdf">
       <img src="/Final_Project_onepick.png" style="max-width:100%;"></a><br>
-  <a href="/Final_Project_onepick.pdf">발표자료</a>
+  <a href="/Final_Project_onepic.pdf">발표자료</a>
  
 
 ## 시연 동영상 
