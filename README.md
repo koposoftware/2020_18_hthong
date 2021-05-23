@@ -15,7 +15,7 @@
 # 2. 프로젝트 제안서
 
    <a target="_blank" rel="noopener noreferrer" href="/FinalProject_proposa.pdf">
-      <img src="/FinalProject_proposal_v1.jpg" style="max-width:100%;"></a><br>
+      <img src="/FinalProject_proposal_v1.0.jpg" style="max-width:100%;"></a><br>
   <a href="/FinalProject_proposal.pdf">발표자료</a>
  
 
