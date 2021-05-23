@@ -16,7 +16,7 @@
 
    <a target="_blank" rel="noopener noreferrer" href="/FinalProject_proposa.pdf">
       <img src="/FinalProject_proposal_v1.jpg" style="max-width:100%;"></a><br>
-  <a href="/FinalProject_proposa.pdf">발표자료</a>
+  <a href="/FinalProject_proposal.pdf">발표자료</a>
  
 
 # 3. 프로젝트 결과
@@ -24,7 +24,7 @@
 
 ## 발표 ppt 
    <a target="_blank" rel="noopener noreferrer" href="/Final_Project_onepic.pdf">
-      <img src="/Final_Project_onepic.png" style="max-width:100%;"></a><br>
+      <img src="/Final_Project_onepick.png" style="max-width:100%;"></a><br>
   <a href="/Final_Project_onepic.pdf">발표자료</a>
  
 
@@ -38,7 +38,7 @@
 # 4. 본인 소개
 
 <a target="_blank" rel="noopener noreferrer" href="https://hyuntaekhong.github.io/">
-<img src="/profil.jpg" style="width: 640px;">
+<img src="/profile.jpg" style="width: 640px;">
 </a><br>
 
    
